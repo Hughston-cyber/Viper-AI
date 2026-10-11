@@ -17,7 +17,7 @@
 .nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.btn{display:inline-block;padding:8px 13px;border-radius:var(--r);font:700 13px system-ui;border:2px solid var(--sig);background:var(--sig);color:var(--ink);cursor:pointer;text-decoration:none}.btn.line{background:transparent;color:#fff;border-color:#b4c8bc}
 main{padding:34px 0 60px}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(42px,7vw,66px);line-height:.98;margin:5px 0 12px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--moss)}.sub{color:var(--mute);margin:0 0 24px;max-width:700px}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 22px}.tile{background:var(--viper);color:#fff;border-left:6px solid var(--sig);border-radius:var(--r);padding:16px 20px}.tile b{display:block;font:700 46px/1 var(--disp)}.tile span{font-size:13px;color:#cfe3d9}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px}.panel h2{margin:0;padding:12px 16px;background:var(--ink);color:#fff;font-size:22px}.in{padding:16px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;color:var(--mute);background:#f6f8f6;white-space:nowrap}.empty{color:var(--mute);padding:14px 0}.notice{border:1px solid #ebd76e;background:#fff8d8;color:#544700;padding:12px 14px;border-radius:var(--r);font-size:13px}.msg{color:var(--mute);font-size:14px;min-height:20px;margin:8px 0 14px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:600px;margin:36px auto}.card h2{font-size:30px;margin:0}.dim{color:var(--mute)}footer{background:var(--viper);color:#a9c4b8;padding:24px 0;margin-top:38px;font-size:13px}[hidden]{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px}.panel h2{margin:0;padding:12px 16px;background:var(--ink);color:#fff;font-size:22px}.in{padding:16px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;color:var(--mute);background:#f6f8f6;white-space:nowrap}.empty{color:var(--mute);padding:14px 0}.rider-toggle{font:700 16px system-ui;color:var(--moss);background:transparent;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.rider-toggle:focus-visible{outline:3px solid var(--sig);outline-offset:3px}.lap-summary td{vertical-align:middle}.lap-detail td{background:#f8faf8}.lap-detail-inner{padding:8px 0}.lap-detail table{font-size:13px}.lap-detail th,.lap-detail td{padding:7px 9px}.count-pill{display:inline-block;background:#e8f1eb;color:var(--viper);font-weight:800;padding:3px 9px;border-radius:99px;white-space:nowrap}.notice{border:1px solid #ebd76e;background:#fff8d8;color:#544700;padding:12px 14px;border-radius:var(--r);font-size:13px}.msg{color:var(--mute);font-size:14px;min-height:20px;margin:8px 0 14px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:600px;margin:36px auto}.card h2{font-size:30px;margin:0}.dim{color:var(--mute)}footer{background:var(--viper);color:#a9c4b8;padding:24px 0;margin-top:38px;font-size:13px}[hidden]{display:none!important}
 @media(max-width:650px){.tiles{grid-template-columns:1fr}.brand span{display:block;margin:0}.bar .wrap{align-items:flex-start}.nav{width:100%}.nav .btn{flex:1;text-align:center}.in{padding:12px}}
 </style>
 </head>
@@ -36,7 +36,7 @@ main{padding:34px 0 60px}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(42p
 <section class="panel"><h2>Race results</h2><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading…</td></tr></tbody></table></div></section>
 <section class="panel"><h2>Rider statistics</h2><div class="scroll"><table><thead><tr><th>Rider</th><th>Event</th><th>Laps</th></tr></thead><tbody id="riderRows"><tr><td colspan="3">Loading…</td></tr></tbody></table></div></section>
 </div>
-<section class="panel"><h2>Recorded lap times</h2><div class="in"><p class="dim">Individual lap times, pit annotations and incident notes imported into the lap records table. Source values are preserved as provided.</p><div class="scroll"><table><thead><tr><th>Event</th><th>Rider</th><th>Stint</th><th>Lap</th><th>Time as recorded</th><th>Incident / notes</th></tr></thead><tbody id="lapRows"><tr><td colspan="6">Loading…</td></tr></tbody></table></div></div></section>
+<section class="panel"><h2>Recorded lap times</h2><div class="in"><p class="dim">Laps are grouped by rider to keep this page compact. Select a rider’s name to expand their recorded laps, including stint details, pit annotations and incident notes.</p><div class="scroll"><table><thead><tr><th>Rider</th><th>Event</th><th>Stints</th><th>Total laps recorded</th></tr></thead><tbody id="lapRows"><tr><td colspan="4">Loading…</td></tr></tbody></table></div></div></section>
 <section class="panel"><h2>Race roster assignments</h2><div class="in"><p class="dim">These are roster assignments recorded for race days. An assigned stint does not confirm that a rider attended.</p><div class="scroll"><table><thead><tr><th>Race day</th><th>Date</th><th>Rider</th><th>Stint</th><th>Minutes</th></tr></thead><tbody id="rosterRows"><tr><td colspan="5">Loading…</td></tr></tbody></table></div></div></section>
 <section class="panel"><h2>Attendance records</h2><div class="in"><div class="notice"><strong>Attendance tracking isn't configured in the schema visible in this repository.</strong> The current database-backed pages expose race records, rider statistics and planned roster entries, but no dedicated attendance table. To avoid misleading information, this page will not treat a roster assignment as proof of attendance.</div></div></section>
 </main>
@@ -50,6 +50,33 @@ const $=id=>document.getElementById(id);
 function cell(row,value){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);row.appendChild(td)}
 function renderRows(id,rows,keys,empty){const body=$(id);body.textContent='';if(!rows.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=keys.length;td.textContent=empty;tr.appendChild(td);body.appendChild(tr);return}rows.forEach(item=>{const tr=document.createElement('tr');keys.forEach(key=>cell(tr,item[key]));body.appendChild(tr)})}
 function dateLabel(value){if(!value)return '—';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?value:d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
+function renderLapGroups(records){
+  const body=$('lapRows');body.textContent='';
+  if(!records.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='No individual lap records have been imported yet. Run the Casey Fields Round 2 SQL import from the repository first.';tr.appendChild(td);body.appendChild(tr);return}
+  const groups=new Map();
+  records.forEach((record,index)=>{
+    const key=[record.event||'Unknown event',record.rider_name||'Unknown rider'].join('::');
+    if(!groups.has(key))groups.set(key,{event:record.event||'Unknown event',rider:record.rider_name||'Unknown rider',records:[],firstIndex:index});
+    groups.get(key).records.push(record);
+  });
+  [...groups.values()].sort((a,b)=>a.rider.localeCompare(b.rider)||a.event.localeCompare(b.event)).forEach((group,index)=>{
+    const numericLaps=group.records.filter(x=>/^\\d+$/.test(String(x.lap_number_as_shown||'').trim()));
+    const stints=[...new Set(group.records.map(x=>x.stint).filter(x=>x!==null&&x!==undefined))].sort((a,b)=>Number(a)-Number(b));
+    const detailId='lap-detail-'+index;
+    const summary=document.createElement('tr');summary.className='lap-summary';
+    const riderCell=document.createElement('td');const toggle=document.createElement('button');toggle.type='button';toggle.className='rider-toggle';toggle.textContent=group.rider;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls',detailId);toggle.addEventListener('click',()=>{const detail=$(detailId);const opening=detail.hidden;detail.hidden=!opening;toggle.setAttribute('aria-expanded',String(opening));});riderCell.appendChild(toggle);summary.appendChild(riderCell);
+    cell(summary,group.event);cell(summary,stints.length?stints.map(x=>'Stint '+x).join(', '):'—');
+    const countCell=document.createElement('td');const pill=document.createElement('span');pill.className='count-pill';pill.textContent=numericLaps.length+' laps';countCell.appendChild(pill);summary.appendChild(countCell);body.appendChild(summary);
+    const detailRow=document.createElement('tr');detailRow.id=detailId;detailRow.className='lap-detail';detailRow.hidden=true;
+    const detailCell=document.createElement('td');detailCell.colSpan=4;
+    const inner=document.createElement('div');inner.className='lap-detail-inner';
+    const table=document.createElement('table');const thead=document.createElement('thead');const headRow=document.createElement('tr');
+    ['Stint','Lap as recorded','Time as recorded','Incident / notes'].forEach(label=>{const th=document.createElement('th');th.textContent=label;headRow.appendChild(th)});thead.appendChild(headRow);table.appendChild(thead);
+    const tbody=document.createElement('tbody');
+    group.records.forEach(record=>{const tr=document.createElement('tr');cell(tr,record.stint===null||record.stint===undefined?'—':record.stint);cell(tr,record.lap_number_as_shown);cell(tr,record.lap_time_as_shown);cell(tr,[record.incident,record.notes].filter(Boolean).join(' — '));tbody.appendChild(tr)});
+    table.appendChild(tbody);inner.appendChild(table);detailCell.appendChild(inner);detailRow.appendChild(detailCell);body.appendChild(detailRow);
+  });
+}
 async function init(){
   try{
     const {data,error}=await sb.auth.getSession();
@@ -69,14 +96,15 @@ async function init(){
     if(errors.length){$('status').textContent='Some records could not be loaded. Check the database table permissions and schema, then reload.';console.error('Rider Data query errors:',errors.map(x=>x.error.message))}
     else $('status').textContent='Showing records currently available to your approved account.';
     const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
-    renderRows('lapRows',lapRecords.map(x=>({event:x.event,rider_name:x.rider_name,stint:x.stint,lap_number_as_shown:x.lap_number_as_shown,lap_time_as_shown:x.lap_time_as_shown,incident:[x.incident,x.notes].filter(Boolean).join(' — ')})),['event','rider_name','stint','lap_number_as_shown','lap_time_as_shown','incident'],'No individual lap records have been imported yet. Run the Casey Fields Round 2 SQL import from the repository first.');
+    renderLapGroups(lapRecords);
     renderRows('raceRows',races.map(x=>({event:x.event,date:dateLabel(x.race_date),result:x.result,laps:x.laps})),['event','date','result','laps'],'No race records have been recorded.');
     renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
     const dayMap=new Map(days.map(d=>[d.id,d]));
     const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
     $('raceCount').textContent=String(races.length);
-    $('lapCount').textContent=String(races.reduce((n,x)=>n+(Number(x.laps)||0),0));
+    const lapLabelsRecorded=lapRecords.filter(x=>/^\\d+$/.test(String(x.lap_number_as_shown||'').trim())).length;
+    $('lapCount').textContent=String(lapLabelsRecorded||races.reduce((n,x)=>n+(Number(x.laps)||0),0));
     $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
 }
