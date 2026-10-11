@@ -106,8 +106,9 @@ async function init(){
     else $('status').textContent='Showing records currently available to your approved account.';
     const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
     if(profile.role==='captain')loadRaceEditor(races);
-    renderLapGroups(lapRecords);
-    const lapCounts=new Map();lapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
+    const visibleLapRecords=lapRecords.filter(x=>!isBrokenCaseyEvent(x.event));
+    renderLapGroups(visibleLapRecords);
+    const lapCounts=new Map();visibleLapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
     const eventRows=new Map();races.filter(x=>!isBrokenCaseyEvent(x.event)).forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
     visibleLapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
     const displayRaces=[...eventRows.values()].sort((a,b)=>String(b.sortDate).localeCompare(String(a.sortDate))||a.event.localeCompare(b.event));
