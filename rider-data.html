@@ -49,6 +49,7 @@ main{padding:34px 0 60px}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(42p
 const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 const $=id=>document.getElementById(id);
 function eventLabel(value){return typeof value==='string'&&/^casey fields(?:\s+round)?\s+2$/i.test(value.trim())?'Casey Fields 1':value}
+ function isBrokenCaseyEvent(value){return /^casey fields 1$/i.test(String(eventLabel(value)||'').trim())}
 let editableRaces=[];
 function fillRaceEditor(){const x=editableRaces.find(x=>String(x.id)===$('editRacePick').value);$('editRaceEvent').value=x?.event||'';$('editRaceDate').value=x?.race_date||'';$('editRaceResult').value=x?.result||'';$('editRaceLaps').value=x?.laps??''}
 function loadRaceEditor(rows){editableRaces=rows||[];const sel=$('editRacePick');sel.textContent='';if(!editableRaces.length){const o=document.createElement('option');o.value='';o.textContent='No race records available';sel.appendChild(o);return}editableRaces.forEach(x=>{const o=document.createElement('option');o.value=String(x.id);o.textContent='#'+x.id+' · '+(x.event||'Unnamed event')+(x.race_date?' · '+x.race_date:'');sel.appendChild(o)});fillRaceEditor()}
@@ -107,11 +108,11 @@ async function init(){
     if(profile.role==='captain')loadRaceEditor(races);
     renderLapGroups(lapRecords);
     const lapCounts=new Map();lapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
-    const eventRows=new Map();races.filter(x=>!/^casey fields(?:\s+round)?\s+1$/i.test((x.event||'').trim())).forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
-    lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
+    const eventRows=new Map();races.filter(x=>!isBrokenCaseyEvent(x.event)).forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
+    visibleLapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
     const displayRaces=[...eventRows.values()].sort((a,b)=>String(b.sortDate).localeCompare(String(a.sortDate))||a.event.localeCompare(b.event));
     renderRows('raceRows',displayRaces,['event','date','result','laps'],'No race records have been recorded.');
-    renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
+    renderRows('riderRows',riders.filter(x=>!isBrokenCaseyEvent(x.event)),['rider_name','event','laps'],'No rider statistics have been recorded.');
     const dayMap=new Map(days.map(d=>[d.id,d]));
     const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
