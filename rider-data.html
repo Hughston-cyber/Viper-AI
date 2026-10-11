@@ -91,7 +91,8 @@ async function init(){
     if(!data.session){$('gate').hidden=false;return}
     const {data:profile,error:profileError}=await sb.from('profiles').select('status,role').eq('id',data.session.user.id).single();
     if(profileError||!profile||profile.status!=='approved'){$('gate').hidden=false;return}
-    $('out').hidden=false;$('main').hidden=false;\n    $('captainRaceEditor').hidden=profile.role!=='captain';
+    $('out').hidden=false;$('main').hidden=false;
+    $('captainRaceEditor').hidden=profile.role!=='captain';
     const [racesResult,ridersResult,daysResult,rosterResult,lapsResult]=await Promise.all([
       sb.from('race_records').select('id,event,race_date,result,laps').order('race_date',{ascending:false}),
       sb.from('rider_stats').select('rider_name,event,laps').order('rider_name'),
@@ -102,7 +103,8 @@ async function init(){
     const errors=[racesResult,ridersResult,daysResult,rosterResult,lapsResult].filter(x=>x.error);
     if(errors.length){$('status').textContent='Some records could not be loaded. Check the database table permissions and schema, then reload.';console.error('Rider Data query errors:',errors.map(x=>x.error.message))}
     else $('status').textContent='Showing records currently available to your approved account.';
-    const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];\n    if(profile.role==='captain')loadRaceEditor(races);
+    const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
+    if(profile.role==='captain')loadRaceEditor(races);
     renderLapGroups(lapRecords);
     const lapCounts=new Map();lapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
     const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
