@@ -47,16 +47,17 @@ main{padding:34px 0 60px}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(42p
 'use strict';
 const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 const $=id=>document.getElementById(id);
+function eventLabel(value){return typeof value==='string'&&value.trim().toLowerCase()==='casey fields 2'?'Casey Fields 1':value}
 function cell(row,value){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);row.appendChild(td)}
-function renderRows(id,rows,keys,empty){const body=$(id);body.textContent='';if(!rows.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=keys.length;td.textContent=empty;tr.appendChild(td);body.appendChild(tr);return}rows.forEach(item=>{const tr=document.createElement('tr');keys.forEach(key=>cell(tr,item[key]));body.appendChild(tr)})}
+function renderRows(id,rows,keys,empty){const body=$(id);body.textContent='';if(!rows.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=keys.length;td.textContent=empty;tr.appendChild(td);body.appendChild(tr);return}rows.forEach(item=>{const tr=document.createElement('tr');keys.forEach(key=>cell(tr,key==='event'||key==='race_day'?eventLabel(item[key]):item[key]));body.appendChild(tr)})}
 function dateLabel(value){if(!value)return '—';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?value:d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
 function renderLapGroups(records){
   const body=$('lapRows');body.textContent='';
   if(!records.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='No individual lap records have been imported yet. Run the Casey Fields Round 2 SQL import from the repository first.';tr.appendChild(td);body.appendChild(tr);return}
   const groups=new Map();
   records.forEach((record,index)=>{
-    const key=[record.event||'Unknown event',record.rider_name||'Unknown rider'].join('::');
-    if(!groups.has(key))groups.set(key,{event:record.event||'Unknown event',rider:record.rider_name||'Unknown rider',records:[],firstIndex:index});
+    const key=[eventLabel(record.event)||'Unknown event',record.rider_name||'Unknown rider'].join('::');
+    if(!groups.has(key))groups.set(key,{event:eventLabel(record.event)||'Unknown event',rider:record.rider_name||'Unknown rider',records:[],firstIndex:index});
     groups.get(key).records.push(record);
   });
   [...groups.values()].sort((a,b)=>a.rider.localeCompare(b.rider)||a.event.localeCompare(b.event)).forEach((group,index)=>{
@@ -97,9 +98,9 @@ async function init(){
     else $('status').textContent='Showing records currently available to your approved account.';
     const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
     renderLapGroups(lapRecords);
-    const lapCounts=new Map();lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
-    const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:x.event,date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
-    lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:x.event,date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
+    const lapCounts=new Map();lapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
+    const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
+    lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
     const displayRaces=[...eventRows.values()].sort((a,b)=>String(b.sortDate).localeCompare(String(a.sortDate))||a.event.localeCompare(b.event));
     renderRows('raceRows',displayRaces,['event','date','result','laps'],'No race records have been recorded.');
     renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
