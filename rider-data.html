@@ -97,18 +97,19 @@ async function init(){
     else $('status').textContent='Showing records currently available to your approved account.';
     const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
     renderLapGroups(lapRecords);
-    renderRows('raceRows',races.map(x=>({event:x.event,date:dateLabel(x.race_date),result:x.result,laps:x.laps})),['event','date','result','laps'],'No race records have been recorded.');
+    const detailedEvents=new Set(lapRecords.map(x=>(x.event||'').trim().toLowerCase()).filter(Boolean));
+    const lapCounts=new Map();lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
+    const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:x.event,date:dateLabel(x.race_date),result:x.result,laps:detailedEvents.has(k)?(lapCounts.get(k)||0):(Number(x.laps)||0),sortDate:x.race_date||''})});
+    lapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:x.event,date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
+    const displayRaces=[...eventRows.values()].sort((a,b)=>String(b.sortDate).localeCompare(String(a.sortDate))||a.event.localeCompare(b.event));
+    renderRows('raceRows',displayRaces,['event','date','result','laps'],'No race records have been recorded.');
     renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
     const dayMap=new Map(days.map(d=>[d.id,d]));
     const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
-    $('raceCount').textContent=String(new Set(races.map(x=>(x.event||'').trim().toLowerCase()).filter(Boolean)).size);
-    const detailedEvents=new Set(lapRecords.map(x=>(x.event||'').trim().toLowerCase()).filter(Boolean));
-    const summaryOnlyLaps=races.reduce((total,race)=>{
-      const eventKey=(race.event||'').trim().toLowerCase();
-      return total+(eventKey&&!detailedEvents.has(eventKey)?(Number(race.laps)||0):0);
-    },0);
-    const numberedLapCount=lapRecords.filter(x=>/^\d+$/.test(String(x.lap_number_as_shown||'').trim())).length;
+    $('raceCount').textContent=String(displayRaces.length);
+    const summaryOnlyLaps=races.reduce((total,race)=>{const eventKey=(race.event||'').trim().toLowerCase();return total+(eventKey&&!detailedEvents.has(eventKey)?(Number(race.laps)||0):0)},0);
+    const numberedLapCount=[...lapCounts.values()].reduce((total,count)=>total+count,0);
     $('lapCount').textContent=String(numberedLapCount+summaryOnlyLaps);
     $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
