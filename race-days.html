@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Race days — Viper AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--viper:#0e3b2e;--moss:#1f6b4f;--paper:#eef2ef;--ink:#0b1512;--mute:#52635b;--line:#c9d3cd;--sig:#f5c400;--bad:#b3261e;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:6px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.bar{background:var(--viper);color:#fff;border-bottom:3px solid var(--sig)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:var(--disp);font-weight:700;font-size:26px;color:#fff;text-decoration:none}.brand span{font-weight:600;font-size:17px;opacity:.7;margin-left:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;padding:10px 18px;border-radius:var(--r);font:inherit;font-weight:700;border:2px solid var(--sig);background:var(--sig);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn.sm{padding:5px 11px;font-size:13px}.btn.line{background:transparent;color:inherit;border-color:currentColor}.btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.day:focus-visible{outline:3px solid var(--sig);outline-offset:2px}
+h1,h2{font-family:var(--disp);margin:0}h1{font-size:46px;line-height:1}
+.page{padding:34px 0 0}.sub{color:var(--mute);margin:6px 0 24px}.dim{color:var(--mute)}
+.layout{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.panel h3{margin:0;padding:11px 16px;background:var(--ink);color:#fff;font-family:var(--disp);font-size:21px;letter-spacing:.03em}
+.in{padding:16px}
+.day{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid var(--line);padding:12px 16px;font:inherit;cursor:pointer;border-left:5px solid transparent}
+.day b{display:block}.day span{font-size:13px;color:var(--mute)}.day.on{border-left-color:var(--sig);background:#f6f8f6}
+label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border-radius:var(--r);border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit}
+textarea{min-height:90px;resize:vertical}
+table{width:100%;border-collapse:collapse;font-size:14.5px}th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mute);background:#f6f8f6}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin:10px 0 0}.facts b{display:block;font-family:var(--disp);font-size:24px;line-height:1.1}.facts span{font-size:13px;color:var(--mute)}
+.info{white-space:pre-wrap;margin:14px 0 0}
+.file{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.msg{font-size:14px;min-height:20px;color:var(--moss);font-weight:600;margin:6px 0}.msg.err{color:var(--bad)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:520px;margin-top:40px}
+[hidden]{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <a class="brand" href="index.html">VIPER AI<span>Race days</span></a>
+  <div class="row"><a class="btn line sm" href="index.html">Dashboard</a><button id="out" class="btn line sm" hidden>Sign out</button></div>
+</div></header>
+
+<div id="gate" hidden class="wrap"><div class="card"><h2>Members only</h2>
+  <p class="dim">Sign in with an approved Team Venom account to see race day information and rosters.</p>
+  <a class="btn" href="index.html">Go to sign in</a></div></div>
+
+<main id="main" hidden class="wrap page">
+  <h1>Race days</h1>
+  <p class="sub">Race day information, stint rosters and files for each event.</p>
+  <div class="layout">
+    <aside>
+      <div class="panel"><h3>Events</h3><div id="list"><div class="in dim">No race days yet.</div></div></div>
+      <div class="panel" id="newForm" hidden><h3>New race day</h3><div class="in">
+        <label for="nt">Title</label><input id="nt" placeholder="Casey Fields (Race #4)">
+        <label for="nd">Date</label><input id="nd" type="date">
+        <label for="nv">Venue</label><input id="nv">
+        <label for="ns">Start time</label><input id="ns" placeholder="9:00 am">
+        <label for="ni">Race day information</label><textarea id="ni" placeholder="Arrival time, pit location, notes"></textarea>
+        <button class="btn sm" id="addDay" style="margin-top:12px">Create race day</button>
+      </div></div>
+    </aside>
+
+    <section id="detail" hidden>
+      <div class="panel"><div class="in">
+        <h2 id="dT" style="font-size:40px"></h2>
+        <div class="facts"><div><b id="dD">—</b><span>Date</span></div><div><b id="dV">—</b><span>Venue</span></div><div><b id="dS">—</b><span>Start</span></div></div>
+        <p class="info" id="dI"></p>
+      </div></div>
+
+      <div class="panel"><h3>Roster</h3>
+        <div style="overflow-x:auto"><table><thead><tr><th>Stint</th><th>Rider</th><th class="n">Minutes</th><th>Notes</th><th id="rAct"></th></tr></thead><tbody id="rb"></tbody></table></div>
+        <div class="in dim" id="rTot"></div>
+        <div class="in" id="rAdd" hidden style="border-top:1px solid var(--line)">
+          <label for="rp">Add stints, one per line: rider, minutes, notes</label>
+          <textarea id="rp" placeholder="Hugh, 45&#10;Tenny, 40, first stint"></textarea>
+          <button class="btn sm" id="addR" style="margin-top:10px">Add to roster</button>
+        </div>
+      </div>
+
+      <div class="panel"><h3>Files</h3><div class="in"><div id="fl" class="dim">No files yet.</div>
+        <div id="fAdd" hidden style="margin-top:14px"><label for="fi">Upload a file (PDF, spreadsheet, image; up to 10 MB)</label>
+          <input id="fi" type="file"><button class="btn sm" id="addF" style="margin-top:10px">Upload file</button></div>
+      </div></div>
+
+      <div class="msg" id="msg" role="status"></div>
+      <button class="btn bad sm" id="delDay" hidden>Delete this race day</button>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+var sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+var $=function(i){return document.getElementById(i)};
+var cap=false,days=[],cur=null;
+function msg(t,err){$('msg').textContent=t||'';$('msg').className='msg'+(err?' err':'')}
+function el(tag,txt,cls){var e=document.createElement(tag);if(txt!=null)e.textContent=txt;if(cls)e.className=cls;return e}
+function fmt(d){return d?new Date(d+'T00:00:00').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'}):'\u2014'}
+
+async function init(){
+  var s=(await sb.auth.getSession()).data.session;
+  if(!s){$('gate').hidden=false;return}
+  var p=await sb.from('profiles').select('*').eq('id',s.user.id).single();
+  if(p.error||!p.data||p.data.status!=='approved'){$('gate').hidden=false;return}
+  cap=p.data.role==='captain';$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
+  list();
+}
+$('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
+
+async function list(keep){
+  var r=await sb.from('race_days').select('*').order('race_date',{ascending:false,nullsFirst:false});
+  if(r.error){return msg(r.error.message+' (has the race days SQL been run?)',1)}
+  days=r.data||[];var box=$('list');box.textContent='';
+  if(!days.length){box.appendChild(el('div','No race days yet.','in dim'));$('detail').hidden=true;return}
+  days.forEach(function(d){var b=el('button',null,'day'+(cur&&cur.id===d.id?' on':''));b.appendChild(el('b',d.title));b.appendChild(el('span',fmt(d.race_date)+(d.venue?' \u00b7 '+d.venue:'')));b.onclick=function(){pick(d.id)};box.appendChild(b)});
+  pick(keep||(cur&&days.some(function(d){return d.id===cur.id})?cur.id:days[0].id));
+}
+async function pick(id){
+  cur=days.find(function(d){return d.id===id});if(!cur)return;
+  document.querySelectorAll('.day').forEach(function(b,i){b.classList.toggle('on',days[i].id===id)});
+  $('detail').hidden=false;msg('');
+  $('dT').textContent=cur.title;$('dD').textContent=fmt(cur.race_date);$('dV').textContent=cur.venue||'\u2014';$('dS').textContent=cur.start_time||'\u2014';$('dI').textContent=cur.info||'';
+  $('rAct').textContent=cap?'Actions':'';$('rAdd').hidden=!cap;$('fAdd').hidden=!cap;$('delDay').hidden=!cap;
+  roster();files();
+}
+async function roster(){
+  var r=await sb.from('roster_entries').select('*').eq('race_day_id',cur.id).order('stint');
+  var rows=r.data||[],tb=$('rb'),tot=0;tb.textContent='';
+  if(!rows.length){var tr=el('tr');var c=el('td','No roster yet.','dim');c.colSpan=5;tr.appendChild(c);tb.appendChild(tr)}
+  rows.forEach(function(x){
+    tot+=x.minutes||0;var tr=el('tr');
+    tr.appendChild(el('td',x.stint));tr.appendChild(el('td',x.rider_name));tr.appendChild(el('td',x.minutes==null?'\u2014':x.minutes,'n'));tr.appendChild(el('td',x.notes||''));
+    var a=el('td');
+    if(cap){
+      var e=el('button','Edit','btn sm line');e.onclick=async function(){
+        var nr=prompt('Rider for stint '+x.stint+':',x.rider_name);if(nr===null)return;
+        var nm=prompt('Minutes:',x.minutes==null?'':x.minutes);if(nm===null)return;
+        var u=await sb.from('roster_entries').update({rider_name:nr.trim()||x.rider_name,minutes:nm.trim()?+nm:null}).eq('id',x.id);
+        if(u.error)msg(u.error.message,1);else roster()};
+      var d=el('button','Remove','btn sm bad');d.style.marginLeft='6px';d.onclick=async function(){
+        var u=await sb.from('roster_entries').delete().eq('id',x.id);if(u.error)msg(u.error.message,1);else roster()};
+      a.appendChild(e);a.appendChild(d)}
+    tr.appendChild(a);tb.appendChild(tr)});
+  $('rTot').textContent=rows.length?rows.length+' stints \u00b7 '+tot+' minutes in total':'';
+}
+async function files(){
+  var r=await sb.from('race_files').select('*').eq('race_day_id',cur.id).order('created_at');
+  var rows=r.data||[],box=$('fl');box.textContent='';box.className='';
+  if(!rows.length){box.className='dim';box.textContent='No files yet.'}
+  rows.forEach(function(f){
+    var d=el('div',null,'file');d.appendChild(el('span',f.file_name));var g=el('span',null,'row');
+    var o=el('button','Open','btn sm');o.onclick=async function(){
+      var w=window.open('','_blank');var u=await sb.storage.from('race-files').createSignedUrl(f.path,300);
+      if(u.error){if(w)w.close();msg(u.error.message,1)}else if(w){w.location=u.data.signedUrl}};
+    g.appendChild(o);
+    if(cap){var x=el('button','Delete','btn sm bad');x.onclick=async function(){
+      if(!confirm('Delete '+f.file_name+'?'))return;
+      await sb.storage.from('race-files').remove([f.path]);await sb.from('race_files').delete().eq('id',f.id);files()};g.appendChild(x)}
+    d.appendChild(g);box.appendChild(d)});
+}
+
+$('addDay').onclick=async function(){
+  var t=$('nt').value.trim();if(!t)return msg('Enter a title for the race day.',1);
+  var r=await sb.from('race_days').insert({title:t,race_date:$('nd').value||null,venue:$('nv').value||null,start_time:$('ns').value||null,info:$('ni').value||null}).select().single();
+  if(r.error)return msg(r.error.message,1);
+  ['nt','nd','nv','ns','ni'].forEach(function(i){$(i).value=''});cur=null;await list(r.data.id);msg('Race day created.');
+};
+$('addR').onclick=async function(){
+  var lines=$('rp').value.split('\n').map(function(l){return l.trim()}).filter(Boolean);if(!lines.length)return msg('Enter at least one stint.',1);
+  var m=await sb.from('roster_entries').select('stint').eq('race_day_id',cur.id).order('stint',{ascending:false}).limit(1);
+  var n=(m.data&&m.data[0]?m.data[0].stint:0),rows=lines.map(function(l){var p=l.split(',').map(function(x){return x.trim()});n++;
+    return{race_day_id:cur.id,stint:n,rider_name:p[0],minutes:p[1]&&!isNaN(p[1])?+p[1]:null,notes:p.slice(2).join(', ')||null}});
+  var r=await sb.from('roster_entries').insert(rows);
+  if(r.error)msg(r.error.message,1);else{$('rp').value='';msg(rows.length+' stints added.');roster()}
+};
+$('addF').onclick=async function(){
+  var f=$('fi').files[0];if(!f)return msg('Choose a file first.',1);
+  if(f.size>10485760)return msg('That file is over 10 MB.',1);
+  $('addF').disabled=true;msg('Uploading\u2026');
+  var path=cur.id+'/'+Date.now()+'-'+f.name.replace(/[^\w.\-]/g,'_');
+  var u=await sb.storage.from('race-files').upload(path,f);
+  if(u.error){$('addF').disabled=false;return msg(u.error.message,1)}
+  var r=await sb.from('race_files').insert({race_day_id:cur.id,file_name:f.name,path:path});
+  $('addF').disabled=false;
+  if(r.error)msg(r.error.message,1);else{$('fi').value='';msg('File uploaded.');files()}
+};
+$('delDay').onclick=async function(){
+  if(!confirm('Delete "'+cur.title+'" with its roster and files?'))return;
+  var fs=await sb.from('race_files').select('path').eq('race_day_id',cur.id);
+  if(fs.data&&fs.data.length)await sb.storage.from('race-files').remove(fs.data.map(function(x){return x.path}));
+  var r=await sb.from('race_days').delete().eq('id',cur.id);
+  if(r.error)msg(r.error.message,1);else{cur=null;list()}
+};
+init();
+})();
+</script>
+</body>
+</html>
