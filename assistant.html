@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1512">
+<title>Viper AI Assistant — Team Venom HPR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#0e3b2e;--moss:#1f6b4f;--paper:#eef2ef;--ink:#0b1512;--mute:#52635b;--line:#c9d3cd;--sig:#f5c400;--bad:#b3261e;--white:#fff;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:7px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header{background:var(--green);color:white;border-bottom:3px solid var(--sig)}header .wrap{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font:700 25px var(--disp);letter-spacing:.02em}.brand small{font:600 14px system-ui;opacity:.72;margin-left:10px}.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.btn{border:2px solid var(--sig);background:var(--sig);color:var(--ink);border-radius:var(--r);padding:9px 14px;font:700 14px system-ui;cursor:pointer;text-decoration:none}.btn.outline{background:transparent;color:white;border-color:#b4c8bc}.btn:disabled{opacity:.55;cursor:wait}
+main{padding:35px 0 55px}.eyebrow{color:var(--moss);font-size:12px;letter-spacing:.15em;font-weight:800;text-transform:uppercase}h1{font:700 clamp(38px,7vw,64px)/.98 var(--disp);margin:7px 0 12px}h1 span{color:var(--moss)}.intro{color:var(--mute);max-width:660px;margin:0 0 24px}.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 8px 25px #0b15120a}.panelhead{padding:15px 18px;background:var(--green);color:white;display:flex;justify-content:space-between;align-items:center;gap:12px}.panelhead strong{font:700 23px var(--disp)}.status{font-size:12px;color:#d8e7de}.dot{display:inline-block;width:8px;height:8px;background:var(--sig);border-radius:50%;margin-right:6px}.messages{padding:20px;min-height:300px;max-height:52vh;overflow:auto;display:flex;flex-direction:column;gap:14px}.bubble{max-width:86%;padding:13px 15px;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.bot{align-self:flex-start;background:#eef3ef;border:1px solid #dbe4dd}.bubble.user{align-self:flex-end;background:var(--green);color:#fff}.bubble .who{font-size:11px;letter-spacing:.08em;font-weight:800;opacity:.7;margin-bottom:4px;text-transform:uppercase}.welcome{color:var(--mute)}.suggestions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.suggestions button{border:1px solid var(--line);border-radius:99px;padding:7px 11px;background:white;color:var(--green);font:600 13px system-ui;cursor:pointer}.suggestions button:hover{border-color:var(--moss);background:#f4f8f4}.composer{border-top:1px solid var(--line);padding:14px;display:flex;gap:10px;align-items:flex-end}.composer textarea{flex:1;min-width:0;min-height:52px;max-height:140px;resize:vertical;border:1px solid var(--line);border-radius:var(--r);padding:12px;font:inherit;color:var(--ink);background:#fff}.composer textarea:focus{outline:2px solid #1f6b4f55;border-color:var(--moss)}.notice{padding:12px 15px;background:#fff8d8;border:1px solid #ebd76e;border-radius:var(--r);margin:0 0 16px;font-size:13px;color:#544700}.error{color:var(--bad);font-size:13px;margin:0 18px 14px;min-height:18px}.small{font-size:12px;color:var(--mute);margin-top:13px}.locked{background:white;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:560px}.locked h2{font:700 28px var(--disp);margin:0 0 6px}
+@media(max-width:600px){.brand small{display:block;margin:0}.messages{padding:14px;min-height:280px}.bubble{max-width:96%}.composer{padding:10px;gap:7px}.composer .btn{padding:10px}.panelhead{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">VIPER AI <small>Team Venom HPR</small></div><nav class="nav"><a class="btn outline" href="index.html">← Dashboard</a><button class="btn outline" id="signout" hidden>Sign out</button></nav></div></header>
+<main class="wrap">
+<div class="eyebrow">Team intelligence · General knowledge</div>
+<h1>Ask <span>Viper AI.</span></h1>
+<p class="intro">Ask about Team Venom race results and team information, or ask a general question. Viper AI should be honest when it cannot verify an answer.</p>
+<div id="access" class="locked"><h2>Checking your access…</h2><p class="welcome">Please wait while we verify your Viper AI account.</p></div>
+<section id="chat" class="panel" hidden>
+<div class="panelhead"><strong>Viper AI Assistant</strong><span class="status"><span class="dot"></span>Team assistant</span></div>
+<div id="messages" class="messages" aria-live="polite">
+<div class="bubble bot"><div class="who">Viper AI</div><div>Hi! I can help with Team Venom information and general questions. What would you like to know?</div><div class="suggestions"><button data-q="How many laps did Team Venom complete at Sandown?">Sandown lap count</button><button data-q="Summarise our recorded race results.">Race results</button><button data-q="What should a rider bring to race day?">Race-day checklist</button></div></div>
+</div>
+<div id="error" class="error" role="status"></div>
+<form id="askform" class="composer"><textarea id="question" maxlength="1500" placeholder="Ask Viper AI a question…" aria-label="Your question" required></textarea><button id="send" class="btn" type="submit">Ask ↗</button></form>
+</section>
+<p class="small" id="footnote" hidden>Team answers should be based on approved records available to your account. Avoid entering passwords or other sensitive personal information.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const $=id=>document.getElementById(id);
+const API='https://viper-ai.hughfletcher.workers.dev/api/assistant';
+let session=null;
+function locked(title,detail,link){$('access').textContent='';const h=document.createElement('h2');h.textContent=title;const p=document.createElement('p');p.className='welcome';p.textContent=detail;$('access').append(h,p);if(link){const a=document.createElement('a');a.className='btn';a.href='index.html';a.textContent='Go to sign in';$('access').append(a)}}
+async function init(){const r=await sb.auth.getSession();session=r.data.session;if(!session){locked('Sign in required','Please sign in to Viper AI first. The assistant is available to approved team members.',true);return}
+const p=await sb.from('profiles').select('status,role').eq('id',session.user.id).single();
+if(p.error||!p.data||p.data.status!=='approved'){locked('Approved membership required','Your account must be approved before you can use the assistant.',true);return}
+$('access').hidden=true;$('chat').hidden=false;$('footnote').hidden=false;$('signout').hidden=false;
+}
+function addMessage(who,text){const d=document.createElement('div');d.className='bubble '+(who==='You'?'user':'bot');const label=document.createElement('div');label.className='who';label.textContent=who;const body=document.createElement('div');body.textContent=text;d.append(label,body);$('messages').append(d);$('messages').scrollTop=$('messages').scrollHeight;return d}
+async function ask(question){if(!session)return;const q=question.trim();if(!q)return;addMessage('You',q);$('question').value='';$('error').textContent='';$('send').disabled=true;const pending=addMessage('Viper AI','Thinking…');
+try{
+const refreshed=await sb.auth.getSession();session=refreshed.data.session;if(!session)throw new Error('Your session has expired. Please sign in again.');
+const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},body:JSON.stringify({question:q})});
+const data=await res.json().catch(()=>({}));
+if(!res.ok)throw new Error(data.error||'The assistant is not available yet. Please try again later.');
+pending.lastChild.textContent=data.answer||'I could not generate an answer. Please try again.';
+}catch(e){pending.lastChild.textContent='';pending.remove();$('error').textContent=e.message||'Could not reach Viper AI. Please try again.'}
+finally{$('send').disabled=false;$('question').focus();$('messages').scrollTop=$('messages').scrollHeight}
+}
+$('askform').addEventListener('submit',e=>{e.preventDefault();ask($('question').value)});
+document.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>ask(b.dataset.q)));
+$('signout').addEventListener('click',async()=>{await sb.auth.signOut();location.href='index.html'});
+sb.auth.onAuthStateChange((event,s)=>{session=s;if(event==='SIGNED_OUT')location.href='index.html'});
+init().catch(()=>locked('Could not check your account','Return to the dashboard and sign in again.',true));
+})();
+</script>
+</body></html>
