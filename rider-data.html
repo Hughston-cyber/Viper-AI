@@ -102,13 +102,14 @@ async function init(){
     const dayMap=new Map(days.map(d=>[d.id,d]));
     const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
-    $('raceCount').textContent=String(races.length);
+    $('raceCount').textContent=String(new Set(races.map(x=>(x.event||'').trim().toLowerCase()).filter(Boolean)).size);
     const detailedEvents=new Set(lapRecords.map(x=>(x.event||'').trim().toLowerCase()).filter(Boolean));
     const summaryOnlyLaps=races.reduce((total,race)=>{
       const eventKey=(race.event||'').trim().toLowerCase();
       return total+(eventKey&&!detailedEvents.has(eventKey)?(Number(race.laps)||0):0);
     },0);
-    $('lapCount').textContent=String(lapRecords.length+summaryOnlyLaps);
+    const numberedLapCount=lapRecords.filter(x=>/^\d+$/.test(String(x.lap_number_as_shown||'').trim())).length;
+    $('lapCount').textContent=String(numberedLapCount+summaryOnlyLaps);
     $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
 }
