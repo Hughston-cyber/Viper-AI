@@ -65,7 +65,7 @@ th{font-size:13px;color:var(--mute);font-weight:700;background:#f6f8f6}td:last-c
 <body>
 <header class="bar"><div class="wrap">
   <div class="brand">VIPER AI<span>Team Venom HPR</span></div>
-  <div class="row"><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></div>
+  <div class="row"><a id="navRace" href="race-days.html" class="btn line sm" hidden>Race days</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></div>
 </div></header>
 
 <main>
@@ -178,11 +178,11 @@ $('go').onclick=async function(){
 $('out').onclick=async function(){await sb.auth.signOut()};
 
 async function load(session){
-  if(!session){me=null;$('out').hidden=true;$('who').textContent='';show('vAuth');return}
+  if(!session){me=null;$('navRace').hidden=true;$('out').hidden=true;$('who').textContent='';show('vAuth');return}
   $('out').hidden=false;
   var p=await sb.from('profiles').select('*').eq('id',session.user.id).single();
   if(p.error||!p.data){show('vPending');$('pTitle').textContent='Account setup incomplete';$('pText').textContent='We could not find your member profile. Contact the team captain.';return}
-  me=p.data;$('who').textContent=me.full_name||me.email;
+  me=p.data;$('who').textContent=me.full_name||me.email;$('navRace').hidden=me.status!=='approved';
   if(me.status==='approved'){show('vApp');dash()}
   else if(me.status==='declined'){show('vPending');$('pTitle').textContent='Request declined';$('pText').textContent='Your membership request was not approved. Contact the team captain if you think this is a mistake.'}
   else{show('vPending');$('pTitle').textContent='Waiting for captain approval';$('pText').textContent="Your account is registered. The team captain will review your request, and then you'll have access to the dashboard."}
