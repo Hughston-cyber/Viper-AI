@@ -103,8 +103,7 @@ async function init(){
     const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
     $('raceCount').textContent=String(races.length);
-    const lapLabelsRecorded=lapRecords.filter(x=>/^\d+$/.test(String(x.lap_number_as_shown||'').trim())).length;
-    $('lapCount').textContent=String(lapLabelsRecorded||races.reduce((n,x)=>n+(Number(x.laps)||0),0));
+    $('lapCount').textContent=String(lapRecords.length);
     $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
 }
