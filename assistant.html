@@ -38,7 +38,7 @@ main{padding:35px 0 55px}.eyebrow{color:var(--moss);font-size:12px;letter-spacin
 'use strict';
 const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 const $=id=>document.getElementById(id);
-const API='https://viper-ai.hughfletcher.workers.dev/api/assistant';
+const API='https://viper-ai-assistant.hughfletcher.workers.dev/api/assistant';
 let session=null;
 function locked(title,detail,link){$('access').textContent='';const h=document.createElement('h2');h.textContent=title;const p=document.createElement('p');p.className='welcome';p.textContent=detail;$('access').append(h,p);if(link){const a=document.createElement('a');a.className='btn';a.href='index.html';a.textContent='Go to sign in';$('access').append(a)}}
 async function init(){const r=await sb.auth.getSession();session=r.data.session;if(!session){locked('Sign in required','Please sign in to Viper AI first. The assistant is available to approved team members.',true);return}
