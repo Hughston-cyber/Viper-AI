@@ -36,6 +36,7 @@ main{padding:34px 0 60px}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(42p
 <section class="panel"><h2>Race results</h2><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading…</td></tr></tbody></table></div></section>
 <section class="panel"><h2>Rider statistics</h2><div class="scroll"><table><thead><tr><th>Rider</th><th>Event</th><th>Laps</th></tr></thead><tbody id="riderRows"><tr><td colspan="3">Loading…</td></tr></tbody></table></div></section>
 </div>
+<section class="panel"><h2>Recorded lap times</h2><div class="in"><p class="dim">Individual lap times, pit annotations and incident notes imported into the lap records table. Source values are preserved as provided.</p><div class="scroll"><table><thead><tr><th>Event</th><th>Rider</th><th>Stint</th><th>Lap</th><th>Time as recorded</th><th>Incident / notes</th></tr></thead><tbody id="lapRows"><tr><td colspan="6">Loading…</td></tr></tbody></table></div></div></section>
 <section class="panel"><h2>Race roster assignments</h2><div class="in"><p class="dim">These are roster assignments recorded for race days. An assigned stint does not confirm that a rider attended.</p><div class="scroll"><table><thead><tr><th>Race day</th><th>Date</th><th>Rider</th><th>Stint</th><th>Minutes</th></tr></thead><tbody id="rosterRows"><tr><td colspan="5">Loading…</td></tr></tbody></table></div></div></section>
 <section class="panel"><h2>Attendance records</h2><div class="in"><div class="notice"><strong>Attendance tracking isn't configured in the schema visible in this repository.</strong> The current database-backed pages expose race records, rider statistics and planned roster entries, but no dedicated attendance table. To avoid misleading information, this page will not treat a roster assignment as proof of attendance.</div></div></section>
 </main>
@@ -57,16 +58,18 @@ async function init(){
     const {data:profile,error:profileError}=await sb.from('profiles').select('status,role').eq('id',data.session.user.id).single();
     if(profileError||!profile||profile.status!=='approved'){$('gate').hidden=false;return}
     $('out').hidden=false;$('main').hidden=false;
-    const [racesResult,ridersResult,daysResult,rosterResult]=await Promise.all([
+    const [racesResult,ridersResult,daysResult,rosterResult,lapsResult]=await Promise.all([
       sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:false}),
       sb.from('rider_stats').select('rider_name,event,laps').order('rider_name'),
       sb.from('race_days').select('id,title,race_date').order('race_date',{ascending:false,nullsFirst:false}),
-      sb.from('roster_entries').select('race_day_id,rider_name,stint,minutes').order('stint')
+      sb.from('roster_entries').select('race_day_id,rider_name,stint,minutes').order('stint'),
+      sb.from('lap_records').select('event,rider_name,stint,lap_number_as_shown,lap_time_as_shown,incident,notes').order('event').order('rider_name').order('stint').order('lap_number',{ascending:false,nullsFirst:true})
     ]);
-    const errors=[racesResult,ridersResult,daysResult,rosterResult].filter(x=>x.error);
+    const errors=[racesResult,ridersResult,daysResult,rosterResult,lapsResult].filter(x=>x.error);
     if(errors.length){$('status').textContent='Some records could not be loaded. Check the database table permissions and schema, then reload.';console.error('Rider Data query errors:',errors.map(x=>x.error.message))}
     else $('status').textContent='Showing records currently available to your approved account.';
-    const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[];
+    const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
+    renderRows('lapRows',lapRecords.map(x=>({event:x.event,rider_name:x.rider_name,stint:x.stint,lap_number_as_shown:x.lap_number_as_shown,lap_time_as_shown:x.lap_time_as_shown,incident:[x.incident,x.notes].filter(Boolean).join(' — ')})),['event','rider_name','stint','lap_number_as_shown','lap_time_as_shown','incident'],'No individual lap records have been imported yet. Run the Casey Fields Round 2 SQL import from the repository first.');
     renderRows('raceRows',races.map(x=>({event:x.event,date:dateLabel(x.race_date),result:x.result,laps:x.laps})),['event','date','result','laps'],'No race records have been recorded.');
     renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
     const dayMap=new Map(days.map(d=>[d.id,d]));
