@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viper AI — Team Venom HPR</title>
+<style>
+:root{--bg:#f4f7f4;--panel:#fff;--ink:#0d1a12;--mute:#53645a;--line:#d6e0d8;--acc:#1f9d3a;--acc2:#0b5d22;--on:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070d09;--panel:#0f1812;--ink:#e8f3ea;--mute:#8aa092;--line:#1e2e23;--acc:#3ddc5f;--acc2:#1f9d3a;--on:#04120a}}
+:root[data-theme="dark"]{--bg:#070d09;--panel:#0f1812;--ink:#e8f3ea;--mute:#8aa092;--line:#1e2e23;--acc:#3ddc5f;--acc2:#1f9d3a;--on:#04120a}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-weight:800;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+.logo i{width:28px;height:28px;border-radius:8px;background:var(--acc);display:grid;place-items:center;color:var(--on);font-style:normal;font-size:16px}
+.logo small{color:var(--mute);font-weight:500;letter-spacing:0}
+.btn{display:inline-block;padding:11px 20px;border-radius:10px;font-weight:700;border:1px solid var(--acc);background:var(--acc);color:var(--on);cursor:pointer;font:inherit;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.hero{padding:56px 0 40px;position:relative}
+.hero:before{content:"";position:absolute;inset:0 -20px auto;height:100%;background:radial-gradient(600px 260px at 20% 0,color-mix(in srgb,var(--acc) 22%,transparent),transparent);pointer-events:none}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);border:1px solid var(--line);padding:5px 12px;border-radius:99px;background:var(--panel)}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:18px 0 14px;letter-spacing:-.02em;position:relative}
+h1 span{color:var(--acc)}
+.lead{max-width:640px;color:var(--mute);font-size:18px;position:relative}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;position:relative}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:34px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat b{display:block;font-size:22px;color:var(--acc)}
+.stat span{font-size:13px;color:var(--mute)}
+h2{font-size:28px;margin:48px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.card .ic{font-size:22px;margin-bottom:8px}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--mute);font-size:15px}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative}
+.step:before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--acc);color:var(--on);font-weight:800;margin-bottom:10px}
+.step h3{margin:0 0 4px;font-size:16px}.step p{margin:0;color:var(--mute);font-size:14px}
+.portal{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tabs button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--mute);font:inherit;font-weight:600;cursor:pointer}
+.tabs button.on{background:var(--acc);color:var(--on);border-color:var(--acc)}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.note{font-size:13px;color:var(--mute);margin-top:12px}
+.msg{margin-top:12px;font-size:14px;color:var(--acc);min-height:20px}
+.table{width:100%;border-collapse:collapse;font-size:14px}
+.table th,.table td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+.table th{color:var(--mute);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.scroll{overflow-x:auto}
+.dim{color:var(--mute)}
+.pill{font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute)}
+footer{margin:60px 0 30px;padding-top:22px;border-top:1px solid var(--line);color:var(--mute);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="logo" href="#top"><i>🐍</i>VIPER AI <small>Team Venom HPR</small></a>
+  <a class="btn ghost" href="#portal">Member sign in</a>
+</nav>
+
+<header class="hero" id="top">
+  <span class="tag">Team Venom · Human Powered Racing</span>
+  <h1>Team Venom's <span>digital information hub.</span></h1>
+  <p class="lead">Racing information, rider statistics and team resources, brought together in one central place, so riders and management can review performance and stay informed all season.</p>
+  <div class="cta"><a class="btn" href="#portal">Sign in</a><a class="btn ghost" href="#features">See what's inside</a></div>
+</header>
+
+<section class="stats">
+  <div class="stat"><b>3 circuits</b><span>Calder · Casey Fields · Sandown</span></div>
+  <div class="stat"><b>Members only</b><span>Private team dashboard</span></div>
+  <div class="stat"><b>Invite code</b><span>Registration by invitation</span></div>
+  <div class="stat"><b>Captain approved</b><span>Every new member reviewed</span></div>
+</section>
+
+<section id="features">
+  <h2>Key features</h2>
+  <p class="sub">A foundation for Team Venom's resources, built to grow with the team.</p>
+  <div class="grid">
+    <div class="card"><div class="ic">📊</div><h3>Rider Statistics</h3><p>A central place to view rider performance and team racing records.</p></div>
+    <div class="card"><div class="ic">🏁</div><h3>Race Records</h3><p>Results and lap counts from events, including Calder, Casey Fields and Sandown.</p></div>
+    <div class="card"><div class="ic">🔐</div><h3>Member Accounts</h3><p>Secure sign-in for authorised team members.</p></div>
+    <div class="card"><div class="ic">✉️</div><h3>Invitation-Based Registration</h3><p>New members register using an invitation code.</p></div>
+    <div class="card"><div class="ic">✅</div><h3>Captain Approval</h3><p>The team captain reviews and approves membership requests.</p></div>
+    <div class="card"><div class="ic">🗂️</div><h3>Team Information Hub</h3><p>A foundation for bringing important Team Venom resources together as the platform develops.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>How joining works</h2>
+  <p class="sub">The public homepage introduces the platform. Everything else is members-only.</p>
+  <div class="steps">
+    <div class="step"><h3>Get an invite code</h3><p>A current team member shares a code with you.</p></div>
+    <div class="step"><h3>Register</h3><p>Create your account using the invitation code.</p></div>
+    <div class="step"><h3>Captain approves</h3><p>The captain reviews your membership request.</p></div>
+    <div class="step"><h3>Access the dashboard</h3><p>View stats, race records and team information.</p></div>
+  </div>
+</section>
+
+<section id="portal">
+  <h2>Member portal</h2>
+  <p class="sub">Sign in or request access. Preview of the members' dashboard on the right.</p>
+  <div class="portal">
+    <div class="card">
+      <div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div>
+      <form id="f" onsubmit="return false">
+        <div id="regOnly" hidden>
+          <label for="nm">Full name</label><input id="nm" autocomplete="name">
+          <label for="code">Invitation code</label><input id="code" autocomplete="off">
+        </div>
+        <label for="em">Email</label><input id="em" type="email" autocomplete="email">
+        <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password">
+        <button class="btn" id="go" style="width:100%;margin-top:16px">Sign in</button>
+        <div class="msg" id="msg"></div>
+      </form>
+      <p class="note">New registrations are held until the team captain approves them.</p>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 style="margin:0">Team dashboard</h3><span class="pill">Preview</span>
+      </div>
+      <div class="scroll">
+      <table class="table">
+        <thead><tr><th>Event</th><th>Result</th><th>Laps</th></tr></thead>
+        <tbody>
+          <tr><td>Calder</td><td class="dim">—</td><td class="dim">—</td></tr>
+          <tr><td>Casey Fields</td><td class="dim">—</td><td class="dim">—</td></tr>
+          <tr><td>Sandown</td><td class="dim">—</td><td class="dim">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">Race records and rider statistics appear here once team data is added.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Our goal</h2>
+  <p class="lead" style="color:var(--ink)">Viper AI is being developed to help Team Venom operate more efficiently, make team information easier to access, and spend less time on administration and more time focusing on the racing, the trikes, and the team.</p>
+</section>
+
+<footer><span><b>Viper AI</b> — Built for Team Venom. Focused on performance.</span><span>Team Venom HPR</span></footer>
+</div>
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.tabs button'),reg=document.getElementById('regOnly'),go=document.getElementById('go'),msg=document.getElementById('msg'),mode='in';
+  tabs.forEach(function(b){b.addEventListener('click',function(){
+    mode=b.dataset.t;tabs.forEach(function(x){x.classList.toggle('on',x===b)});
+    reg.hidden=mode!=='reg';go.textContent=mode==='reg'?'Request access':'Sign in';msg.textContent='';
+  })});
+  go.addEventListener('click',function(){
+    msg.textContent=mode==='reg'?'Account system not connected yet. Your request has not been sent.':'Account system not connected yet.';
+  });
+})();
+</script>
+</body>
+</html>
