@@ -480,13 +480,10 @@ async function dash(){
   sb.from('lap_records').select('event,lap_number_as_shown')
  ]);
  if(a.error||b.error||l.error){console.error('Viper dashboard data error',a.error,b.error,l.error);msg('lmsg','Could not refresh dashboard data. Reload the page or check database access.',1);return}
- const isPlaceholderCasey=(value)=>/^casey fields 1$/i.test(String(value||'').trim());
- const ar=(a.data||[]).filter(x=>!isPlaceholderCasey(x.event)&&!isHiddenSandownRound3(x.event)),br=(b.data||[]).filter(x=>!isPlaceholderCasey(x.event)),lr=(l.data||[]).filter(x=>!isPlaceholderCasey(x.event));
+ const ar=a.data||[],br=(b.data||[]),lr=(l.data||[]);
  const lapCounts=new Map();
  lr.forEach(x=>{const k=eventKey(x.event);if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
- const eventRows=new Map();
- ar.forEach(x=>{const k=eventKey(x.event);if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),race_date:x.race_date,result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0)})});
- const displayRaces=[...eventRows.values()].sort((x,y)=>String(y.race_date||'').localeCompare(String(x.race_date||''))||String(x.event).localeCompare(String(y.event)));
+ const displayRaces=ar.map(x=>{const k=eventKey(x.event);return{event:eventLabel(x.event),race_date:x.race_date,result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0)}}).sort((x,y)=>String(y.race_date||'').localeCompare(String(x.race_date||''))||String(x.event).localeCompare(String(y.event)));
  fill($('rr'),displayRaces,['event','race_date','result','laps']);
  const riderTotals=new Map();
  br.forEach(x=>{const name=String(x.rider_name||'').trim();if(!name||/^ross$/i.test(name))return;const key=name.toLowerCase();const current=riderTotals.get(key)||{rider_name:name,laps:0};current.laps+=Number(x.laps)||0;riderTotals.set(key,current)});
