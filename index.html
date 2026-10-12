@@ -492,8 +492,22 @@ html body>header.bar .site-nav>.lead-menu:not([open])>.lead-menu-pop{display:non
 html body>header.bar .site-nav>.lead-menu .lead-menu-pop a{display:flex!important;align-items:center!important;width:100%!important;min-height:38px!important;padding:9px 10px!important;box-sizing:border-box!important;text-decoration:none!important}
 html body>header.bar .site-nav>#navCaptain{display:none!important}
 
+
+/* Rebuilt sidebar Leadership menu: explicit button + controlled submenu */
+html body>header.bar .site-nav>.lead-menu{display:block!important;position:relative!important;width:100%!important;min-width:0!important;z-index:10000!important}
+html body>header.bar .site-nav>.lead-menu[hidden]{display:none!important}
+html body>header.bar .site-nav #leadershipToggle{appearance:none!important;-webkit-appearance:none!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;width:100%!important;min-height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #536456!important;border-radius:7px!important;background:#142018!important;color:#edf4ee!important;font:inherit!important;font-size:13px!important;font-weight:800!important;text-align:left!important;cursor:pointer!important;box-sizing:border-box!important}
+html body>header.bar .site-nav #leadershipToggle:hover,html body>header.bar .site-nav #leadershipToggle[aria-expanded="true"]{border-color:var(--sig)!important;color:var(--sig)!important;background:#1a2a1e!important}
+html body>header.bar .site-nav #leadershipChevron{display:inline-block!important;transition:transform .18s ease!important}
+html body>header.bar .site-nav #leadershipToggle[aria-expanded="true"] #leadershipChevron{transform:rotate(180deg)!important}
+html body>header.bar .site-nav #leadershipSubmenu{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important;margin:7px 0 0!important;padding:7px!important;border:1px solid #35463a!important;border-radius:7px!important;background:#0d150f!important;box-sizing:border-box!important}
+html body>header.bar .site-nav #leadershipSubmenu[hidden]{display:none!important}
+html body>header.bar .site-nav #leadershipSubmenu a{display:flex!important;align-items:center!important;width:100%!important;min-height:38px!important;margin:0!important;padding:9px 10px 9px 14px!important;border:1px solid transparent!important;border-radius:5px!important;background:transparent!important;color:#dce7de!important;text-decoration:none!important;font-size:12px!important;font-weight:750!important;line-height:1.3!important;box-sizing:border-box!important;white-space:normal!important}
+html body>header.bar .site-nav #leadershipSubmenu a:hover,html body>header.bar .site-nav #leadershipSubmenu a[aria-current="page"]{border-color:#405344!important;background:#1b2a1f!important;color:var(--sig)!important}
+html body>header.bar .site-nav>#navCaptain{display:none!important}
+
 </style></head><body>
-<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Dashboard</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" aria-current="page" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><details id="leadershipMenu" class="lead-menu" hidden><summary>Leadership <span aria-hidden="true">▾</span></summary><div class="lead-menu-pop"><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></div></details><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header><main>
+<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Dashboard</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" aria-current="page" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span id="leadershipChevron" aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></div></div><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header><main>
 <section id="vAuth" class="hero"><div class="wrap"><div><div class="eyebrow">Team Venom · Race operations platform</div><h1>Race data.<br><span style="color:var(--sig)">Race ready.</span></h1><p class="lead">The Team Venom race operations hub. Race records, rider performance and event logistics — organised for the people behind every lap.</p></div><div class="auth"><h2>Team sign in</h2><div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div><div id="regOnly" hidden><label for="nm">Full name</label><input id="nm" autocomplete="name"><label for="code">Invitation code</label><input id="code" autocomplete="off"></div><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:100%;margin-top:18px">Sign in</button><div class="msg" id="amsg" role="status"></div><p class="note">New accounts need an invitation code and captain approval before you can see team data.</p></div></div></section>
 <section class="wrap trike-banner" aria-label="Team Venom trike"><figure class="hero-photo"><img src="./images/team-venom-trike.jpg" alt="Team Venom trike" fetchpriority="high"><figcaption><strong>TEAM VENOM</strong><span>HPR · RACE PERFORMANCE</span></figcaption></figure></section>
 <div id="vPending" hidden class="wrap"><div class="card"><h3 id="pTitle">Waiting for captain approval</h3><p id="pText" class="dim">Your account is registered. The team captain will review your request.</p><button id="refreshProfile" class="btn sm">Check approval status</button></div></div>
@@ -563,4 +577,17 @@ $('submitRace').onclick=()=>submit('race_record',{event:$('sEvent').value.trim()
 $('submitFile').onclick=async()=>{const f=$('sFile').files[0],day=$('sFileDay').value;if(!f||!day)return msg('lmsg','Choose a race day and file first.',1);if(f.size>10*1024*1024)return msg('lmsg','File must be 10 MB or smaller.',1);if(!me||!sessionUser)return;const safe=f.name.replace(/[^\w.\-]/g,'_');const path='pending/'+sessionUser.id+'/'+Date.now()+'-'+safe;msg('lmsg','Uploading file…');$('submitFile').disabled=true;try{const up=await sb.storage.from('race-files').upload(path,f);if(up.error)return msg('lmsg',up.error.message,1);const r=await sb.from('submissions').insert({category:'file',payload:{race_day_id:day,file_name:f.name,pending_path:path},submitted_by:sessionUser.id});if(r.error){await sb.storage.from('race-files').remove([path]);return msg('lmsg',r.error.message,1)}$('sFile').value='';msg('lmsg','File uploaded privately and submitted for Captain approval.');await loadMySubs()}finally{$('submitFile').disabled=false}};
 sb.auth.onAuthStateChange((event,session)=>{setTimeout(()=>load(session),0)});window.addEventListener('pageshow',event=>{if(event.persisted)loadCurrent()});loadCurrent();
 })();
-</script></body></html>
+</script>
+<script>
+(function(){
+  const menu=document.getElementById('leadershipMenu');
+  const toggle=document.getElementById('leadershipToggle');
+  const submenu=document.getElementById('leadershipSubmenu');
+  if(!menu||!toggle||!submenu)return;
+  const setOpen=(open)=>{submenu.hidden=!open;toggle.setAttribute('aria-expanded',String(open));};
+  setOpen(Boolean(submenu.querySelector('[aria-current="page"]')));
+  toggle.addEventListener('click',()=>setOpen(submenu.hidden));
+})();
+</script>
+
+</body></html>
