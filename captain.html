@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Captain Controls — VIPER Motorsport</title><link rel="icon" type="image/png" sizes="32x32" href="./favicon.png?v=2"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+:root{--viper:#0e3b2e;--moss:#1f6b4f;--paper:#eef2ef;--ink:#0b1512;--mute:#52635b;--line:#c9d3cd;--sig:#f5c400;--bad:#b3261e;--white:#fff;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:6px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}.bar{background:var(--viper);color:white;border-bottom:3px solid var(--sig)}.bar .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}.brand{font-family:var(--disp);font-weight:700;font-size:26px}.brand span{font-weight:600;font-size:17px;opacity:.7;margin-left:10px}.who{font-size:14px;opacity:.85}.btn{display:inline-block;padding:10px 16px;border-radius:var(--r);font:inherit;font-weight:700;border:2px solid var(--sig);background:var(--sig);color:var(--ink);cursor:pointer;text-decoration:none}.btn:hover{filter:brightness(.96)}.btn.sm{padding:5px 11px;font-size:13px}.btn.line{background:transparent;color:inherit;border-color:currentColor}.btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}button:disabled{opacity:.55;cursor:wait}.hero{background:var(--viper);color:white;padding:64px 0 72px;background-image:radial-gradient(circle at 50% 0,transparent 52%,rgba(255,255,255,.06) 54%,transparent 58%);background-size:34px 34px}.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(46px,8vw,92px);line-height:.95;margin:0 0 18px}p.lead{font-size:19px;max-width:520px;color:#cfe3d9}.auth{background:white;color:var(--ink);border-radius:var(--r);padding:26px;border-top:6px solid var(--sig)}.auth h2{font-size:28px;margin:0 0 14px}.tabs{display:flex;border-bottom:2px solid var(--line)}.tabs button{flex:1;padding:10px;background:none;border:0;border-bottom:3px solid transparent;font:inherit;font-weight:700;color:var(--mute);cursor:pointer}.tabs button.on{color:var(--viper);border-color:var(--viper)}label{display:block;font-size:14px;font-weight:600;margin:12px 0 5px}input,select,textarea{width:100%;padding:10px 12px;border-radius:var(--r);border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit}textarea{min-height:76px;resize:vertical}.msg{margin:10px 0;font-size:14px;min-height:20px;color:var(--moss);font-weight:600}.msg.err{color:var(--bad)}.note,.dim{font-size:13px;color:var(--mute)}.page{padding:36px 0 0}h2.h{font-size:38px;line-height:1;margin:0 0 8px}.sub{color:var(--mute);margin:0 0 22px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}.tile{background:var(--viper);color:white;border-radius:var(--r);padding:16px 20px;border-left:6px solid var(--sig)}.tile b{display:block;font-family:var(--disp);font-size:52px;line-height:1}.tile span{font-size:14px;color:#cfe3d9}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}.panel{background:white;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px}.panel h3{margin:0;padding:12px 16px;background:var(--ink);color:white;font-size:22px;letter-spacing:.03em}.in{padding:16px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}th{font-size:13px;color:var(--mute);background:#f6f8f6}td:last-child,th:last-child{text-align:right}.f{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f .full{grid-column:1/-1}.req{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.req .actions{display:flex;gap:6px;flex-wrap:wrap}.tag{display:inline-block;background:#e5efe8;color:var(--viper);padding:2px 8px;border-radius:3px;font-size:12px;font-weight:700}.card{background:white;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:560px;margin-top:36px}footer{margin-top:64px;background:var(--viper);color:#a9c4b8;padding:24px 0;font-size:14px}[hidden]{display:none!important}@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}.brand span{display:block;margin-left:0;font-size:14px}.bar .wrap{padding-top:8px;padding-bottom:8px}}
+
+/* VIPER Motorsport — performance-focused visual system */
+:root{--viper:#0a110e;--moss:#8fce63;--paper:#090e0c;--ink:#edf4ee;--mute:#9aaca0;--line:#28372e;--sig:#c8f169;--bad:#ff7168;--white:#f6faf7;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:13px;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{background:radial-gradient(ellipse at 78% -15%,#203b2a 0,transparent 38%),var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.005em}
+.wrap{max-width:1240px}
+.bar,header{position:sticky;top:0;z-index:30;background:rgba(8,15,11,.91);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #314531;box-shadow:0 8px 28px #0003}
+.bar .wrap,header .wrap{min-height:72px}
+.brand{letter-spacing:.055em;text-transform:uppercase}
+.brand span,.brand small{color:#c8f169;opacity:1;letter-spacing:.11em;text-transform:uppercase}
+.btn{border:1px solid var(--sig);border-radius:9px;background:var(--sig);color:#10170d;font-weight:800;box-shadow:0 0 0 0 #c8f16900;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 7px 22px #c8f1691c}
+.btn.line,.btn.outline{background:#ffffff08;color:var(--ink);border-color:#435748}
+.btn.line:hover,.btn.outline:hover{border-color:var(--sig);color:var(--sig)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+h1,h2,h3{letter-spacing:-.025em}
+h1{font-size:clamp(46px,7vw,78px);line-height:.94;letter-spacing:-.035em}
+h2.h{font-size:clamp(34px,4vw,44px)}
+.eyebrow{color:var(--sig);letter-spacing:.19em}
+.sub,.intro,.dim,.note,.small,.welcome{color:var(--mute)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(112deg,#0a110e 0%,#112319 60%,#1b3220 100%);border-bottom:1px solid #314531}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;background:repeating-linear-gradient(132deg,transparent 0 56px,#c8f16910 57px 58px,transparent 59px 112px);mask-image:linear-gradient(90deg,transparent,#000)}
+.hero .wrap{position:relative;z-index:1}
+.auth,.card,.locked,.panel,.tile{border-radius:var(--r);border:1px solid var(--line);box-shadow:0 14px 40px #0002}
+.auth,.card,.locked{background:#121a15;color:var(--ink)}
+.panel{background:#101813;border-color:#26372b;overflow:hidden}
+.panel h2,.panel h3,.panelhead{background:linear-gradient(100deg,#17241a,#111a14);color:#f3f8f3;border-bottom:1px solid #2d402f}
+.panel h2,.panel h3{padding:16px 19px;font-size:24px}
+.in{padding:20px}
+.tiles{gap:16px}
+.tile{position:relative;overflow:hidden;background:linear-gradient(125deg,#17251a,#0f1712);border:1px solid #304332;border-left:3px solid var(--sig);padding:21px 22px}
+.tile:after{content:"";position:absolute;right:-22px;top:-38px;width:110px;height:110px;border:1px solid #c8f16920;transform:rotate(35deg);pointer-events:none}
+.tile b{color:var(--sig);font-variant-numeric:tabular-nums}
+.tile span{color:#b1c1b4}
+input,select,textarea,.composer textarea{background:#0a100c!important;color:var(--ink)!important;border:1px solid #35483a!important;border-radius:9px!important}
+input::placeholder,textarea::placeholder{color:#738579}
+input:focus,select:focus,textarea:focus,.composer textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
+label{color:#dbe6dc}
+.tabs{border-color:var(--line)}
+.tabs button{color:var(--mute)}
+.tabs button.on{color:var(--sig);border-color:var(--sig)}
+table{color:var(--ink);font-variant-numeric:tabular-nums}
+th{background:#17221a;color:#a8b9aa;border-color:#2b3b2e}
+td{border-color:#26362a}
+tbody tr{transition:background .15s ease}
+tbody tr:hover td{background:#c8f1690a}
+.tag,.count-pill{background:#263a24;color:#d4f59d;border:1px solid #415d34}
+.day{background:#111913;color:var(--ink);border-color:#26362a}
+.day span{color:var(--mute)}
+.day.on,.day:hover{background:#1a281b;border-left-color:var(--sig)}
+.messages{background:#0b120e}
+.bubble.bot{background:#18231b;color:var(--ink);border-color:#2e4232}
+.bubble.user{background:#c8f169;color:#11170e;border-color:#c8f169}
+.suggestions button{background:#111a14;color:#d8e8d8;border-color:#344737}
+.suggestions button:hover{background:#1b2b1c;border-color:var(--sig);color:var(--sig)}
+.notice{background:#29250f;color:#f4e6a4;border-color:#6c5d25}
+.msg{color:#b8dc91}
+.msg.err,.error{color:var(--bad)}
+footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
+#status{padding:10px 13px;background:#101a13;border:1px solid #293a2c;border-radius:9px}
+:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+@media(max-width:820px){.bar .wrap,header .wrap{min-height:64px}.hero{padding:44px 0}.in{padding:15px}.panel h2,.panel h3{padding:14px 16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+/* VIPER Motorsport — analytics layout foundation */
+:root{--viper:#123d2b;--moss:#26734b;--paper:#f3f6f3;--ink:#17251d;--mute:#637469;--line:#d9e2db;--sig:#b9e36b;--bad:#b3261e;--white:#fff;--r:14px;color-scheme:light}
+body{background:#f3f6f3;color:var(--ink);letter-spacing:0}
+.wrap{max-width:1320px}
+.bar,header{background:rgba(255,255,255,.94);color:#173a29;border-bottom:1px solid #dce5de;box-shadow:0 5px 24px #163d2910}
+.brand{color:#143d2b}.brand span,.brand small{color:#34744d}
+.who{color:#53675a}
+.btn{background:#174c34;color:#fff;border-color:#174c34;border-radius:9px;box-shadow:none}
+.btn:hover{background:#226442;filter:none;box-shadow:0 5px 15px #174c341c}
+.btn.line,.btn.outline{background:#fff;color:#174c34;border-color:#c8d8cc}
+.btn.line:hover,.btn.outline:hover{background:#eff6ef;color:#174c34;border-color:#80a88a}
+.hero{background:linear-gradient(120deg,#123d2b 0%,#1b5a3b 70%,#2d7148 100%);color:#fff;border-bottom:0;padding:58px 0 62px}
+.hero:after{opacity:.16;background:repeating-linear-gradient(135deg,transparent 0 50px,#fff 51px 52px,transparent 53px 105px)}
+.hero .wrap{grid-template-columns:1.2fr .8fr;gap:56px}
+h1{font-size:clamp(48px,6.4vw,76px)}
+p.lead{color:#d9e9de}
+.auth,.card,.locked{background:#fff;color:#17251d;border:1px solid #dce5de;box-shadow:0 18px 55px #061d101c}
+.auth{border-top:5px solid var(--sig);border-radius:15px;padding:28px}
+.auth h2{color:#173d2b}
+.tabs{border-color:#dce5de}.tabs button{color:#718076}.tabs button.on{color:#174c34;border-color:#26734b}
+input,select,textarea,.composer textarea{background:#fff!important;color:#17251d!important;border:1px solid #cad8ce!important;border-radius:9px!important}
+input::placeholder,textarea::placeholder{color:#87958b}
+input:focus,select:focus,textarea:focus,.composer textarea:focus{outline:3px solid #26734b22!important;border-color:#26734b!important}
+label{color:#304c3b}
+.page{padding-top:42px}
+h2.h{color:#183d2b;font-size:clamp(34px,4vw,44px);margin-bottom:10px}
+.sub,.intro,.dim,.note,.small,.welcome{color:#637469}
+.tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0}
+.tile{background:#fff;color:#173d2b;border:1px solid #dce5de;border-left:4px solid #26734b;border-radius:14px;padding:23px 24px;box-shadow:0 7px 22px #183d2b08}
+.tile:after{border-color:#26734b18}
+.tile b{color:#174c34;font-size:50px}
+.tile span{color:#66796c}
+.grid2{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.panel{background:#fff;border:1px solid #dce5de;border-radius:14px;box-shadow:0 7px 24px #183d2b08}
+.panel h2,.panel h3,.panelhead{background:#f7faf7;color:#183d2b;border-bottom:1px solid #e1e9e3}
+.panel h3{padding:17px 20px;font-size:23px}
+.in{padding:20px}
+table{color:#21372a;font-size:14px}
+th{background:#f2f6f2;color:#637469;border-color:#e1e8e2;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+td{border-color:#e7ede8}
+tbody tr:hover td{background:#f5faf4}
+.tag,.count-pill{background:#e8f3e6;color:#225a36;border:1px solid #d0e5ca}
+#status{background:#f3f8f3;border-color:#dce5de}
+.msg{color:#26734b}
+footer{background:#123d2b;color:#c1d7c8;border-top:0;margin-top:70px}
+.analytics-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin:4px 0 24px}
+.chart-panel{background:#fff;border:1px solid #dce5de;border-radius:14px;padding:20px 22px;box-shadow:0 7px 24px #183d2b08;min-width:0}
+.chart-title{font-size:21px;font-weight:750;color:#183d2b;margin:0}
+.chart-caption{font-size:13px;color:#77867b;margin:4px 0 18px}
+.bar-chart{display:flex;flex-direction:column;gap:13px}
+.bar-row{display:grid;grid-template-columns:minmax(88px,1fr) minmax(70px,2fr) 34px;gap:12px;align-items:center;font-size:13px}
+.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#42584a}
+.bar-track{height:10px;background:#edf2ed;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#1c6240,#8cbd58);min-width:2px}
+.bar-value{text-align:right;font-weight:750;color:#1b4c32;font-variant-numeric:tabular-nums}
+.chart-empty{font-size:14px;color:#7b897f;padding:12px 0}
+.section-kicker{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#438057;margin-bottom:8px}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr;gap:28px}.tiles{grid-template-columns:1fr}.grid2,.analytics-grid{grid-template-columns:1fr}.hero{padding:42px 0}.page{padding-top:30px}.auth{padding:22px}}
+
+/* Team Venom hero photography */
+.hero-photo{position:relative;margin:30px 0 0;overflow:hidden;border:1px solid #d6e3d8;border-radius:14px;background:#e5ece6;box-shadow:0 18px 42px #07190e30;isolation:isolate}
+.hero-photo:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(0deg,rgba(5,19,11,.88),transparent);pointer-events:none}
+.hero-photo img{display:block;width:100%;height:clamp(210px,25vw,320px);object-fit:cover;object-position:center 55%}
+.hero-photo figcaption{position:absolute;z-index:1;left:18px;right:18px;bottom:16px;display:flex;align-items:end;justify-content:space-between;gap:12px;color:#fff;text-shadow:0 1px 8px #0008}
+.hero-photo figcaption strong{font-family:var(--disp);font-size:clamp(20px,2.5vw,29px);letter-spacing:.07em}
+.hero-photo figcaption span{font-size:10px;font-weight:800;letter-spacing:.16em;text-align:right}
+@media(max-width:820px){.hero-photo{margin-top:22px}.hero-photo img{height:230px}.hero-photo figcaption{left:13px;right:13px;bottom:12px}}
+
+
+/* Keep the Team Venom photo visible while auth switches between landing and dashboard */
+.trike-banner{padding-top:22px}
+.trike-banner .hero-photo{margin:0 0 4px}
+.trike-banner .hero-photo img{height:clamp(220px,29vw,360px);object-position:center 55%}
+@media(max-width:820px){.trike-banner{padding-top:16px}.trike-banner .hero-photo img{height:230px}}
+
+
+/* Homepage spacing and layout refinement */
+.hero{padding:clamp(42px,5vw,58px) 0 clamp(28px,3.8vw,42px)}
+.hero .wrap{gap:clamp(28px,4.5vw,56px)}
+.hero h1{max-width:760px;margin-bottom:22px}
+p.lead{max-width:580px;line-height:1.7;margin-top:0}
+.auth{padding:clamp(22px,2.5vw,30px)}
+.trike-banner{padding-top:24px;padding-bottom:0}
+.trike-banner .hero-photo{max-width:1120px;margin:0 auto;border-color:#dce5de}
+.trike-banner .hero-photo img{height:clamp(220px,26vw,340px)}
+#landing>section{padding:42px 0 12px!important}
+#landing .grid2{gap:18px 24px}
+#landing .grid2>div{padding:20px 22px;background:#fff;border:1px solid #dce5de;border-radius:12px}
+#landing .grid2 p{margin:8px 0 0;line-height:1.65}
+.page{padding-top:36px}
+#vApp>.sub{margin-bottom:22px}
+.tiles{margin:24px 0;gap:18px}
+.analytics-grid{gap:18px;margin-bottom:22px}
+.grid2{gap:18px}
+.panel{margin-bottom:18px}
+footer{margin-top:52px;padding:24px 0}
+@media(max-width:820px){
+ .hero{padding:36px 0 30px}
+ .hero .wrap{gap:24px}
+ .hero h1{margin-bottom:16px}
+ .auth{padding:21px}
+ .trike-banner{padding-top:16px}
+ .trike-banner .hero-photo img{height:230px}
+ #landing>section{padding:32px 0 8px!important}
+ #landing .grid2{gap:12px}
+ #landing .grid2>div{padding:17px 18px}
+ .page{padding-top:28px}
+ .tiles{gap:12px;margin:20px 0}
+ .analytics-grid,.grid2{gap:14px}
+ footer{margin-top:40px}
+}
+
+
+/* VIPER MOTORSPORT — unified race-operations design system */
+:root{
+ --viper:#101713;--moss:#a8e45b;--paper:#0b100d;--ink:#edf4ef;--mute:#a1afa5;
+ --line:#2c3a30;--sig:#c8f169;--bad:#ff756d;--white:#f6faf7;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:12px;
+ color-scheme:dark
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--paper)}
+body{background:radial-gradient(ellipse at 78% -18%,#203d2b 0,transparent 36%),linear-gradient(180deg,#0b100d 0%,#0e1510 45%,#0b100d 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.005em}
+.wrap{max-width:1320px}
+.bar,header{position:sticky;top:0;z-index:50;background:rgba(9,15,11,.94);color:var(--ink);border-bottom:1px solid #344538;box-shadow:0 12px 34px #0005;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.bar .wrap,header .wrap{min-height:74px;gap:16px}
+.brand{font-family:var(--disp);font-size:29px;line-height:1;letter-spacing:.09em;text-transform:uppercase;color:#f3f7f3;text-decoration:none}
+.brand span,.brand small{display:inline-block;margin-left:12px;color:var(--sig);font:800 11px/1.2 system-ui,sans-serif;letter-spacing:.17em;text-transform:uppercase;opacity:1}
+h1,h2,h3{font-family:var(--disp);letter-spacing:-.025em}
+h1{font-size:clamp(44px,6.4vw,78px);line-height:.94;letter-spacing:-.035em}
+h2.h{font-size:clamp(32px,4vw,44px);line-height:1}
+.eyebrow{color:var(--sig);font-size:11px;font-weight:850;letter-spacing:.2em;text-transform:uppercase}
+.sub,.intro,.dim,.note,.small,.welcome,.chart-caption{color:var(--mute)}
+.btn{border:1px solid var(--sig);border-radius:8px;background:var(--sig);color:#11170d;font-weight:850;letter-spacing:.015em;box-shadow:none;transition:transform .16s ease,background .16s ease,border-color .16s ease}
+.btn:hover{background:#d8ff83;border-color:#d8ff83;filter:none;transform:translateY(-1px);box-shadow:0 8px 22px #c8f16920}
+.btn.line,.btn.outline{background:#111a14;color:#e8f1e9;border-color:#3b4d40}
+.btn.line:hover,.btn.outline:hover{background:#1b2b1e;color:var(--sig);border-color:var(--sig)}
+.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(112deg,#0b100d 0%,#12251a 58%,#1d3924 100%);border-bottom:1px solid #344638;padding-top:60px;padding-bottom:62px}
+.hero:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.18;background:repeating-linear-gradient(135deg,transparent 0 42px,#c8f169 43px,#c8f169 44px,transparent 45px 88px);mask-image:linear-gradient(90deg,transparent,#000 65%,transparent)}
+.hero:after{content:"";position:absolute;z-index:-1;right:-7vw;bottom:-100px;width:38vw;height:38vw;border:1px solid #c8f16920;transform:rotate(35deg);pointer-events:none}
+p.lead{color:#c7d9cb;max-width:610px}
+.auth,.card,.locked{background:linear-gradient(145deg,#18221b,#101712);color:var(--ink);border:1px solid #344538;border-radius:14px;box-shadow:0 20px 60px #0004}
+.auth{border-top:4px solid var(--sig)}
+.panel,.chart-panel{background:linear-gradient(150deg,#141e17,#101712);border:1px solid #2d3d31;border-radius:13px;box-shadow:0 12px 34px #0002;overflow:hidden}
+.panel h2,.panel h3,.panelhead{background:linear-gradient(100deg,#1b2a1d,#121a14);color:#f1f7f1;border-bottom:1px solid #304433}
+.panel h2,.panel h3{padding:16px 20px;font-size:23px}
+.in{padding:20px}
+.tiles{gap:16px;margin-top:22px;margin-bottom:24px}
+.tile{position:relative;overflow:hidden;background:linear-gradient(125deg,#1a2a1d,#111913);color:var(--ink);border:1px solid #344b35;border-left:3px solid var(--sig);border-radius:12px;padding:21px 23px;box-shadow:0 12px 30px #0002}
+.tile:after{content:"";position:absolute;right:-25px;top:-43px;width:112px;height:112px;border:1px solid #c8f16925;transform:rotate(35deg);pointer-events:none}
+.tile b{color:var(--sig);font-family:var(--disp);font-size:clamp(38px,4vw,52px);font-variant-numeric:tabular-nums;line-height:1}
+.tile span{color:#b6c7b9}
+.analytics-grid{gap:18px}
+.chart-panel{padding:22px}
+.chart-title{color:#f1f7f1}
+.chart-caption{margin-bottom:20px}
+.bar-label{color:#b8c9bb}
+.bar-track{background:#253229}
+.bar-fill{background:linear-gradient(90deg,#4c8a40,#c8f169)}
+.grid2,.grid{gap:18px}
+.page,main{padding-top:38px}
+table{width:100%;border-collapse:collapse;color:#e7f0e8;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:12px 15px;text-align:left;border-bottom:1px solid #2b3b2e}
+th{background:#1a261d;color:#a9b9ac;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+td{color:#e0eae1}
+tbody tr{transition:background .15s ease}
+tbody tr:hover td{background:#c8f1690b}
+.scroll{overflow-x:auto}
+input,select,textarea,.composer textarea{background:#0b120d!important;color:#edf4ef!important;border:1px solid #3a4b3d!important;border-radius:8px!important}
+input::placeholder,textarea::placeholder{color:#718376}
+input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
+label{color:#cbd8cd}
+.tabs{border-color:#344538}
+.tabs button{color:#a1afa5}
+.tabs button.on{color:var(--sig);border-color:var(--sig)}
+.tag,.count-pill{background:#203321;color:#d7f6a1;border:1px solid #3e5b38}
+.day{background:#111a14;color:var(--ink);border-bottom:1px solid #2c3b30;border-left:3px solid transparent}
+.day span{color:var(--mute)}
+.day.on,.day:hover{background:#1c2b1e;border-left-color:var(--sig)}
+.facts b{color:var(--sig);font-family:var(--disp)}
+.facts span{color:var(--mute)}
+.notice{background:#2a260f;color:#f2e7b2;border-color:#635b29}
+.msg{color:#bce98b}
+.msg.err,.error{color:var(--bad)}
+#status{padding:12px 14px;background:#131e16;border:1px solid #314634;border-radius:9px}
+footer{margin-top:64px;background:#080d0a;color:#82988a;border-top:1px solid #2d3d31;padding:26px 0}
+:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+#vPending .card{margin-top:34px}
+#vApp>.sub{max-width:780px}
+.trike-banner{padding-top:26px}
+.hero-photo{border:1px solid #3a4c3c;border-radius:14px;overflow:hidden;box-shadow:0 22px 55px #0005;background:#101712}
+.hero-photo img{display:block;width:100%;object-fit:cover}
+.hero-photo figcaption{background:linear-gradient(90deg,#09100bdf,#09100b77);color:#f3f8f3}
+.hero-photo figcaption strong{letter-spacing:.12em}
+.hero-photo figcaption span{color:var(--sig);letter-spacing:.15em}
+#landing{padding-top:10px}
+#landing>section{border-top:1px solid #2b3b2e}
+@media(max-width:820px){
+ .bar .wrap,header .wrap{min-height:66px;align-items:center}
+ .brand{font-size:25px}
+ .brand span,.brand small{display:block;margin:5px 0 0;font-size:10px}
+ .hero{padding:42px 0}
+ .hero .wrap{grid-template-columns:1fr;gap:25px}
+ .tiles{grid-template-columns:1fr}
+ .grid2,.grid,.analytics-grid,.layout{grid-template-columns:1fr}
+ .page,main{padding-top:27px}
+ .in{padding:15px}
+ .panel h2,.panel h3{padding:14px 16px}
+ .trike-banner{padding-top:16px}
+ .hero-photo img{height:230px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+/* VIPER MOTORSPORT — final professional refinement */
+:root{
+  --viper:#101a13;--moss:#5f9f43;--paper:#0b100d;--ink:#eef4ef;
+  --mute:#a4b1a7;--line:#2b3a2f;--sig:#c8f169;--bad:#ff7770;
+  --white:#f7faf7;--r:10px;
+}
+*{box-sizing:border-box}
+html{background:#0b100d;scroll-padding-top:100px}
+body{background:linear-gradient(180deg,#0b100d 0%,#0d140f 55%,#0a0f0c 100%);color:#eef4ef;line-height:1.6}
+.wrap{width:min(100% - 44px,1240px);max-width:1240px}
+.bar,header{background:rgba(9,15,11,.96);border-bottom:1px solid #2e4032;box-shadow:0 8px 28px #0003}
+.bar .wrap,header .wrap{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:inline-flex;align-items:baseline;gap:12px;font-size:30px;letter-spacing:.1em;white-space:nowrap}
+.brand span,.brand small{margin:0;color:#c8f169;font:750 10px/1.3 system-ui,sans-serif;letter-spacing:.18em}
+.nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.nav .btn{min-height:39px;padding:8px 13px;font-size:13px}
+h1,h2,h3{font-family:var(--disp);letter-spacing:-.02em}
+h1{font-size:clamp(44px,5.7vw,72px);line-height:.98;max-width:900px}
+h2.h{font-size:clamp(32px,3.8vw,42px);line-height:1.05}
+.eyebrow{font-size:10px;letter-spacing:.2em;font-weight:850;text-transform:uppercase;color:var(--sig)}
+.sub,.dim,.note,.small,.welcome{color:#a4b1a7;line-height:1.65}
+.hero{padding:clamp(38px,5vw,60px) 0 clamp(34px,4vw,50px);background:linear-gradient(115deg,#0d1710 0%,#14271a 64%,#1b3220 100%);border-bottom:1px solid #2e4032}
+.hero .wrap{gap:clamp(28px,4vw,54px)}
+p.lead{font-size:clamp(16px,1.5vw,19px);line-height:1.75;color:#d1dfd3}
+.auth,.card,.locked{border:1px solid #334637;border-radius:12px;background:#121b15;box-shadow:0 16px 42px #0003}
+.auth{padding:clamp(20px,2.5vw,28px);border-top:3px solid var(--sig)}
+.panel,.chart-panel{border:1px solid #2b3b2f;border-radius:11px;background:#111913;box-shadow:0 8px 24px #0002}
+.panel h2,.panel h3,.panelhead{background:#17231a;color:#f1f6f1;border-bottom:1px solid #2b3b2f}
+.panel h2,.panel h3{padding:16px 20px;font-size:22px;line-height:1.15}
+.in{padding:clamp(15px,2vw,21px)}
+.tiles{gap:14px;margin:22px 0 24px}
+.tile{border:1px solid #304333;border-left:3px solid var(--sig);border-radius:10px;background:linear-gradient(135deg,#17251a,#111812);padding:20px 21px;box-shadow:none}
+.tile b{font-family:var(--disp);font-size:clamp(38px,4vw,49px);line-height:1.05;color:var(--sig);font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b6c5b8}
+.grid2,.grid,.analytics-grid{gap:16px}
+.page,main{padding-top:34px}
+.btn{min-height:42px;padding:10px 16px;border-radius:7px;font-size:14px;font-weight:800;letter-spacing:.015em;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.sm{min-height:32px;padding:5px 10px;font-size:12px}
+.btn.line,.btn.outline{background:transparent;border-color:#46594a;color:#e1ebe2}
+.btn.line:hover,.btn.outline:hover{background:#1b2a1d;border-color:var(--sig);color:var(--sig)}
+input,select,textarea,.composer textarea{min-height:42px;background:#0b120d!important;color:#eef4ef!important;border:1px solid #394c3d!important;border-radius:7px!important;padding:10px 12px}
+textarea{min-height:96px}
+label{font-size:12px;font-weight:750;letter-spacing:.025em;color:#cbd8cd;margin:14px 0 6px}
+input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
+.tabs{border-bottom:1px solid #304033}
+.tabs button{padding:12px 10px;color:#a4b1a7}
+.tabs button.on{color:var(--sig);border-color:var(--sig)}
+.scroll{border-radius:7px;max-width:100%}
+table{font-size:13px;line-height:1.55}
+th,td{padding:12px 14px;border-bottom:1px solid #29382d}
+th{background:#18241b;color:#aebdaf;font-size:10px;letter-spacing:.12em;font-weight:800;text-transform:uppercase;white-space:nowrap}
+td{color:#e0e9e1;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#c8f1690a}
+.tag,.count-pill{display:inline-flex;align-items:center;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:800;background:#203321;color:#d7f6a1;border:1px solid #3e5b38}
+#status{padding:11px 14px;background:#131e16;border:1px solid #304233;border-radius:7px}
+.msg{line-height:1.5}
+.hero-photo{border-radius:10px;border-color:#344737;box-shadow:0 16px 38px #0004}
+footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-top:1px solid #2b3b2f;font-size:11px;font-weight:750;letter-spacing:.15em}
+:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+[hidden]{display:none!important}
+@media(max-width:820px){
+ .wrap{width:min(100% - 30px,1240px)}
+ .bar .wrap,header .wrap{min-height:66px;gap:12px;flex-wrap:wrap;padding-top:11px;padding-bottom:11px}
+ .brand{font-size:25px;gap:8px;white-space:normal}
+ .brand span,.brand small{font-size:9px;letter-spacing:.12em}
+ .nav{gap:6px}
+ .nav .btn{padding:7px 10px;min-height:35px;font-size:12px}
+ .hero{padding:36px 0 32px}
+ .hero .wrap{grid-template-columns:1fr;gap:23px}
+ .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+ .tile{padding:15px 12px}
+ .tile b{font-size:35px}
+ .tile span{font-size:10px;letter-spacing:.04em}
+ .grid2,.grid,.analytics-grid,.layout{grid-template-columns:1fr}
+ .page,main{padding-top:26px}
+ .panel h2,.panel h3{padding:14px 15px}
+ .in{padding:14px}
+ table{min-width:580px}
+ footer{margin-top:40px}
+}
+@media(max-width:480px){
+ .brand{font-size:23px}
+ .brand span,.brand small{display:block;margin:4px 0 0}
+ .bar .wrap,header .wrap{align-items:flex-start}
+ .nav{width:100%;justify-content:flex-start}
+ .tiles{grid-template-columns:1fr}
+ .tile{display:flex;align-items:center;justify-content:space-between;gap:12px}
+ .tile b{font-size:34px}
+ .tile span{text-align:right}
+ h1{font-size:clamp(40px,12vw,56px)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+/* Rider strengths — replace lap-total chart with practical team profiles */
+.strengths-panel{padding:20px 22px}
+.strengths-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.strengths-heading .section-kicker{margin-bottom:5px}
+.strengths-note{font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#637469}
+.strengths-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.strength-card{position:relative;min-width:0;padding:17px 16px 16px;border:1px solid #dce5de;border-radius:11px;background:linear-gradient(145deg,#fff,#f7faf7);overflow:hidden}
+.strength-index{position:absolute;top:12px;right:13px;color:#9aada0;font-size:11px;font-weight:850;letter-spacing:.08em}
+.strength-card h4{margin:0 28px 8px 0;color:#183d2b;font:700 23px/1.1 var(--disp);letter-spacing:.01em}
+.strength-card p{margin:0 0 9px;color:#225a36;font-size:14px;font-weight:800}
+.strength-detail{display:block;color:#637469;font-size:12px;line-height:1.55}
+.strength-pending{background:#f7f8f6;border-style:dashed}
+.strength-pending p{color:#68776c}
+@media(max-width:820px){.strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strengths-panel{padding:17px}}
+@media(max-width:480px){.strengths-grid{grid-template-columns:1fr}.strength-card{padding:15px}}
+
+
+
+/* Compact rider list on the homepage */
+.strengths-panel{padding:14px 16px}
+.strengths-heading .section-kicker{font-size:10px;margin-bottom:2px}
+.strengths-heading .chart-title{font-size:19px}
+.strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:10px}
+.strength-card{padding:9px 11px;border-radius:8px;box-shadow:none}
+.strength-card h4{font-size:17px;line-height:1.05;margin:0}
+@media(max-width:820px){.strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.strengths-panel{padding:12px}}
+@media(max-width:520px){.strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strength-card{padding:9px}}
+
+
+/* Homepage rider list — force a compact layout over earlier theme rules */
+#vApp .analytics-grid > .strengths-panel{padding:12px 14px!important}
+#vApp .strengths-panel .strengths-heading{margin:0!important}
+#vApp .strengths-panel .strengths-heading .section-kicker{font-size:9px!important;line-height:1.2!important;margin:0 0 3px!important}
+#vApp .strengths-panel .strengths-heading .chart-title{font-size:18px!important;line-height:1.1!important;margin:0!important}
+#vApp .strengths-panel .strengths-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-top:9px!important}
+#vApp .strengths-panel .strength-card{min-height:0!important;padding:8px 9px!important;border-radius:7px!important;box-shadow:none!important}
+#vApp .strengths-panel .strength-card h4{font-size:15px!important;line-height:1.05!important;margin:0!important;letter-spacing:0!important}
+@media(max-width:820px){
+ #vApp .strengths-panel{padding:11px!important}
+ #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
+ #vApp .strengths-panel .strength-card{padding:7px!important}
+ #vApp .strengths-panel .strength-card h4{font-size:14px!important}
+}
+@media(max-width:480px){
+ #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+</style></head><body>
+<header class="bar"><div class="wrap"><div class="brand">VIPER<span>CAPTAIN CONTROLS</span></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span id="who" class="who"></span><button id="backHome" class="btn line sm" type="button">Dashboard</button><button id="out" class="btn line sm" hidden type="button">Sign out</button></div></div></header>
+<main class="wrap page"><div id="gate" class="card" role="status" hidden>Checking access…</div><section id="captainApp" hidden><h2 class="h">Captain controls</h2><p class="sub">Private race operations tools, restricted to the owner’s approved Captain account.</p><div id="captainControls"><h2 class="h" style="margin-top:38px">Captain controls</h2><div class="grid2"><div class="panel"><h3>Membership requests & roles</h3><div class="in" id="members">Loading…</div></div><div class="panel"><h3>Invitation codes</h3><div class="in"><div id="codes" class="dim" style="margin-bottom:12px"></div><div class="row" style="display:flex;gap:8px"><input id="newcode" placeholder="New code" aria-label="New invitation code"><button class="btn sm" id="addcode">Add code</button></div></div></div></div><div class="panel"><h3>Pending submissions</h3><div class="in" id="reviewQueue">Loading…</div></div><div class="panel"><h3>Add official race day</h3><div class="in"><p class="note">Create an event that will appear on the Race Days page. For Maryborough, use a title such as “Maryborough 24 Hour”.</p><label for="cDayTitle">Race day title</label><input id="cDayTitle" placeholder="Maryborough 24 Hour"><label for="cDayDate">Date</label><input id="cDayDate" type="date"><label for="cDayVenue">Venue</label><input id="cDayVenue" placeholder="Maryborough"><label for="cDayTime">Start time</label><input id="cDayTime" placeholder="e.g. 12:00 pm"><label for="cDayInfo">Information</label><textarea id="cDayInfo" placeholder="Race format, arrival details, team notes…"></textarea><button class="btn sm" id="cAddDay" style="margin-top:12px">Add official race day</button></div></div><div class="grid2"><div class="panel"><h3>Add official race record</h3><div class="in"><label>Event</label><input id="cEvent" placeholder="Sandown"><label>Date</label><input id="cDate" type="date"><label>Result</label><input id="cResult"><label>Laps</label><input id="cLaps" type="number" min="0"><button class="btn sm" id="cAddRace" style="margin-top:12px">Save record</button></div></div><div class="panel"><h3>Add official rider statistic</h3><div class="in"><label>Rider name</label><input id="cRider"><label>Event</label><input id="cStatEvent"><label>Laps</label><input id="cStatLaps" type="number" min="0"><button class="btn sm" id="cAddStat" style="margin-top:12px">Save statistic</button></div></div></div><div class="panel"><h3>Edit existing race records</h3><div class="in"><p class="note">Choose a saved race record, change its details, then save.</p><label for="editRacePick">Race record</label><select id="editRacePick"><option value="">Loading records…</option></select><div class="f"><div class="full"><label for="editRaceEvent">Event</label><input id="editRaceEvent"></div><div><label for="editRaceDate">Date</label><input id="editRaceDate" type="date"></div><div><label for="editRaceLaps">Laps</label><input id="editRaceLaps" type="number" min="0"></div><div class="full"><label for="editRaceResult">Result</label><input id="editRaceResult"></div></div><button class="btn sm" id="saveRaceEdit" style="margin-top:12px">Save race changes</button></div></div><div class="panel"><h3>Edit existing rider statistics</h3><div class="in"><p class="note">Choose a saved rider statistic, change its details, then save.</p><label for="editStatPick">Rider statistic</label><select id="editStatPick"><option value="">Loading records…</option></select><div class="f"><div><label for="editStatRider">Rider name</label><input id="editStatRider"></div><div><label for="editStatLaps">Laps</label><input id="editStatLaps" type="number" min="0"></div><div class="full"><label for="editStatEvent">Event</label><input id="editStatEvent"></div></div><button class="btn sm" id="saveStatEdit" style="margin-top:12px">Save rider changes</button></div></div><div class="msg" id="cmsg" role="status"></div></div></section></main>
+<script>(function(){'use strict';
+const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const $=id=>document.getElementById(id);let me=null,sessionUser=null;
+const OWNER_ID='8d693590-5efa-4878-97ec-0b01eb28caf9';
+function msg(el,t,err){$(el).textContent=t||'';$(el).className='msg'+(err?' err':'')}
+function num(id){const v=$(id).value.trim();return v===''?null:Number(v)}
+function td(tr,t){const c=document.createElement('td');c.textContent=t==null||t===''?'—':t;tr.appendChild(c)}
+function fill(body,rows,cols){body.textContent='';if(!rows.length){const r=document.createElement('tr');const c=document.createElement('td');c.colSpan=cols.length;c.textContent='No entries yet';r.appendChild(c);body.appendChild(r);return}rows.forEach(x=>{const r=document.createElement('tr');cols.forEach(k=>td(r,x[k]));body.appendChild(r)})}
+function setOptions(id,rows,label){const sel=$(id);sel.textContent='';if(!rows.length){const o=document.createElement('option');o.value='';o.textContent='No records available';sel.appendChild(o);return}rows.forEach(x=>{const o=document.createElement('option');o.value=String(x.id);o.textContent=label(x);sel.appendChild(o)})}
+function summary(s){const p=s.payload||{};return p.title||p.event||p.rider_name||p.file_name||('Submission #'+s.id)}
+async function loadMembers(){const r=await sb.from('profiles').select('id,full_name,email,role,status,created_at').order('created_at');const box=$('members');box.textContent='';if(r.error){box.textContent=r.error.message;return}(r.data||[]).forEach(u=>{const d=document.createElement('div');d.className='req';const left=document.createElement('div');const b=document.createElement('b');b.textContent=u.full_name||u.email;left.appendChild(b);const p=document.createElement('div');p.className='dim';p.textContent=u.email+' · '+u.status+' · '+u.role;left.appendChild(p);const actions=document.createElement('div');actions.className='actions';if(u.status==='pending'){[['Approve','approved'],['Decline','declined']].forEach(([label,status])=>{const btn=document.createElement('button');btn.className='btn sm'+(status==='declined'?' bad':'');btn.textContent=label;btn.onclick=async()=>{const x=await sb.from('profiles').update({status}).eq('id',u.id);if(x.error)msg('cmsg',x.error.message,1);else loadMembers()};actions.appendChild(btn)})}if(u.status==='approved'&&u.id!==sessionUser.id){const sel=document.createElement('select');[['member','Member'],['leadership','Leadership']].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o)});sel.value=u.role;const btn=document.createElement('button');btn.className='btn sm';btn.textContent='Save role';btn.onclick=async()=>{const x=await sb.from('profiles').update({role:sel.value}).eq('id',u.id);if(x.error)msg('cmsg',x.error.message,1);else{msg('cmsg','Role updated.');loadMembers()}};actions.append(sel,btn)}d.append(left,actions);box.appendChild(d)})}
+async function loadCodes(){const r=await sb.from('invite_codes').select('code,active').order('created_at');$('codes').textContent=r.error?r.error.message:((r.data||[]).map(x=>x.code+(x.active?'':' (off)')).join(', ')||'No codes yet.')}
+$('addcode').onclick=async()=>{const v=$('newcode').value.trim();if(!v)return;const r=await sb.from('invite_codes').insert({code:v,active:true});if(r.error)msg('cmsg',r.error.message,1);else{$('newcode').value='';msg('cmsg','Invitation code added.');loadCodes()}};
+let editableRaces=[],editableStats=[];
+function setOptions(id,rows,label){const sel=$(id);sel.textContent='';if(!rows.length){const o=document.createElement('option');o.value='';o.textContent='No records available';sel.appendChild(o);return}rows.forEach(x=>{const o=document.createElement('option');o.value=String(x.id);o.textContent=label(x);sel.appendChild(o)})}
+async function loadEditRecords(){const [a,b]=await Promise.all([sb.from('race_records').select('id,event,race_date,result,laps').order('race_date',{ascending:false}),sb.from('rider_stats').select('id,rider_name,event,laps').order('rider_name')]);if(a.error||b.error){msg('cmsg','Could not load editable records: '+(a.error?.message||b.error?.message),1);return}editableRaces=a.data||[];editableStats=b.data||[];setOptions('editRacePick',editableRaces,x=>'#'+x.id+' · '+(x.event||'Unnamed event')+(x.race_date?' · '+x.race_date:''));setOptions('editStatPick',editableStats,x=>'#'+x.id+' · '+(x.rider_name||'Unnamed rider')+' · '+(x.event||'No event'));fillRaceEditor();fillStatEditor()}
+function fillRaceEditor(){const x=editableRaces.find(x=>String(x.id)===$('editRacePick').value);$('editRaceEvent').value=x?.event||'';$('editRaceDate').value=x?.race_date||'';$('editRaceResult').value=x?.result||'';$('editRaceLaps').value=x?.laps??''}
+function fillStatEditor(){const x=editableStats.find(x=>String(x.id)===$('editStatPick').value);$('editStatRider').value=x?.rider_name||'';$('editStatEvent').value=x?.event||'';$('editStatLaps').value=x?.laps??''}
+$('editRacePick').onchange=fillRaceEditor;$('editStatPick').onchange=fillStatEditor;
+$('saveRaceEdit').onclick=async()=>{const id=$('editRacePick').value;if(!id)return msg('cmsg','Choose a race record first.',1);const event=$('editRaceEvent').value.trim();if(!event)return msg('cmsg','Event name cannot be empty.',1);$('saveRaceEdit').disabled=true;const r=await sb.from('race_records').update({event,race_date:$('editRaceDate').value||null,result:$('editRaceResult').value.trim()||null,laps:num('editRaceLaps')}).eq('id',id);$('saveRaceEdit').disabled=false;if(r.error)return msg('cmsg','Could not save race record: '+r.error.message,1);msg('cmsg','Race record updated.');await loadEditRecords();await loadEditRecords()};
+$('saveStatEdit').onclick=async()=>{const id=$('editStatPick').value;if(!id)return msg('cmsg','Choose a rider statistic first.',1);const rider_name=$('editStatRider').value.trim();if(!rider_name)return msg('cmsg','Rider name cannot be empty.',1);$('saveStatEdit').disabled=true;const r=await sb.from('rider_stats').update({rider_name,event:$('editStatEvent').value.trim()||null,laps:num('editStatLaps')}).eq('id',id);$('saveStatEdit').disabled=false;if(r.error)return msg('cmsg','Could not save rider statistic: '+r.error.message,1);msg('cmsg','Rider statistic updated.');await loadEditRecords();await loadEditRecords()};
+async function loadQueue(){const r=await sb.from('submissions').select('*').eq('status','pending').order('created_at');const box=$('reviewQueue');box.textContent='';if(r.error){box.textContent=r.error.message;return}if(!r.data?.length){box.textContent='No pending submissions.';return}for(const s of r.data){const d=document.createElement('div');d.className='req';const left=document.createElement('div');const b=document.createElement('b');b.textContent=s.category.replace('_',' ').toUpperCase()+' — '+summary(s);left.appendChild(b);const p=document.createElement('p');p.className='dim';p.style.whiteSpace='pre-wrap';p.textContent=JSON.stringify(s.payload,null,2);left.appendChild(p);const notes=document.createElement('input');notes.placeholder='Review note (optional)';notes.setAttribute('aria-label','Review note');notes.style.margin='6px 0';left.appendChild(notes);const actions=document.createElement('div');actions.className='actions';const approve=document.createElement('button');approve.className='btn sm';approve.textContent='Approve';approve.onclick=()=>review(s,'approved',notes.value);const reject=document.createElement('button');reject.className='btn sm bad';reject.textContent='Reject';reject.onclick=()=>review(s,'rejected',notes.value);actions.append(approve,reject);d.append(left,actions);box.appendChild(d)}}
+async function review(s,decision,notes){let publishedPath=null;const payload=s.payload||{};if(decision==='approved'&&s.category==='file'){const old=payload.pending_path;if(!old||!old.startsWith('pending/'))return msg('cmsg','Pending file path is missing; submission was not approved.',1);publishedPath=old.replace(/^pending\//,'published/');const move=await sb.storage.from('race-files').move(old,publishedPath);if(move.error)return msg('cmsg','Could not publish file: '+move.error.message,1)}const r=await sb.rpc('review_submission',{p_submission_id:s.id,p_decision:decision,p_notes:notes||null,p_published_path:publishedPath});if(r.error){if(publishedPath)await sb.storage.from('race-files').move(publishedPath,payload.pending_path);return msg('cmsg',r.error.message,1)}msg('cmsg','Submission '+decision+'.');await loadQueue();}
+$('cAddDay').onclick=async()=>{const title=$('cDayTitle').value.trim();if(!title)return msg('cmsg','Enter a race day title.',1);const btn=$('cAddDay');btn.disabled=true;msg('cmsg','Adding race day…');const r=await sb.from('race_days').insert({title,race_date:$('cDayDate').value||null,venue:$('cDayVenue').value.trim()||null,start_time:$('cDayTime').value.trim()||null,info:$('cDayInfo').value.trim()||null});btn.disabled=false;if(r.error)return msg('cmsg','Could not add race day: '+r.error.message,1);msg('cmsg','Official race day added! Open Race Days to check it.');$('cDayTitle').value='';$('cDayDate').value='';$('cDayVenue').value='';$('cDayTime').value='';$('cDayInfo').value='';};
+$('cAddRace').onclick=async()=>{const event=$('cEvent').value.trim();if(!event)return msg('cmsg','Enter an event.',1);const r=await sb.from('race_records').insert({event,race_date:$('cDate').value||null,result:$('cResult').value.trim()||null,laps:num('cLaps')});if(r.error)msg('cmsg',r.error.message,1);else{msg('cmsg','Race record saved.');await loadEditRecords()}};$('cAddStat').onclick=async()=>{const name=$('cRider').value.trim();if(!name)return msg('cmsg','Enter a rider name.',1);const r=await sb.from('rider_stats').insert({rider_name:name,event:$('cStatEvent').value.trim()||null,laps:num('cStatLaps')});if(r.error)msg('cmsg',r.error.message,1);else{msg('cmsg','Rider statistic saved.');await loadEditRecords()}};
+
+async function init(){
+ const session=(await sb.auth.getSession()).data.session;
+ sessionUser=session?.user||null;
+ if(!sessionUser){$('gate').textContent='Please sign in to Viper AI first, then open Captain Controls.';$('gate').hidden=false;$('captainApp').hidden=true;return}
+ const p=await sb.from('profiles').select('id,full_name,role,status').eq('id',sessionUser.id).single();
+ if(p.error||!p.data||p.data.id!==OWNER_ID||p.data.role!=='captain'||p.data.status!=='approved'){
+  $('gate').textContent='Access denied. Captain Controls are restricted to the Viper AI owner account.';$('gate').hidden=false;$('captainApp').hidden=true;return
+ }
+ me=p.data;$('who').textContent=me.full_name||'Captain';$('out').hidden=false;$('gate').hidden=true;$('captainApp').hidden=false;
+ await loadMembers();await loadCodes();await loadQueue();await loadEditRecords();
+}
+$('out').onclick=async()=>{await sb.auth.signOut();window.location.href='index.html'};
+$('backHome').onclick=()=>window.location.href='index.html';
+sb.auth.onAuthStateChange(()=>{setTimeout(init,0)});init();
+})();</script></body></html>
