@@ -189,6 +189,7 @@ footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
 
   let session = null;
   let approved = false;
+  let conversation = [];
 
   function locked(title, detail, link) {
     $('access').textContent = '';
@@ -313,7 +314,7 @@ footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
           'Authorization': 'Bearer ' + session.access_token,
           'apikey': SUPABASE_KEY
         },
-        body: JSON.stringify({ question: q })
+        body: JSON.stringify({ question: q, history: conversation.slice(-8) })
       });
 
       const result = await response.json().catch(() => ({}));
@@ -347,6 +348,8 @@ footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
       }
 
       pending.lastChild.textContent = answer;
+      conversation.push({ role: 'user', content: q }, { role: 'assistant', content: answer });
+      conversation = conversation.slice(-8);
     } catch (err) {
       pending.remove();
       $('error').textContent =
