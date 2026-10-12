@@ -170,7 +170,8 @@ async function init(){
     const errors=[racesResult,ridersResult,daysResult,rosterResult,lapsResult].filter(x=>x.error);
     if(errors.length){$('status').textContent='Some records could not be loaded. Check the database table permissions and schema, then reload.';console.error('Rider Data query errors:',errors.map(x=>x.error.message))}
     else $('status').textContent='Showing records currently available to your approved account.';
-    const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
+    const isPlaceholderCasey=(value)=>/^casey fields 1$/i.test(String(value||'').trim());
+    const races=(racesResult.data||[]).filter(x=>!isPlaceholderCasey(x.event)),riders=(ridersResult.data||[]).filter(x=>!isPlaceholderCasey(x.event)),days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
     if(profile.role==='captain')loadRaceEditor(races);
     const visibleLapRecords=lapRecords.filter(x=>!isPlaceholderLapEvent(x.event));
     renderLapGroups(visibleLapRecords);
