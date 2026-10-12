@@ -180,7 +180,7 @@ async function init(){
     renderRows('raceRows',displayRaces,['event','date','result','laps'],'No race records have been recorded.');
     renderRows('riderRows',riders,['rider_name','event','laps'],'No rider statistics have been recorded.');
     const dayMap=new Map(days.map(d=>[d.id,d]));
-    const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:d?.title||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
+    const rosterRows=roster.map(x=>{const d=dayMap.get(x.race_day_id);return{race_day:eventLabel(d?.title)||'Unknown race day',date:dateLabel(d?.race_date),rider:x.rider_name,stint:x.stint,minutes:x.minutes}});
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
     $('raceCount').textContent=String(displayRaces.length);
     $('lapCount').textContent=String(displayRaces.reduce((total,x)=>total+(Number(x.laps)||0),0));
