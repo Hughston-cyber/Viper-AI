@@ -327,14 +327,23 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
 @media(max-width:760px){.overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.race-overview{padding:20px}}
 @media(max-width:460px){.overview-head{align-items:flex-start;flex-direction:column}.countdown{display:flex;align-items:center;gap:12px;text-align:left;padding:9px 12px}.countdown span{font-size:32px}.countdown small{margin:0}.overview-foot{align-items:flex-start;flex-direction:column}}
 /* Leadership dropdown navigation */
-.lead-menu{position:relative;z-index:20;color:inherit;font-size:13px}.lead-menu summary{list-style:none;cursor:pointer;padding:5px 11px;border:1px solid currentColor;border-radius:8px;font-weight:800;white-space:nowrap}.lead-menu summary::-webkit-details-marker{display:none}.lead-menu[open] summary{border-color:var(--sig);color:var(--sig)}.lead-menu-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:245px;padding:6px;background:#101813;border:1px solid #3b4d40;border-radius:9px;box-shadow:0 14px 35px #0008;display:grid;gap:3px}.lead-menu-pop a{padding:10px 12px;border-radius:6px;color:var(--ink);text-decoration:none;font-weight:750}.lead-menu-pop a:hover,.lead-menu-pop a:focus-visible{background:#263a2b;color:var(--sig)}\n</style>
+.lead-menu{position:relative;z-index:20;color:inherit;font-size:13px}.lead-menu summary{list-style:none;cursor:pointer;padding:5px 11px;border:1px solid currentColor;border-radius:8px;font-weight:800;white-space:nowrap}.lead-menu summary::-webkit-details-marker{display:none}.lead-menu[open] summary{border-color:var(--sig);color:var(--sig)}.lead-menu-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:245px;padding:6px;background:#101813;border:1px solid #3b4d40;border-radius:9px;box-shadow:0 14px 35px #0008;display:grid;gap:3px}.lead-menu-pop a{padding:10px 12px;border-radius:6px;color:var(--ink);text-decoration:none;font-weight:750}.lead-menu-pop a:hover,.lead-menu-pop a:focus-visible{background:#263a2b;color:var(--sig)}\n
+/* Shared VIPER navigation */
+.bar .wrap.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;padding-top:10px;padding-bottom:10px}
+.site-brand{display:flex;align-items:center;gap:12px;flex-shrink:0;color:inherit;text-decoration:none}
+.site-brand .brand{display:block;line-height:1.05}
+.page-indicator{display:inline-flex;align-items:center;gap:7px;border:1px solid #536d58;border-radius:999px;padding:5px 9px;color:var(--sig);font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:850;white-space:nowrap}
+.page-indicator:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sig);box-shadow:0 0 8px #b7ff6a80}
+.site-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.site-nav .btn,.site-nav .lead-menu summary{white-space:nowrap}
+.site-nav a[aria-current="page"],.site-nav .lead-menu[data-current="true"] summary{border-color:var(--sig)!important;color:var(--sig)!important;box-shadow:inset 0 -2px 0 var(--sig)}
+.site-nav .lead-menu-pop a[aria-current="page"]{background:#263a2b;color:var(--sig)}
+@media(max-width:760px){.bar .wrap.topbar-inner{align-items:flex-start;flex-direction:column;gap:10px}.site-nav{justify-content:flex-start;width:100%}.page-indicator{font-size:9px}}
+
+</style>
 </head>
 <body>
-<header class="bar"><div class="wrap">
-  <a class="brand" href="index.html">VIPER<span>RACE OPERATIONS</span></a>
-  <div class="row"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="rider-data.html">Rider Data</a><details id="leadershipMenu" class="lead-menu" hidden><summary>Leadership <span aria-hidden="true">▾</span></summary><nav class="lead-menu-pop" aria-label="Leadership navigation"><a href="attendance.html">Roll Call</a><a href="race-days.html">Rosters &amp; Race Operations</a><a href="rider-data.html">Rider Data</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></nav></details><button id="out" class="btn line sm" hidden>Sign out</button></div>
-</div></header>
-
+<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Race Operations</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" aria-current="page" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><details id="leadershipMenu" class="lead-menu" hidden><summary>Leadership <span aria-hidden="true">▾</span></summary><nav class="lead-menu-pop" aria-label="Leadership navigation"><a href="attendance.html">Roll Call</a><a href="race-days.html" aria-current="page">Rosters &amp; Race Operations</a><a href="rider-data.html">Rider Data</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></nav></details><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
 <div id="gate" hidden class="wrap"><div class="card"><h2>Members only</h2>
   <p class="dim">Sign in with an approved Team Venom account to see race day information and rosters.</p>
   <a class="btn" href="index.html">Go to sign in</a></div></div>
@@ -409,7 +418,7 @@ async function init(){
   if(!s){$('gate').hidden=false;return}
   var p=await sb.from('profiles').select('*').eq('id',s.user.id).single();
   if(p.error||!p.data||p.data.status!=='approved'){$('gate').hidden=false;return}
-  cap=p.data.role==='captain';$('leadershipMenu').hidden=!(p.data.role==='captain'||p.data.role==='leadership');$('leadCaptainLink').hidden=!cap;$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
+  cap=p.data.role==='captain';$('leadershipMenu').hidden=!(p.data.role==='captain'||p.data.role==='leadership');$('leadCaptainLink').hidden=!cap;$('navCaptain').hidden=!cap;$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
   list();
 }
 $('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
