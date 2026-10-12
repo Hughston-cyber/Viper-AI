@@ -468,6 +468,19 @@ header.bar .site-nav a[aria-current="page"]{border-color:var(--sig)!important;co
  header.bar .site-nav>a.btn,header.bar .site-nav>button.btn{font-size:12px!important;padding:8px!important}
 }
 
+
+/* Enforce the same fixed sidebar on every VIPER page, including Captain Controls */
+html body>header.bar{position:fixed!important;left:0!important;top:0!important;right:auto!important;bottom:0!important;width:248px!important;height:100vh!important;min-height:100vh!important;max-height:none!important;transform:none!important;float:none!important;display:block!important;z-index:9999!important;overflow-y:auto!important;overflow-x:hidden!important;border-right:3px solid var(--sig)!important;border-bottom:0!important}
+html body>header.bar>.wrap.topbar-inner{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;max-width:none!important;height:auto!important;min-height:100vh!important;margin:0!important;padding:24px 16px!important;gap:26px!important;box-sizing:border-box!important}
+html body{padding-left:248px!important}
+@media(max-width:760px){
+ html body>header.bar{position:fixed!important;left:0!important;top:0!important;right:auto!important;bottom:0!important;width:190px!important;height:100vh!important;min-height:100vh!important;max-height:none!important;transform:none!important;float:none!important;display:block!important;border-right:3px solid var(--sig)!important;border-bottom:0!important}
+ html body>header.bar>.wrap.topbar-inner{width:100%!important;min-height:100vh!important;height:auto!important;padding:18px 10px!important;gap:20px!important}
+ html body{padding-left:190px!important;padding-top:0!important}
+ html body>header.bar .site-brand .brand{font-size:25px!important}
+ html body>header.bar .site-nav>a.btn,html body>header.bar .site-nav>button.btn{font-size:12px!important;padding:8px!important}
+}
+
 </style></head><body>
 <header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Dashboard</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" aria-current="page" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><a id="leadershipMenu" class="btn line sm" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header><main>
 <section id="vAuth" class="hero"><div class="wrap"><div><div class="eyebrow">Team Venom · Race operations platform</div><h1>Race data.<br><span style="color:var(--sig)">Race ready.</span></h1><p class="lead">The Team Venom race operations hub. Race records, rider performance and event logistics — organised for the people behind every lap.</p></div><div class="auth"><h2>Team sign in</h2><div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div><div id="regOnly" hidden><label for="nm">Full name</label><input id="nm" autocomplete="name"><label for="code">Invitation code</label><input id="code" autocomplete="off"></div><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:100%;margin-top:18px">Sign in</button><div class="msg" id="amsg" role="status"></div><p class="note">New accounts need an invitation code and captain approval before you can see team data.</p></div></div></section>
