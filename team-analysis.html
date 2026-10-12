@@ -32,7 +32,6 @@
 </div>
 <section class="panel"><h2>Rider performance overview</h2><div class="in"><p class="sub">A team-wide summary of recorded rider activity, without ranking teammates against each other.</p><div class="scroll"><table><thead><tr><th>Rider</th><th>Events recorded</th><th>Total recorded laps</th><th>Average per event</th></tr></thead><tbody id="leaderRows"><tr><td colspan="4">Loading rider statistics…</td></tr></tbody></table></div><p class="small-note">These totals reflect available rider-stat entries. They may not add up to the official team total if some individual records are missing.</p></div></section>
 <section class="panel"><h2>Official race results</h2><div class="in"><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading official results…</td></tr></tbody></table></div></div></section>
-<section class="panel"><h2>Fastest recorded lap</h2><div class="in" id="fastestLap"><p class="empty-state">Checking lap-time records…</p></div></section>
 </main>
 <footer><div class="wrap">VIPER MOTORSPORT — RACE DATA. TEAM PERFORMANCE.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -91,10 +90,6 @@ try{
  const insights=$('insights');insights.textContent='';
  if(races.length){const best=races.slice().sort((a,b)=>lapsNumber(b.laps)-lapsNumber(a.laps))[0];const total=races.reduce((sum,r)=>sum+lapsNumber(r.laps),0);addInsight('Highest-lap event',best.event+' recorded '+lapsNumber(best.laps)+' official team laps.');addInsight('Average event distance', (total/races.length).toFixed(1)+' team laps per official event across '+races.length+' recorded results.');const podium=races.filter(r=>/\b[1-3](st|nd|rd)\b/i.test(String(r.result||''))).length;addInsight('Recorded podium finishes',podium+' of '+races.length+' events have a result recorded as 1st, 2nd or 3rd.')}else addInsight('No race results yet','Add official race results to generate event comparisons.');
  if(leaderboard.length){const top=leaderboard[0];addInsight('Top recorded rider total',top.name+' leads the available rider-stat entries with '+top.laps+' laps across '+top.events.size+' recorded event(s).')}
- const usableTimes=lapRecords.map(x=>({row:x,seconds:timeToSeconds(x.lap_time_as_shown)})).filter(x=>x.seconds!==null&&!/pit stop annotation/i.test(String(x.row.incident||'')));
- usableTimes.sort((a,b)=>a.seconds-b.seconds);
- const fastest=$('fastestLap');fastest.textContent='';
- if(usableTimes.length){const f=usableTimes[0];const box=el('div',undefined,'insight');box.append(el('strong','Fastest parsed lap time'),el('p',f.row.rider_name+' — '+f.row.lap_time_as_shown+' at '+f.row.event+'.'));const note=el('p','Calculated from recorded lap-time strings; pit-stop annotation rows are excluded.','small-note');fastest.append(box,note);addInsight('Fastest recorded lap',f.row.rider_name+' posted '+f.row.lap_time_as_shown+' in '+f.row.event+'.')}else fastest.appendChild(el('p','No parseable lap-time records available yet.','empty-state'));
  $('status').textContent='Live analysis updated from the approved team database.';
 }catch(error){console.error('Team analysis failed',error);$('status').textContent='Could not load team analysis. Please sign in again or refresh.'}
 }
