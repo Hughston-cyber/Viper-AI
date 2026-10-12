@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leadership Attendance — VIPER Motorsport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#0b100d;--ink:#edf4ef;--mute:#a1afa5;--line:#2c3a30;--sig:#c8f169;--bad:#ff756d;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 78% -18%,#203d2b 0,transparent 36%),linear-gradient(180deg,#0b100d,#0e1510 55%,#0b100d);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1240px;margin:auto;padding:0 22px}.bar{position:sticky;top:0;z-index:5;background:#090f0bee;border-bottom:1px solid #344538;backdrop-filter:blur(15px)}.bar .wrap{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{font:700 27px/1 var(--disp);letter-spacing:.08em}.brand span{font:800 11px/1.2 system-ui;color:var(--sig);letter-spacing:.15em;margin-left:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 13px;border:1px solid #3b4d40;border-radius:8px;background:#111a14;color:var(--ink);font:800 13px system-ui;text-decoration:none;cursor:pointer}.btn.primary{background:var(--sig);border-color:var(--sig);color:#11170d}.btn:hover{border-color:var(--sig);color:var(--sig)}.btn.primary:hover{background:#d8ff83;color:#11170d}.btn:disabled{opacity:.55;cursor:wait}
+main{padding:36px 0 60px}.eyebrow{font-size:11px;font-weight:850;letter-spacing:.2em;text-transform:uppercase;color:var(--sig)}h1,h2,h3{font-family:var(--disp);letter-spacing:-.025em;margin:0}h1{font-size:clamp(40px,6vw,70px);line-height:.95;margin:7px 0 10px}h2{font-size:28px}h3{font-size:22px}.sub,.muted{color:var(--mute)}.sub{margin:0 0 22px;max-width:700px}
+.panel{background:#101813;border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:18px}.panel-head{padding:15px 18px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,#17241a,#111a14);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.panel-body{padding:18px}
+.controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end}.field label{display:block;color:#dbe6dc;font-size:12px;font-weight:800;margin:0 0 6px}.field select,.field input{width:100%;min-height:43px;padding:10px 12px;background:#0a100c;color:var(--ink);border:1px solid #35483a;border-radius:8px;font:inherit}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:16px 0 20px}.stat{padding:14px;border:1px solid var(--line);border-left:3px solid var(--sig);border-radius:10px;background:#111a14}.stat b{display:block;color:var(--sig);font:700 30px/1 var(--disp);font-variant-numeric:tabular-nums}.stat span{font-size:11px;color:var(--mute);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.roll{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.rider{padding:13px;border:1px solid var(--line);border-radius:10px;background:#0d1510;display:grid;grid-template-columns:minmax(0,1fr);gap:11px}.rider-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.rider-name{font-weight:850;font-size:15px;overflow-wrap:anywhere}.rider-status{font-size:10px;letter-spacing:.12em;font-weight:900;text-transform:uppercase;color:var(--mute)}.rider-status.present{color:#b8f28c}.rider-status.late{color:#f5d66e}.rider-status.absent{color:#ff938b}.rider-status.unmarked{color:#a1afa5}.status-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.status-btn{min-height:36px;padding:6px 4px;background:#141e17;color:#c4d0c6;border:1px solid #344538;border-radius:7px;font:800 11px system-ui;cursor:pointer}.status-btn:hover{border-color:var(--sig)}.status-btn[aria-pressed=true]{background:var(--sig);border-color:var(--sig);color:#11170d}.status-btn[data-status=absent][aria-pressed=true]{background:var(--bad);border-color:var(--bad);color:#1b0a09}.status-btn[data-status=late][aria-pressed=true]{background:#f5d66e;border-color:#f5d66e;color:#201a08}
+.msg{min-height:22px;margin:8px 0 0;color:#b8dc91;font-weight:700;font-size:13px}.msg.err{color:var(--bad)}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:440px;font-size:13px}th,td{text-align:left;padding:11px 14px;border-bottom:1px solid #26362a}th{background:#17221a;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em}td:last-child{font-variant-numeric:tabular-nums}.pill{display:inline-block;border:1px solid #415d34;background:#263a24;color:#d4f59d;padding:3px 8px;border-radius:99px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.gate{max-width:620px;margin:55px auto;padding:25px;border:1px solid var(--line);border-radius:13px;background:#101813}.add-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:16px}.add-row input{min-width:0;padding:10px 12px;border:1px solid #35483a;border-radius:8px;background:#0a100c;color:var(--ink);font:inherit}.small-note{font-size:12px;color:var(--mute);margin:12px 0 0}
+[hidden]{display:none!important}:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.roll{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.controls .btn{width:100%}.bar .wrap{padding-top:12px;padding-bottom:12px}}
+@media(max-width:420px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.status-btn{font-size:10px}}
+</style></head>
+<body>
+<header class="bar"><div class="wrap"><a class="brand" href="index.html" style="color:inherit;text-decoration:none">VIPER<span>TEAM VENOM HPR</span></a><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a class="btn" href="race-days.html">Race Operations</a><a class="btn" href="index.html">Dashboard</a><span id="who" class="muted"></span><button id="out" class="btn" hidden>Sign out</button></div></div></header>
+<div id="gate" class="wrap gate" hidden><div class="eyebrow">Restricted area</div><h2 style="margin-top:8px">Leadership access required.</h2><p class="muted">The attendance register is available to approved captains and approved leadership members only. Sign in with an authorised account to continue.</p><a class="btn primary" href="index.html">Go to sign in</a></div>
+<main id="app" class="wrap" hidden>
+<div class="eyebrow">Team Venom · People & race operations</div><h1>Leadership <span style="color:var(--sig)">Roll Call.</span></h1><p class="sub">A race-by-race attendance register. Mark each rider Present, Late, Absent or Unmarked; updates are saved to Viper AI.</p>
+<section class="panel"><div class="panel-head"><h2>Choose race day</h2><span id="eventDate" class="pill">Select an event</span></div><div class="panel-body"><div class="controls"><div class="field"><label for="raceSelect">Race day / event</label><select id="raceSelect"><option value="">Loading race days…</option></select></div><button id="refresh" class="btn" type="button">Refresh register</button></div><div id="message" class="msg" role="status" aria-live="polite"></div></div></section>
+<div class="stats" aria-label="Attendance totals"><div class="stat"><b id="total">0</b><span>On the roll</span></div><div class="stat"><b id="present">0</b><span>Present</span></div><div class="stat"><b id="late">0</b><span>Late</span></div><div class="stat"><b id="absent">0</b><span>Absent</span></div><div class="stat"><b id="unmarked">0</b><span>Unmarked</span></div></div>
+<section class="panel"><div class="panel-head"><h2>Attendance roll</h2><span class="muted" id="savedHint">Choose an event to begin</span></div><div class="panel-body"><div id="roll" class="roll"></div><div class="add-row"><input id="newRider" maxlength="80" placeholder="Add a rider to this roll…" aria-label="New rider name"><button id="addRider" class="btn primary" type="button">Add rider</button></div><p class="small-note">A rider added here is saved for this race day. Choose Unmarked to clear a status. Only approved leadership can view or change attendance.</p></div></section>
+<section class="panel"><div class="panel-head"><h2>Race attendance history</h2><span class="muted">Saved records</span></div><div class="table-wrap"><table><thead><tr><th>Race day</th><th>Date</th><th>Present</th><th>Late</th><th>Absent</th><th>Unmarked</th></tr></thead><tbody id="history"><tr><td colspan="6" class="muted">Loading attendance history…</td></tr></tbody></table></div></section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+var sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+var $=function(id){return document.getElementById(id)};
+var user=null,profile=null,days=[],attendance=[],activeDay=null,busy=false;
+var DEFAULT_RIDERS=['Felix Maskiell','Oscar Layton','Hugh Fletcher','Hutch Freckleton','Josh Lichomets','Nicholas Katsabis','Tenny Hearn','Ross'];
+function say(text,error){$('message').textContent=text||'';$('message').className='msg'+(error?' err':'')}
+function fmtDate(s){return s?new Date(s+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'Date not set'}
+function canLead(p){return !!p&&p.status==='approved'&&(p.role==='captain'||p.role==='leadership')}
+function counts(rows){var c={present:0,late:0,absent:0,unmarked:0};rows.forEach(function(r){c[r.status]=(c[r.status]||0)+1});return c}
+function updateStats(){var c=counts(attendance);$('total').textContent=attendance.length;$('present').textContent=c.present;$('late').textContent=c.late;$('absent').textContent=c.absent;$('unmarked').textContent=c.unmarked}
+function makeStatusButton(rider,status,label){var b=document.createElement('button');b.type='button';b.className='status-btn';b.dataset.status=status;b.textContent=label;b.setAttribute('aria-pressed',rider.status===status?'true':'false');b.setAttribute('aria-label','Mark '+rider.rider_name+' '+label);b.onclick=function(){mark(rider,status)};return b}
+function renderRoll(){
+ var box=$('roll');box.textContent='';
+ if(!activeDay){box.textContent='Choose a race day to load its roll.';updateStats();return}
+ if(!attendance.length){box.textContent='No riders on this roll yet. Add a rider below.';updateStats();return}
+ attendance.slice().sort(function(a,b){return a.rider_name.localeCompare(b.rider_name)}).forEach(function(r){
+  var card=document.createElement('article');card.className='rider';
+  var top=document.createElement('div');top.className='rider-top';
+  var name=document.createElement('div');name.className='rider-name';name.textContent=r.rider_name;
+  var st=document.createElement('div');st.className='rider-status '+r.status;st.textContent=r.status;
+  top.append(name,st);card.appendChild(top);
+  var buttons=document.createElement('div');buttons.className='status-buttons';
+  [['present','Present'],['late','Late'],['absent','Absent'],['unmarked','Unmarked']].forEach(function(x){buttons.appendChild(makeStatusButton(r,x[0],x[1]))});
+  card.appendChild(buttons);box.appendChild(card);
+ });
+ updateStats();
+}
+async function loadHistory(){
+ var h=$('history');h.textContent='';
+ var r=await sb.from('race_attendance').select('race_day_id,status,rider_name,race_days(title,race_date)');
+ if(r.error){var tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='Could not load attendance history: '+r.error.message;tr.appendChild(td);h.appendChild(tr);return}
+ var groups={};
+ (r.data||[]).forEach(function(x){var k=String(x.race_day_id);if(!groups[k])groups[k]={id:k,title:x.race_days&&x.race_days.title||'Race day '+k,date:x.race_days&&x.race_days.race_date||'',rows:[]};groups[k].rows.push(x)});
+ var list=Object.keys(groups).map(function(k){var g=groups[k],c=counts(g.rows);return{title:g.title,date:g.date,c:c,total:g.rows.length}}).sort(function(a,b){return String(b.date).localeCompare(String(a.date))||a.title.localeCompare(b.title)});
+ if(!list.length){var tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=6;td.textContent='No attendance has been marked yet.';td.className='muted';tr.appendChild(td);h.appendChild(tr);return}
+ list.forEach(function(g){var tr=document.createElement('tr');[g.title,fmtDate(g.date),g.c.present,g.c.late,g.c.absent,g.c.unmarked].forEach(function(v){var td=document.createElement('td');td.textContent=String(v);tr.appendChild(td)});h.appendChild(tr)});
+}
+async function loadDay(){
+ var id=$('raceSelect').value;activeDay=days.find(function(d){return String(d.id)===String(id)})||null;
+ if(!activeDay){attendance=[];$('eventDate').textContent='Select an event';$('savedHint').textContent='Choose an event to begin';renderRoll();return}
+ $('eventDate').textContent=fmtDate(activeDay.race_date);$('savedHint').textContent='Loading saved statuses…';say('Loading '+activeDay.title+'…');
+ var result=await sb.from('race_attendance').select('id,race_day_id,rider_name,status,marked_by,updated_at').eq('race_day_id',activeDay.id);
+ if(result.error){attendance=[];renderRoll();say('Could not load the roll: '+result.error.message,true);return}
+ var saved=result.data||[],byName={};saved.forEach(function(x){byName[x.rider_name.toLowerCase()]=x});
+ var names=DEFAULT_RIDERS.slice();
+ saved.forEach(function(x){if(!names.some(function(n){return n.toLowerCase()===x.rider_name.toLowerCase()}))names.push(x.rider_name)});
+ attendance=names.map(function(n){return byName[n.toLowerCase()]||{race_day_id:activeDay.id,rider_name:n,status:'unmarked',marked_by:null,updated_at:null}});
+ renderRoll();$('savedHint').textContent=saved.length+' saved record'+(saved.length===1?'':'s')+' · Unmarked defaults are shown until changed';say('Roll loaded for '+activeDay.title+'.');
+}
+async function mark(rider,status){
+ if(busy||!activeDay)return;busy=true;say('Saving '+rider.rider_name+'…');
+ var payload={race_day_id:activeDay.id,rider_name:rider.rider_name,status:status,marked_by:user.id,updated_at:new Date().toISOString()};
+ var res=await sb.from('race_attendance').upsert(payload,{onConflict:'race_day_id,rider_name'}).select().single();
+ busy=false;
+ if(res.error){say('Could not save attendance: '+res.error.message,true);return}
+ var i=attendance.findIndex(function(x){return x.rider_name.toLowerCase()===rider.rider_name.toLowerCase()});if(i>=0)attendance[i]=res.data;
+ renderRoll();$('savedHint').textContent='Last saved just now';say(rider.rider_name+' marked '+status+'. Saved.');
+ await loadHistory();
+}
+async function addRider(){
+ if(!activeDay||busy)return;var name=$('newRider').value.trim();if(!name)return say('Enter a rider name first.',true);
+ if(attendance.some(function(x){return x.rider_name.toLowerCase()===name.toLowerCase()}))return say(name+' is already on this roll.',true);
+ busy=true;$('addRider').disabled=true;say('Adding '+name+'…');
+ var res=await sb.from('race_attendance').insert({race_day_id:activeDay.id,rider_name:name,status:'unmarked',marked_by:user.id}).select().single();
+ busy=false;$('addRider').disabled=false;
+ if(res.error){say('Could not add rider: '+res.error.message,true);return}
+ attendance.push(res.data);$('newRider').value='';renderRoll();$('savedHint').textContent='Rider added and saved';say(name+' added to this race day.');await loadHistory();
+}
+async function init(){
+ var sess=await sb.auth.getSession();user=sess.data&&sess.data.session&&sess.data.session.user;
+ if(!user){$('gate').hidden=false;return}
+ var p=await sb.from('profiles').select('id,full_name,role,status').eq('id',user.id).single();profile=p.data;
+ if(p.error||!canLead(profile)){$('gate').hidden=false;return}
+ $('who').textContent=profile.full_name||'Leadership';$('out').hidden=false;$('app').hidden=false;
+ var d=await sb.from('race_days').select('id,title,race_date,venue').order('race_date',{ascending:true});
+ if(d.error){say('Could not load race days: '+d.error.message,true);return}
+ days=d.data||[];var sel=$('raceSelect');sel.textContent='';
+ if(!days.length){var o=document.createElement('option');o.value='';o.textContent='No race days have been created yet';sel.appendChild(o);activeDay=null;renderRoll();say('Create a race day in Race Operations first.',true);await loadHistory();return}
+ days.forEach(function(day){var o=document.createElement('option');o.value=day.id;o.textContent=day.title+(day.race_date?' — '+fmtDate(day.race_date):'');sel.appendChild(o)});
+ var future=days.filter(function(x){return x.race_date&&x.race_date>=new Date().toISOString().slice(0,10)});var initial=future[0]||days[days.length-1];sel.value=String(initial.id);await loadDay();await loadHistory();
+}
+$('raceSelect').addEventListener('change',loadDay);$('refresh').onclick=async function(){await loadDay();await loadHistory()};$('addRider').onclick=addRider;$('newRider').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addRider()}});
+$('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
+sb.auth.onAuthStateChange(function(event,session){if(event==='SIGNED_OUT')location.href='index.html'});
+init();
+})();
+</script></body></html>
