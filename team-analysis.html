@@ -31,6 +31,15 @@
 <section class="panel"><h2>Official laps by event</h2><div class="in"><div id="eventChart" class="bar-chart"><p class="empty-state">Loading event comparison…</p></div><p class="small-note">Uses official race-record lap totals, not a sum of individual rider entries.</p></div></section>
 </div>
 <section class="panel"><h2>Rider performance overview</h2><div class="in"><p class="sub">A team-wide summary of recorded rider activity, without ranking teammates against each other.</p><div class="scroll"><table><thead><tr><th>Rider</th><th>Events recorded</th><th>Total recorded laps</th><th>Average per event</th></tr></thead><tbody id="leaderRows"><tr><td colspan="4">Loading rider statistics…</td></tr></tbody></table></div><p class="small-note">These totals reflect available rider-stat entries. They may not add up to the official team total if some individual records are missing.</p></div></section>
+
+<section class="panel"><h2>Sandown Round 3 — Lap Analysis</h2><div class="in">
+<p class="sub">A visual breakdown of the 65 lap times supplied for Sandown Round 3. Lower lap times are faster; the roll lap is included as recorded.</p>
+<div class="analysis-grid">
+<div><h3>Lap time by lap number</h3><canvas id="sandownLapChart" aria-label="Line graph showing lap time for each lap at Sandown Round 3"></canvas></div>
+<div><h3>Average lap time by rider</h3><canvas id="sandownRiderChart" aria-label="Bar chart comparing average lap time by rider at Sandown Round 3"></canvas></div>
+</div>
+<p id="sandownSummary" class="small-note">Preparing Sandown Round 3 graphs…</p>
+</div></section>
 <section class="panel"><h2>Official race results</h2><div class="in"><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading official results…</td></tr></tbody></table></div></div></section>
 </main>
 <footer><div class="wrap">VIPER MOTORSPORT — RACE DATA. TEAM PERFORMANCE.</div></footer>
@@ -102,5 +111,30 @@ load();
 <script>
 (function(){const menu=document.getElementById('leadershipMenu'),toggle=document.getElementById('leadershipToggle'),submenu=document.getElementById('leadershipSubmenu');if(!menu||!toggle||!submenu)return;const page=(location.pathname.split('/').pop()||'index.html').toLowerCase();const roll=document.getElementById('leadAttendanceLink'),captain=document.getElementById('leadCaptainLink');if(roll&&page==='attendance.html')roll.setAttribute('aria-current','page');if(captain&&page==='captain.html')captain.setAttribute('aria-current','page');function setOpen(open){submenu.hidden=!open;toggle.setAttribute('aria-expanded',String(open))}setOpen(page==='attendance.html'||page==='captain.html');toggle.addEventListener('click',()=>setOpen(submenu.hidden));})();
 </script>
-</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+const raw=[
+[1,'07:01.2','Tenny'],[2,'05:58.9','Tenny'],[3,'06:06.1','Tenny'],[4,'05:54.4','Tenny'],[5,'06:03.5','Tenny'],[6,'06:10.5','Tenny'],[7,'06:27.3','Tenny'],[8,'08:39.9','Tenny'],
+[9,'07:34.1','Nick'],[10,'07:49.5','Nick'],[11,'07:40.0','Nick'],[12,'07:31.2','Nick'],[13,'07:29.5','Nick'],[14,'09:32.3','Nick'],
+[15,'07:35.7','Oscar'],[16,'07:02.8','Oscar'],[17,'07:09.3','Oscar'],[18,'07:08.0','Oscar'],[19,'07:13.0','Oscar'],[20,'07:22.7','Oscar'],[21,'07:59.8','Oscar'],
+[22,'06:23.5','Hugh'],[23,'06:21.7','Hugh'],[24,'06:24.7','Hugh'],[25,'06:51.0','Hugh'],[26,'06:48.1','Hugh'],[27,'07:01.8','Hugh'],[28,'07:34.8','Hugh'],[29,'06:39.3','Hugh'],[30,'06:21.2','Hugh'],[31,'06:46.3','Hugh'],[32,'08:15.9','Hugh'],
+[33,'06:14.0','Hutch'],[34,'06:12.4','Hutch'],[35,'06:23.7','Hutch'],[36,'06:22.0','Hutch'],[37,'07:58.8','Hutch'],
+[38,'05:58.3','Josh'],[39,'05:56.9','Josh'],[40,'05:43.1','Josh'],[41,'06:12.1','Josh'],[42,'06:04.3','Josh'],[43,'06:04.6','Josh'],[44,'06:16.9','Josh'],[45,'06:09.6','Josh'],[46,'06:03.3','Josh'],[47,'06:26.8','Josh'],
+[48,'04:57.9','Dylan'],[49,'05:07.7','Dylan'],[50,'05:15.6','Dylan'],[51,'05:19.2','Dylan'],[52,'05:16.2','Dylan'],[53,'05:19.5','Dylan'],[54,'05:53.7','Dylan'],[55,'07:14.5','Dylan'],[56,'05:06.2','Dylan'],[57,'04:55.0','Dylan'],[58,'07:04.2','Dylan'],[59,'05:26.1','Felix'],[60,'05:32.5','Felix'],[61,'05:44.8','Felix'],[62,'05:59.0','Felix'],[63,'05:56.9','Felix'],[64,'06:03.6','Felix'],[65,'05:51.6','Felix']
+];
+const seconds=s=>{const p=s.split(':');return Number(p[0])*60+Number(p[1]);};
+const fmt=s=>{const m=Math.floor(s/60),sec=(s%60).toFixed(1).padStart(4,'0');return m+':'+sec;};
+const riderNames=['Tenny','Nick','Oscar','Hugh','Hutch','Josh','Dylan','Felix'];
+const averages=riderNames.map(name=>{const rows=raw.filter(x=>x[2]===name);return {name,count:rows.length,avg:rows.reduce((sum,x)=>sum+seconds(x[1]),0)/rows.length};});
+const fastest=raw.reduce((a,b)=>seconds(a[1])<seconds(b[1])?a:b);
+const canvas1=document.getElementById('sandownLapChart'),canvas2=document.getElementById('sandownRiderChart');
+if(!canvas1||!canvas2||!window.Chart)return;
+new Chart(canvas1,{type:'line',data:{labels:raw.map(x=>x[0]),datasets:[{label:'Lap time',data:raw.map(x=>seconds(x[1])),borderColor:'#a5e65a',backgroundColor:'rgba(165,230,90,.14)',pointRadius:2.5,pointHoverRadius:5,borderWidth:2,tension:.18,spanGaps:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Lap time: '+fmt(c.parsed.y),afterLabel:c=>'Rider: '+raw[c.dataIndex][2]}}},scales:{x:{title:{display:true,text:'Lap number'},ticks:{maxTicksLimit:13}},y:{title:{display:true,text:'Lap time (minutes:seconds)'},ticks:{callback:v=>fmt(v)}}}}});
+new Chart(canvas2,{type:'bar',data:{labels:averages.map(x=>x.name),datasets:[{label:'Average lap time (seconds)',data:averages.map(x=>x.avg),backgroundColor:'#5d9f45',borderColor:'#a5e65a',borderWidth:1,borderRadius:5}]},options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Average: '+fmt(c.parsed.x)+' ('+averages[c.dataIndex].count+' laps)'}}},scales:{x:{title:{display:true,text:'Average lap time'},ticks:{callback:v=>fmt(v)}}}}});
+document.getElementById('sandownSummary').textContent='65 laps recorded · '+riderNames.length+' riders · Fastest recorded lap: '+fmt(seconds(fastest[1]))+' (Lap '+fastest[0]+', '+fastest[2]+'). Averages are calculated from the supplied lap-time table.';
+})();
+</script>
+\n</body>
 </html>
