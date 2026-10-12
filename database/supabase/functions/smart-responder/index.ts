@@ -29,7 +29,9 @@ YOUR RESPONSE RULES
 - Treat the FAQ below as the authoritative team knowledge supplied to you.
 - If information is marked N/A or is not provided, explain that it is
   unavailable or unconfirmed. Do not guess.
-- If a question asks about current information that may have changed,
+- Answer general knowledge questions too; do not restrict yourself to Team Venom topics.
+- For current weather questions, use the supplied live weather data. If it is unavailable, say so instead of guessing.
+- If a question asks about other current information that may have changed,
   recommend checking the team website or latest team email.
 - Do not claim to access live databases, private records, emails or race
   timing systems.
@@ -302,6 +304,39 @@ Deno.serve(async (req: Request) => {
           .map((item: { role: string; content: string }) => ({ role: item.role as "user" | "assistant", content: item.content.trim() }))
       : [];
 
+    // Fetch current weather and a short forecast when the user asks about weather.
+    let weatherContext = "No live weather lookup was needed for this question.";
+    if (/\b(weather|forecast|temperature|rain(?:ing)?|windy|humidity|sunrise|sunset)\b/i.test(question)) {
+      try {
+        // Team home base default is Melbourne; explicit locations in the question take priority.
+        const locationMatch = question.match(/\b(?:weather|forecast|temperature|rain|wind|humidity)\b.{0,35}?\b(?:in|for|at|near)\s+([a-zA-Z][a-zA-Z .'-]{1,55}?)(?:[?!.;,]|\s+today\b|\s+tomorrow\b|\s+this\s+week\b|$)/i)
+          || question.match(/\b(?:in|for|at|near)\s+([a-zA-Z][a-zA-Z .'-]{1,55}?)(?:[?!.;,]|\s+today\b|\s+tomorrow\b|\s+this\s+week\b|$)/i);
+        const requestedPlace = locationMatch?.[1]?.trim().replace(/\s+/g, " ") || "Melbourne";
+        const geoUrl = "https://geocoding-api.open-meteo.com/v1/search?" + new URLSearchParams({ name: requestedPlace, count: "1", language: "en", format: "json" });
+        const geoResponse = await fetch(geoUrl, { signal: AbortSignal.timeout(7000) });
+        if (!geoResponse.ok) throw new Error("Geocoding service unavailable");
+        const geo = await geoResponse.json();
+        const place = geo?.results?.[0];
+        if (!place) {
+          weatherContext = "Live weather could not find the location: " + requestedPlace + ". Ask the user to specify a city or town.";
+        } else {
+          const forecastUrl = "https://api.open-meteo.com/v1/forecast?" + new URLSearchParams({
+            latitude: String(place.latitude), longitude: String(place.longitude),
+            current: "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m",
+            daily: "temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset,weather_code",
+            forecast_days: "7", timezone: "auto"
+          });
+          const weatherResponse = await fetch(forecastUrl, { signal: AbortSignal.timeout(7000) });
+          if (!weatherResponse.ok) throw new Error("Weather service unavailable");
+          const weather = await weatherResponse.json();
+          weatherContext = JSON.stringify({ source: "Open-Meteo live weather", place: { name: place.name, admin1: place.admin1, country: place.country, timezone: weather.timezone }, current: weather.current, daily: weather.daily, defaultLocationUsed: !locationMatch });
+        }
+      } catch (weatherError) {
+        console.error("Weather lookup failed:", weatherError instanceof Error ? weatherError.message : "Unknown error");
+        weatherContext = "Live weather lookup failed. Do not invent current conditions; tell the user live weather is temporarily unavailable and they can try again.";
+      }
+    }
+
     // Fetch live team records using the signed-in member's session; RLS remains in force.
     const [racesResult, statsResult, daysResult, rosterResult, lapsResult] = await Promise.all([
       supabase.from("race_records").select("event,race_date,result,laps,notes").order("race_date", { ascending: false }).limit(100),
@@ -318,7 +353,7 @@ Deno.serve(async (req: Request) => {
       lap_records: lapsResult.error ? null : (lapsResult.data ?? []),
     };
     const liveContext = JSON.stringify(liveData).slice(0, 18000);
-    const liveDataInstructions = "CURRENT DATABASE SNAPSHOT (source of truth for recorded team data):\\n" + liveContext + "\\n\\nDATA RULES:\\n- Prefer current database records over older FAQ values when they conflict.\\n- Distinguish team totals, individual rider laps, stints and race results.\\n- For comparisons, compare like-for-like events and state which dates/data are available.\\n- If a table is null or a value is missing, say it is unavailable rather than guessing.\\n- The snapshot may be truncated; never claim it contains every historical record.\\n- Do not reveal invitation codes, credentials, tokens or private account information.";
+    const liveDataInstructions = "LIVE WEATHER DATA (use only if relevant; if defaultLocationUsed is true, clearly say Melbourne was assumed):\\n" + weatherContext + "\\n\\nCURRENT DATABASE SNAPSHOT (source of truth for recorded team data):\\n" + liveContext + "\\n\\nDATA RULES:\\n- Prefer current database records over older FAQ values when they conflict.\\n- Distinguish team totals, individual rider laps, stints and race results.\\n- For comparisons, compare like-for-like events and state which dates/data are available.\\n- If a table is null or a value is missing, say it is unavailable rather than guessing.\\n- The snapshot may be truncated; never claim it contains every historical record.\\n- Do not reveal invitation codes, credentials, tokens or private account information.";
     // Ask OpenRouter with the FAQ, live team records and recent conversation.
     const aiResponse = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",
