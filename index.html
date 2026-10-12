@@ -6,7 +6,7 @@
 <link rel="shortcut icon" type="image/png" href="./favicon.png?v=2">
   
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Viper AI — Team Venom HPR</title>
+<title>VIPER Motorsport — Team Venom HPR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -188,10 +188,110 @@ footer{margin-top:52px;padding:24px 0}
  footer{margin-top:40px}
 }
 
+
+/* VIPER MOTORSPORT — unified race-operations design system */
+:root{
+ --viper:#101713;--moss:#a8e45b;--paper:#0b100d;--ink:#edf4ef;--mute:#a1afa5;
+ --line:#2c3a30;--sig:#c8f169;--bad:#ff756d;--white:#f6faf7;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:12px;
+ color-scheme:dark
+}
+html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--paper)}
+body{background:radial-gradient(ellipse at 78% -18%,#203d2b 0,transparent 36%),linear-gradient(180deg,#0b100d 0%,#0e1510 45%,#0b100d 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.005em}
+.wrap{max-width:1320px}
+.bar,header{position:sticky;top:0;z-index:50;background:rgba(9,15,11,.94);color:var(--ink);border-bottom:1px solid #344538;box-shadow:0 12px 34px #0005;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.bar .wrap,header .wrap{min-height:74px;gap:16px}
+.brand{font-family:var(--disp);font-size:29px;line-height:1;letter-spacing:.09em;text-transform:uppercase;color:#f3f7f3;text-decoration:none}
+.brand span,.brand small{display:inline-block;margin-left:12px;color:var(--sig);font:800 11px/1.2 system-ui,sans-serif;letter-spacing:.17em;text-transform:uppercase;opacity:1}
+h1,h2,h3{font-family:var(--disp);letter-spacing:-.025em}
+h1{font-size:clamp(44px,6.4vw,78px);line-height:.94;letter-spacing:-.035em}
+h2.h{font-size:clamp(32px,4vw,44px);line-height:1}
+.eyebrow{color:var(--sig);font-size:11px;font-weight:850;letter-spacing:.2em;text-transform:uppercase}
+.sub,.intro,.dim,.note,.small,.welcome,.chart-caption{color:var(--mute)}
+.btn{border:1px solid var(--sig);border-radius:8px;background:var(--sig);color:#11170d;font-weight:850;letter-spacing:.015em;box-shadow:none;transition:transform .16s ease,background .16s ease,border-color .16s ease}
+.btn:hover{background:#d8ff83;border-color:#d8ff83;filter:none;transform:translateY(-1px);box-shadow:0 8px 22px #c8f16920}
+.btn.line,.btn.outline{background:#111a14;color:#e8f1e9;border-color:#3b4d40}
+.btn.line:hover,.btn.outline:hover{background:#1b2b1e;color:var(--sig);border-color:var(--sig)}
+.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(112deg,#0b100d 0%,#12251a 58%,#1d3924 100%);border-bottom:1px solid #344638;padding-top:60px;padding-bottom:62px}
+.hero:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.18;background:repeating-linear-gradient(135deg,transparent 0 42px,#c8f169 43px,#c8f169 44px,transparent 45px 88px);mask-image:linear-gradient(90deg,transparent,#000 65%,transparent)}
+.hero:after{content:"";position:absolute;z-index:-1;right:-7vw;bottom:-100px;width:38vw;height:38vw;border:1px solid #c8f16920;transform:rotate(35deg);pointer-events:none}
+p.lead{color:#c7d9cb;max-width:610px}
+.auth,.card,.locked{background:linear-gradient(145deg,#18221b,#101712);color:var(--ink);border:1px solid #344538;border-radius:14px;box-shadow:0 20px 60px #0004}
+.auth{border-top:4px solid var(--sig)}
+.panel,.chart-panel{background:linear-gradient(150deg,#141e17,#101712);border:1px solid #2d3d31;border-radius:13px;box-shadow:0 12px 34px #0002;overflow:hidden}
+.panel h2,.panel h3,.panelhead{background:linear-gradient(100deg,#1b2a1d,#121a14);color:#f1f7f1;border-bottom:1px solid #304433}
+.panel h2,.panel h3{padding:16px 20px;font-size:23px}
+.in{padding:20px}
+.tiles{gap:16px;margin-top:22px;margin-bottom:24px}
+.tile{position:relative;overflow:hidden;background:linear-gradient(125deg,#1a2a1d,#111913);color:var(--ink);border:1px solid #344b35;border-left:3px solid var(--sig);border-radius:12px;padding:21px 23px;box-shadow:0 12px 30px #0002}
+.tile:after{content:"";position:absolute;right:-25px;top:-43px;width:112px;height:112px;border:1px solid #c8f16925;transform:rotate(35deg);pointer-events:none}
+.tile b{color:var(--sig);font-family:var(--disp);font-size:clamp(38px,4vw,52px);font-variant-numeric:tabular-nums;line-height:1}
+.tile span{color:#b6c7b9}
+.analytics-grid{gap:18px}
+.chart-panel{padding:22px}
+.chart-title{color:#f1f7f1}
+.chart-caption{margin-bottom:20px}
+.bar-label{color:#b8c9bb}
+.bar-track{background:#253229}
+.bar-fill{background:linear-gradient(90deg,#4c8a40,#c8f169)}
+.grid2,.grid{gap:18px}
+.page,main{padding-top:38px}
+table{width:100%;border-collapse:collapse;color:#e7f0e8;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:12px 15px;text-align:left;border-bottom:1px solid #2b3b2e}
+th{background:#1a261d;color:#a9b9ac;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+td{color:#e0eae1}
+tbody tr{transition:background .15s ease}
+tbody tr:hover td{background:#c8f1690b}
+.scroll{overflow-x:auto}
+input,select,textarea,.composer textarea{background:#0b120d!important;color:#edf4ef!important;border:1px solid #3a4b3d!important;border-radius:8px!important}
+input::placeholder,textarea::placeholder{color:#718376}
+input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
+label{color:#cbd8cd}
+.tabs{border-color:#344538}
+.tabs button{color:#a1afa5}
+.tabs button.on{color:var(--sig);border-color:var(--sig)}
+.tag,.count-pill{background:#203321;color:#d7f6a1;border:1px solid #3e5b38}
+.day{background:#111a14;color:var(--ink);border-bottom:1px solid #2c3b30;border-left:3px solid transparent}
+.day span{color:var(--mute)}
+.day.on,.day:hover{background:#1c2b1e;border-left-color:var(--sig)}
+.facts b{color:var(--sig);font-family:var(--disp)}
+.facts span{color:var(--mute)}
+.notice{background:#2a260f;color:#f2e7b2;border-color:#635b29}
+.msg{color:#bce98b}
+.msg.err,.error{color:var(--bad)}
+#status{padding:12px 14px;background:#131e16;border:1px solid #314634;border-radius:9px}
+footer{margin-top:64px;background:#080d0a;color:#82988a;border-top:1px solid #2d3d31;padding:26px 0}
+:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
+#vPending .card{margin-top:34px}
+#vApp>.sub{max-width:780px}
+.trike-banner{padding-top:26px}
+.hero-photo{border:1px solid #3a4c3c;border-radius:14px;overflow:hidden;box-shadow:0 22px 55px #0005;background:#101712}
+.hero-photo img{display:block;width:100%;object-fit:cover}
+.hero-photo figcaption{background:linear-gradient(90deg,#09100bdf,#09100b77);color:#f3f8f3}
+.hero-photo figcaption strong{letter-spacing:.12em}
+.hero-photo figcaption span{color:var(--sig);letter-spacing:.15em}
+#landing{padding-top:10px}
+#landing>section{border-top:1px solid #2b3b2e}
+@media(max-width:820px){
+ .bar .wrap,header .wrap{min-height:66px;align-items:center}
+ .brand{font-size:25px}
+ .brand span,.brand small{display:block;margin:5px 0 0;font-size:10px}
+ .hero{padding:42px 0}
+ .hero .wrap{grid-template-columns:1fr;gap:25px}
+ .tiles{grid-template-columns:1fr}
+ .grid2,.grid,.analytics-grid,.layout{grid-template-columns:1fr}
+ .page,main{padding-top:27px}
+ .in{padding:15px}
+ .panel h2,.panel h3{padding:14px 16px}
+ .trike-banner{padding-top:16px}
+ .hero-photo img{height:230px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
 </style></head><body>
-<header class="bar"><div class="wrap"><div class="brand">VIPER AI<span>Team Venom HPR</span></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><a id="navRace" href="race-days.html" class="btn line sm" hidden>Race days</a><a id="navRiders" href="rider-data.html" class="btn line sm">Rider Data</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></div></div></header>
+<header class="bar"><div class="wrap"><div class="brand">VIPER<span>TEAM VENOM HPR</span></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><a id="navRace" href="race-days.html" class="btn line sm" hidden>Race days</a><a id="navRiders" href="rider-data.html" class="btn line sm">Rider Data</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></div></div></header>
 <main>
-<section id="vAuth" class="hero"><div class="wrap"><div><h1>Every lap, every rider, in one place.</h1><p class="lead">Viper AI is Team Venom's private hub for race records, rider statistics and team resources, so less time goes on admin and more on the racing and the trikes.</p></div><div class="auth"><h2>Team sign in</h2><div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div><div id="regOnly" hidden><label for="nm">Full name</label><input id="nm" autocomplete="name"><label for="code">Invitation code</label><input id="code" autocomplete="off"></div><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:100%;margin-top:18px">Sign in</button><div class="msg" id="amsg" role="status"></div><p class="note">New accounts need an invitation code and captain approval before you can see team data.</p></div></div></section>
+<section id="vAuth" class="hero"><div class="wrap"><div><h1>Every lap, every rider, in one place.</h1><p class="lead">The Team Venom race operations hub. Race records, rider performance and event logistics — organised for the people behind every lap.</p></div><div class="auth"><h2>Team sign in</h2><div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div><div id="regOnly" hidden><label for="nm">Full name</label><input id="nm" autocomplete="name"><label for="code">Invitation code</label><input id="code" autocomplete="off"></div><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:100%;margin-top:18px">Sign in</button><div class="msg" id="amsg" role="status"></div><p class="note">New accounts need an invitation code and captain approval before you can see team data.</p></div></div></section>
 <section class="wrap trike-banner" aria-label="Team Venom trike"><figure class="hero-photo"><img src="./images/team-venom-trike.jpg" alt="Team Venom trike" fetchpriority="high"><figcaption><strong>TEAM VENOM</strong><span>HPR · RACE PERFORMANCE</span></figcaption></figure></section>
 <div id="vPending" hidden class="wrap"><div class="card"><h3 id="pTitle">Waiting for captain approval</h3><p id="pText" class="dim">Your account is registered. The team captain will review your request.</p><button id="refreshProfile" class="btn sm">Check approval status</button></div></div>
 <div id="vApp" hidden class="wrap page"><h2 class="h" id="hello">Team dashboard</h2><p class="sub">Race records and rider statistics for approved members.</p><div class="tiles"><div class="tile"><b id="stRaces">0</b><span>Official races logged</span></div><div class="tile"><b id="stLaps">0</b><span>Recorded race laps</span></div><div class="tile"><b id="stRiders">0</b><span>Riders tracked</span></div></div>
@@ -200,7 +300,7 @@ footer{margin-top:52px;padding:24px 0}
 <div id="leader" hidden><h2 class="h" style="margin-top:36px">Leadership submissions</h2><p class="sub">Submit new data for Captain review. It won't appear in official records until approved.</p><div class="grid2"><div class="panel"><h3>Submit race record</h3><div class="in"><label>Event</label><input id="sEvent" placeholder="Sandown"><label>Race date</label><input id="sDate" type="date"><label>Result</label><input id="sResult" placeholder="2nd Middle Open"><label>Laps</label><input id="sLaps" type="number" min="0"><label>Notes</label><textarea id="sRaceNotes"></textarea><button class="btn sm" id="submitRace">Submit for approval</button></div></div><div class="panel"><h3>Submit rider statistics</h3><div class="in"><label>Rider name</label><input id="sRider"><label>Event</label><input id="sStatEvent" placeholder="Casey Fields"><label>Laps</label><input id="sStatLaps" type="number" min="0"><label>Notes</label><textarea id="sStatNotes"></textarea><button class="btn sm" id="submitStat">Submit for approval</button></div></div><div class="panel"><h3>Submit race day</h3><div class="in"><label>Title</label><input id="sDayTitle" placeholder="Casey Fields — Race 4"><label>Date</label><input id="sDayDate" type="date"><label>Venue</label><input id="sDayVenue"><label>Start time</label><input id="sDayTime" placeholder="9:00 am"><label>Information</label><textarea id="sDayInfo"></textarea><button class="btn sm" id="submitDay">Submit for approval</button></div></div><div class="panel"><h3>Submit roster entry</h3><div class="in"><label>Race day</label><select id="sRosterDay"></select><label>Stint number</label><input id="sStint" type="number" min="1"><label>Rider name</label><input id="sRosterRider"><label>Minutes</label><input id="sMinutes" type="number" min="0"><label>Notes</label><textarea id="sRosterNotes"></textarea><button class="btn sm" id="submitRoster">Submit for approval</button></div></div><div class="panel"><h3>Submit a race-day file</h3><div class="in"><label>Race day</label><select id="sFileDay"></select><label>File</label><input id="sFile" type="file"><p class="note">Maximum 10 MB. Files remain private until approved.</p><button class="btn sm" id="submitFile">Upload for approval</button></div></div><div class="panel"><h3>My submissions</h3><div class="in" id="mySubs">Loading…</div></div></div><div class="msg" id="lmsg" role="status"></div></div>
 <div id="captain" hidden><h2 class="h" style="margin-top:38px">Captain controls</h2><div class="grid2"><div class="panel"><h3>Membership requests & roles</h3><div class="in" id="members">Loading…</div></div><div class="panel"><h3>Invitation codes</h3><div class="in"><div id="codes" class="dim" style="margin-bottom:12px"></div><div class="row" style="display:flex;gap:8px"><input id="newcode" placeholder="New code" aria-label="New invitation code"><button class="btn sm" id="addcode">Add code</button></div></div></div></div><div class="panel"><h3>Pending submissions</h3><div class="in" id="reviewQueue">Loading…</div></div><div class="panel"><h3>Add official race day</h3><div class="in"><p class="note">Create an event that will appear on the Race Days page. For Maryborough, use a title such as “Maryborough 24 Hour”.</p><label for="cDayTitle">Race day title</label><input id="cDayTitle" placeholder="Maryborough 24 Hour"><label for="cDayDate">Date</label><input id="cDayDate" type="date"><label for="cDayVenue">Venue</label><input id="cDayVenue" placeholder="Maryborough"><label for="cDayTime">Start time</label><input id="cDayTime" placeholder="e.g. 12:00 pm"><label for="cDayInfo">Information</label><textarea id="cDayInfo" placeholder="Race format, arrival details, team notes…"></textarea><button class="btn sm" id="cAddDay" style="margin-top:12px">Add official race day</button></div></div><div class="grid2"><div class="panel"><h3>Add official race record</h3><div class="in"><label>Event</label><input id="cEvent" placeholder="Sandown"><label>Date</label><input id="cDate" type="date"><label>Result</label><input id="cResult"><label>Laps</label><input id="cLaps" type="number" min="0"><button class="btn sm" id="cAddRace" style="margin-top:12px">Save record</button></div></div><div class="panel"><h3>Add official rider statistic</h3><div class="in"><label>Rider name</label><input id="cRider"><label>Event</label><input id="cStatEvent"><label>Laps</label><input id="cStatLaps" type="number" min="0"><button class="btn sm" id="cAddStat" style="margin-top:12px">Save statistic</button></div></div></div><div class="panel"><h3>Edit existing race records</h3><div class="in"><p class="note">Choose a saved race record, change its details, then save.</p><label for="editRacePick">Race record</label><select id="editRacePick"><option value="">Loading records…</option></select><div class="f"><div class="full"><label for="editRaceEvent">Event</label><input id="editRaceEvent"></div><div><label for="editRaceDate">Date</label><input id="editRaceDate" type="date"></div><div><label for="editRaceLaps">Laps</label><input id="editRaceLaps" type="number" min="0"></div><div class="full"><label for="editRaceResult">Result</label><input id="editRaceResult"></div></div><button class="btn sm" id="saveRaceEdit" style="margin-top:12px">Save race changes</button></div></div><div class="panel"><h3>Edit existing rider statistics</h3><div class="in"><p class="note">Choose a saved rider statistic, change its details, then save.</p><label for="editStatPick">Rider statistic</label><select id="editStatPick"><option value="">Loading records…</option></select><div class="f"><div><label for="editStatRider">Rider name</label><input id="editStatRider"></div><div><label for="editStatLaps">Laps</label><input id="editStatLaps" type="number" min="0"></div><div class="full"><label for="editStatEvent">Event</label><input id="editStatEvent"></div></div><button class="btn sm" id="saveStatEdit" style="margin-top:12px">Save rider changes</button></div></div><div class="msg" id="cmsg" role="status"></div></div></div>
 <div id="landing" class="wrap"><section style="padding:56px 0 0"><h2 class="h">How joining works</h2><div class="grid2"><div><b>1. Get a code</b><p class="dim">A team member shares an invitation code.</p></div><div><b>2. Register</b><p class="dim">Sign up with your name and email.</p></div><div><b>3. Captain approves</b><p class="dim">The Captain reviews membership and Leadership submissions.</p></div><div><b>4. View the dashboard</b><p class="dim">Approved members can access race records, rider stats and race-day resources.</p></div></div></section></div>
-</main><footer><div class="wrap">Viper AI — Smarter data. Stronger Results.</div></footer>
+</main><footer><div class="wrap">VIPER MOTORSPORT — RACE DATA. TEAM PERFORMANCE.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script>
 (function(){'use strict';const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');const $=id=>document.getElementById(id);let mode='in',me=null,sessionUser=null;
 function msg(el,t,err){$(el).textContent=t||'';$(el).className='msg'+(err?' err':'')}
