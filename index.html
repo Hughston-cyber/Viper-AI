@@ -109,7 +109,7 @@ async function dash(){
   sb.from('lap_records').select('event,lap_number_as_shown')
  ]);
  if(a.error||b.error||l.error){console.error('Viper dashboard data error',a.error,b.error,l.error);msg('lmsg','Could not refresh dashboard data. Reload the page or check database access.',1);return}
- const ar=a.data||[],br=b.data||[],lr=l.data||[];
+ const ar=a.data||[],br=b.data||[],lr=(l.data||[]).filter(x=>!/^casey fields 1$/i.test(String(x.event||'').trim()));
  const lapCounts=new Map();
  lr.forEach(x=>{const k=eventKey(x.event);if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
  const eventRows=new Map();
