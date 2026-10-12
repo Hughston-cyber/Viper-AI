@@ -184,14 +184,14 @@ async function list(keep){
   if(r.error){return msg(r.error.message+' (has the race days SQL been run?)',1)}
   days=r.data||[];var box=$('list');box.textContent='';
   if(!days.length){box.appendChild(el('div','No race days yet.','in dim'));$('detail').hidden=true;return}
-  days.forEach(function(d){var b=el('button',null,'day'+(cur&&cur.id===d.id?' on':''));b.appendChild(el('b',d.title));b.appendChild(el('span',fmt(d.race_date)+(d.venue?' \u00b7 '+d.venue:'')));b.onclick=function(){pick(d.id)};box.appendChild(b)});
+  days.forEach(function(d){var b=el('button',null,'day'+(cur&&cur.id===d.id?' on':''));b.appendChild(el('b',eventLabel(d.title)));b.appendChild(el('span',fmt(d.race_date)+(d.venue?' \u00b7 '+d.venue:'')));b.onclick=function(){pick(d.id)};box.appendChild(b)});
   pick(keep||(cur&&days.some(function(d){return d.id===cur.id})?cur.id:days[0].id));
 }
 async function pick(id){
   cur=days.find(function(d){return d.id===id});if(!cur)return;
   document.querySelectorAll('.day').forEach(function(b,i){b.classList.toggle('on',days[i].id===id)});
   $('detail').hidden=false;msg('');
-  $('dT').textContent=cur.title;$('dD').textContent=fmt(cur.race_date);$('dV').textContent=cur.venue||'\u2014';$('dS').textContent=cur.start_time||'\u2014';$('dI').textContent=cur.info||'';
+  $('dT').textContent=eventLabel(cur.title);$('dD').textContent=fmt(cur.race_date);$('dV').textContent=cur.venue||'\u2014';$('dS').textContent=cur.start_time||'\u2014';$('dI').textContent=cur.info||'';
   $('rAct').textContent=cap?'Actions':'';$('rAdd').hidden=!cap;$('fAdd').hidden=!cap;$('delDay').hidden=!cap;
   roster();files();
 }
