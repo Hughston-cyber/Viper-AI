@@ -167,7 +167,7 @@ var $=function(i){return document.getElementById(i)};
 var cap=false,days=[],cur=null;
 function msg(t,err){$('msg').textContent=t||'';$('msg').className='msg'+(err?' err':'')}
 function el(tag,txt,cls){var e=document.createElement(tag);if(txt!=null)e.textContent=txt;if(cls)e.className=cls;return e}
-function eventLabel(value){return typeof value==='string'&&/^casey fields(?:\s+round)?\s+2$/i.test(value.trim())?'Casey Fields 1':value}
+function eventLabel(value){return value}
 function fmt(d){return d?new Date(d+'T00:00:00').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'}):'\u2014'}
 
 async function init(){
