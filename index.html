@@ -101,6 +101,7 @@ async function loadCurrent(){const s=await sb.auth.getSession();await load(s.dat
 async function load(session){sessionUser=session?.user||null;if(!session){me=null;$('navRace').hidden=true;$('navAssistant').hidden=true;$('out').hidden=true;$('who').textContent='';$('leader').hidden=true;$('captain').hidden=true;show('vAuth');return}$('out').hidden=false;const p=await sb.from('profiles').select('*').eq('id',session.user.id).single();if(p.error||!p.data){show('vPending');$('pTitle').textContent='Account setup incomplete';$('pText').textContent='We could not find your member profile. Contact the Captain.';return}me=p.data;$('who').textContent=me.full_name||me.email;$('navRace').hidden=me.status!=='approved';$('navAssistant').hidden=me.status!=='approved';if(me.status!=='approved'){show('vPending');$('pTitle').textContent=me.status==='declined'?'Request declined':'Waiting for Captain approval';$('pText').textContent=me.status==='declined'?'Your membership request was not approved. Contact the Captain if you think this is a mistake.':'Your account is registered. The Captain will review your request.';return}show('vApp');await dash();$('leader').hidden=me.role!=='leadership';$('captain').hidden=me.role!=='captain';if(!$('leader').hidden){await loadRaceDayOptions();await loadMySubs()}if(me.role==='captain'){await loadMembers();await loadCodes();await loadQueue();await loadEditRecords()}}
 function eventLabel(value){return value}
 function eventKey(value){return String(eventLabel(value)||'').trim().toLowerCase()}
+function isHiddenSandownRound3(value){return /^sandown\s*(?:\(\s*round\s*#?\s*3\s*\)|round\s*#?\s*3|\(\s*#?\s*3\s*\))$/i.test(String(value||'').trim())}
 async function dash(){
  $('hello').textContent='Welcome, '+((me.full_name||'').split(' ')[0]||'member');
  const [a,b,l]=await Promise.all([
@@ -110,7 +111,7 @@ async function dash(){
  ]);
  if(a.error||b.error||l.error){console.error('Viper dashboard data error',a.error,b.error,l.error);msg('lmsg','Could not refresh dashboard data. Reload the page or check database access.',1);return}
  const isPlaceholderCasey=(value)=>/^casey fields 1$/i.test(String(value||'').trim());
- const ar=(a.data||[]).filter(x=>!isPlaceholderCasey(x.event)),br=(b.data||[]).filter(x=>!isPlaceholderCasey(x.event)),lr=(l.data||[]).filter(x=>!isPlaceholderCasey(x.event));
+ const ar=(a.data||[]).filter(x=>!isPlaceholderCasey(x.event)&&!isHiddenSandownRound3(x.event)),br=(b.data||[]).filter(x=>!isPlaceholderCasey(x.event)),lr=(l.data||[]).filter(x=>!isPlaceholderCasey(x.event));
  const lapCounts=new Map();
  lr.forEach(x=>{const k=eventKey(x.event);if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
  const eventRows=new Map();
