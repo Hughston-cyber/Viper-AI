@@ -77,10 +77,18 @@ async function loadDay(){
  var result=await sb.from('race_attendance').select('id,race_day_id,rider_name,status,marked_by,updated_at').eq('race_day_id',activeDay.id);
  if(result.error){attendance=[];renderRoll();say('Could not load the roll: '+result.error.message,true);return}
  var saved=result.data||[],byName={};saved.forEach(function(x){byName[x.rider_name.toLowerCase()]=x});
+ var missing=DEFAULT_RIDERS.filter(function(n){return !byName[n.toLowerCase()]});
+ if(missing.length){
+  var seeded=await sb.from('race_attendance').insert(missing.map(function(n){return{race_day_id:activeDay.id,rider_name:n,status:'unmarked',marked_by:null}}));
+  if(seeded.error){attendance=[];renderRoll();say('Could not initialise the roll: '+seeded.error.message,true);return}
+  result=await sb.from('race_attendance').select('id,race_day_id,rider_name,status,marked_by,updated_at').eq('race_day_id',activeDay.id);
+  if(result.error){attendance=[];renderRoll();say('Could not reload the saved roll: '+result.error.message,true);return}
+  saved=result.data||[];byName={};saved.forEach(function(x){byName[x.rider_name.toLowerCase()]=x});
+ }
  var names=DEFAULT_RIDERS.slice();
  saved.forEach(function(x){if(!names.some(function(n){return n.toLowerCase()===x.rider_name.toLowerCase()}))names.push(x.rider_name)});
  attendance=names.map(function(n){return byName[n.toLowerCase()]||{race_day_id:activeDay.id,rider_name:n,status:'unmarked',marked_by:null,updated_at:null}});
- renderRoll();$('savedHint').textContent=saved.length+' saved record'+(saved.length===1?'':'s')+' · Unmarked defaults are shown until changed';say('Roll loaded for '+activeDay.title+'.');
+ renderRoll();$('savedHint').textContent=saved.length+' saved record'+(saved.length===1?'':'s')+' · All statuses saved per race day';say('Roll loaded for '+activeDay.title+'.');
 }
 async function mark(rider,status){
  if(busy||!activeDay)return;busy=true;say('Saving '+rider.rider_name+'…');
