@@ -308,6 +308,24 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 
+
+.race-overview{position:relative;overflow:hidden;margin:24px 0 28px;padding:24px 26px;border:1px solid #435d3d;border-radius:15px;background:radial-gradient(ellipse at 95% 0%,#38552a55,transparent 45%),linear-gradient(125deg,#18271b,#0f1711 75%);box-shadow:0 18px 48px #0003}
+.race-overview:after{content:"";position:absolute;right:-48px;top:-80px;width:210px;height:210px;border:1px solid #c8f16924;transform:rotate(35deg);pointer-events:none}
+.overview-head{position:relative;z-index:1;display:flex;justify-content:space-between;gap:22px;align-items:center}
+.overview-head h2{font-size:clamp(30px,4vw,44px);line-height:1.02;margin:7px 0 4px}
+.overview-head .dim{margin:0}
+.countdown{min-width:112px;text-align:center;padding:13px 16px;border:1px solid #465e38;border-radius:12px;background:#080f0b99}
+.countdown span{display:block;color:var(--sig);font:700 clamp(34px,5vw,50px)/1 var(--disp);font-variant-numeric:tabular-nums}
+.countdown small{display:block;margin-top:7px;color:var(--mute);font-size:9px;font-weight:850;letter-spacing:.14em}
+.overview-stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:23px}
+.overview-stats>div{padding:14px 15px;border:1px solid #2d3e30;border-radius:10px;background:#080f0b66;min-width:0}
+.stat-label{display:block;color:var(--mute);font-size:10px;font-weight:850;letter-spacing:.14em;margin-bottom:7px}
+.overview-stats b{display:block;color:#f1f7f1;font:700 clamp(19px,2vw,26px)/1.1 var(--disp);overflow-wrap:anywhere}
+.overview-stats small{display:block;color:var(--mute);font-size:11px;margin-top:5px}
+.overview-foot{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:#c6d6c8;font-size:13px}
+#ovStatus:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sig);margin-right:9px;box-shadow:0 0 10px #c8f16955}
+@media(max-width:760px){.overview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.race-overview{padding:20px}}
+@media(max-width:460px){.overview-head{align-items:flex-start;flex-direction:column}.countdown{display:flex;align-items:center;gap:12px;text-align:left;padding:9px 12px}.countdown span{font-size:32px}.countdown small{margin:0}.overview-foot{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -323,6 +341,16 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
 <main id="main" hidden class="wrap page">
   <div class="eyebrow">Team Venom · Event management</div><h1>Race <span style="color:var(--sig)">Operations.</span></h1>
   <p class="sub">Race day information, stint rosters and files for each event.</p>
+  <section id="overview" class="race-overview" hidden aria-label="Next race overview">
+    <div class="overview-head"><div><div class="eyebrow">NEXT UP · TEAM VENOM</div><h2 id="ovTitle">Race day</h2><p id="ovVenue" class="dim">Venue to be confirmed</p></div><div class="countdown"><span id="ovCount">—</span><small id="ovCountLabel">UNTIL RACE DAY</small></div></div>
+    <div class="overview-stats">
+      <div><span class="stat-label">DATE</span><b id="ovDate">—</b></div>
+      <div><span class="stat-label">START TIME</span><b id="ovStart">TBC</b></div>
+      <div><span class="stat-label">ROSTER</span><b id="ovRoster">—</b><small id="ovRosterSub">stints assigned</small></div>
+      <div><span class="stat-label">RACE FILES</span><b id="ovFiles">—</b><small>uploaded files</small></div>
+    </div>
+    <div class="overview-foot"><span id="ovStatus">Preparing race day</span><button class="btn sm" id="ovOpen" type="button">Open race details ↗</button></div>
+  </section>
   <div class="layout">
     <aside>
       <div class="panel"><h3>Events</h3><div id="list"><div class="in dim">No race days yet.</div></div></div>
@@ -410,6 +438,32 @@ async function list(keep){
     b.appendChild(meta);b.onclick=function(){pick(d.id)};box.appendChild(b)
   });
   pick(keep||(cur&&days.some(function(d){return d.id===cur.id})?cur.id:days[0].id));
+  renderOverview();
+}
+async function renderOverview(){
+  var panel=$('overview');
+  var today=new Date();today.setHours(0,0,0,0);
+  var upcoming=days.filter(function(d){return d.race_date&&new Date(d.race_date+'T00:00:00')>=today;}).sort(function(a,b){return new Date(a.race_date+'T00:00:00')-new Date(b.race_date+'T00:00:00');});
+  var target=upcoming[0]||null;
+  if(!target){panel.hidden=true;return}
+  panel.hidden=false;
+  $('ovTitle').textContent=target.title||'Race day';
+  $('ovVenue').textContent=target.venue||'Venue to be confirmed';
+  $('ovDate').textContent=fmt(target.race_date);
+  $('ovStart').textContent=target.start_time||'To be confirmed';
+  var when=new Date(target.race_date+'T00:00:00'),diff=Math.max(0,Math.ceil((when-today)/86400000));
+  $('ovCount').textContent=diff===0?'TODAY':diff.toLocaleString('en-AU');
+  $('ovCountLabel').textContent=diff===0?'RACE DAY':diff===1?'DAY TO GO':'DAYS TO GO';
+  $('ovStatus').textContent=diff===0?'Race day is here':diff===1?'Final preparations':'Upcoming event';
+  $('ovOpen').onclick=function(){pick(target.id);$('detail').scrollIntoView({behavior:'smooth',block:'start'})};
+  $('ovRoster').textContent='…';$('ovFiles').textContent='…';$('ovRosterSub').textContent='loading stints';
+  var results=await Promise.all([
+    sb.from('roster_entries').select('id',{count:'exact',head:true}).eq('race_day_id',target.id),
+    sb.from('race_files').select('id',{count:'exact',head:true}).eq('race_day_id',target.id)
+  ]);
+  if(!results[0].error)$('ovRoster').textContent=String(results[0].count||0);
+  $('ovRosterSub').textContent='stints assigned';
+  if(!results[1].error)$('ovFiles').textContent=String(results[1].count||0);
 }
 async function pick(id){
   cur=days.find(function(d){return d.id===id});if(!cur)return;
