@@ -113,6 +113,7 @@ footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
 const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 const $=id=>document.getElementById(id);
 function eventLabel(value){return typeof value==='string'&&/^casey fields(?:\s+round)?\s+2$/i.test(value.trim())?'Casey Fields 1':value}
+function isPlaceholderLapEvent(value){return /^casey fields 1$/i.test(String(value||'').trim())}
 let editableRaces=[];
 function fillRaceEditor(){const x=editableRaces.find(x=>String(x.id)===$('editRacePick').value);$('editRaceEvent').value=x?.event||'';$('editRaceDate').value=x?.race_date||'';$('editRaceResult').value=x?.result||'';$('editRaceLaps').value=x?.laps??''}
 function loadRaceEditor(rows){editableRaces=rows||[];const sel=$('editRacePick');sel.textContent='';if(!editableRaces.length){const o=document.createElement('option');o.value='';o.textContent='No race records available';sel.appendChild(o);return}editableRaces.forEach(x=>{const o=document.createElement('option');o.value=String(x.id);o.textContent='#'+x.id+' · '+(x.event||'Unnamed event')+(x.race_date?' · '+x.race_date:'');sel.appendChild(o)});fillRaceEditor()}
@@ -171,7 +172,7 @@ async function init(){
     else $('status').textContent='Showing records currently available to your approved account.';
     const races=racesResult.data||[],riders=ridersResult.data||[],days=daysResult.data||[],roster=rosterResult.data||[],lapRecords=lapsResult.data||[];
     if(profile.role==='captain')loadRaceEditor(races);
-    const visibleLapRecords=lapRecords;
+    const visibleLapRecords=lapRecords.filter(x=>!isPlaceholderLapEvent(x.event));
     renderLapGroups(visibleLapRecords);
     const lapCounts=new Map();visibleLapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
     const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
