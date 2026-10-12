@@ -192,7 +192,7 @@ async function init(){
     renderLapGroups(visibleLapRecords);
     const lapCounts=new Map();visibleLapRecords.forEach(x=>{const k=(eventLabel(x.event)||'').trim().toLowerCase();if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
     const eventRows=new Map();races.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k)eventRows.set(k,{event:eventLabel(x.event),date:dateLabel(x.race_date),result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0),sortDate:x.race_date||''})});
-    visibleLapRecords.forEach(x=>{const k=(x.event||'').trim().toLowerCase();if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),date:'—',result:'—',laps:lapCounts.get(k)||0,sortDate:''})});
+    // Only official race_records appear in the Race results table; lap-only events stay in lap data.
     const displayRaces=[...eventRows.values()].sort((a,b)=>String(b.sortDate).localeCompare(String(a.sortDate))||a.event.localeCompare(b.event));
     renderRows('raceRows',displayRaces,['event','date','result','laps'],'No race records have been recorded.');
     renderRiderComparison();
