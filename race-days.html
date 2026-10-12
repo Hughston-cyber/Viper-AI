@@ -33,7 +33,16 @@ textarea{min-height:90px;resize:vertical}
 table{width:100%;border-collapse:collapse;font-size:14.5px}th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
 th{font-size:13px;color:var(--mute);background:#f6f8f6}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .facts{display:flex;gap:28px;flex-wrap:wrap;margin:10px 0 0}.facts b{display:block;font-family:var(--disp);font-size:24px;line-height:1.1}.facts span{font-size:13px;color:var(--mute)}
-.info{white-space:pre-wrap;margin:14px 0 0}
+.info{white-space:pre-wrap;margin:8px 0 0}
+.instructions{margin-top:20px;padding:18px 20px;border:1px solid #41583a;border-left:4px solid var(--sig);border-radius:10px;background:linear-gradient(115deg,#1b2a1d,#121a14)}
+.instructions h3{font-family:var(--disp);font-size:23px;margin:5px 0 0;color:var(--ink)}
+.instructions .eyebrow{font-size:10px;font-weight:850;letter-spacing:.18em;color:var(--sig)}
+.day .day-meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.day .status{display:inline-block;padding:2px 7px;border:1px solid #41583a;border-radius:99px;color:#d8f7a0;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.day .status.past{border-color:#3b463e;color:#a1afa5}
+.event-list-note{padding:12px 16px 4px;color:var(--mute);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.file .file-name{min-width:0;overflow-wrap:anywhere}
+@media(max-width:560px){.file{align-items:flex-start;flex-direction:column}.file .row{width:100%}.file .row button{flex:1}}
 .file{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
 .msg{font-size:14px;min-height:20px;color:var(--moss);font-weight:600;margin:6px 0}.msg.err{color:var(--bad)}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:520px;margin-top:40px}
@@ -331,7 +340,7 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
       <div class="panel"><div class="in">
         <h2 id="dT" style="font-size:40px"></h2>
         <div class="facts"><div><b id="dD">—</b><span>Date</span></div><div><b id="dV">—</b><span>Venue</span></div><div><b id="dS">—</b><span>Start</span></div></div>
-        <p class="info" id="dI"></p>
+        <div class="instructions" id="instructionsPanel" hidden><div class="eyebrow">TEAM BRIEFING</div><h3>Race-day instructions</h3><p class="info" id="dI"></p></div>
       </div></div>
 
       <div class="panel"><h3>Roster</h3>
@@ -377,18 +386,36 @@ async function init(){
 $('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
 
 async function list(keep){
-  var r=await sb.from('race_days').select('*').order('race_date',{ascending:false,nullsFirst:false});
+  var r=await sb.from('race_days').select('*');
   if(r.error){return msg(r.error.message+' (has the race days SQL been run?)',1)}
-  days=r.data||[];var box=$('list');box.textContent='';
+  var today=new Date();today.setHours(0,0,0,0);days=(r.data||[]).slice().sort(function(a,b){
+    var ad=a.race_date?new Date(a.race_date+'T00:00:00'):null,bd=b.race_date?new Date(b.race_date+'T00:00:00'):null;
+    var ap=ad&&ad>=today,bp=bd&&bd>=today;
+    if(ap!==bp)return ap?-1:1;
+    if(ap&&bp)return ad-bd;
+    if(ad&&bd)return bd-ad;
+    if(ad)return -1;if(bd)return 1;
+    return String(a.title||'').localeCompare(String(b.title||''));
+  });
+  var box=$('list');box.textContent='';
   if(!days.length){box.appendChild(el('div','No race days yet.','in dim'));$('detail').hidden=true;return}
-  days.forEach(function(d){var b=el('button',null,'day'+(cur&&cur.id===d.id?' on':''));b.appendChild(el('b',eventLabel(d.title)));b.appendChild(el('span',fmt(d.race_date)+(d.venue?' \u00b7 '+d.venue:'')));b.onclick=function(){pick(d.id)};box.appendChild(b)});
+  var nextHeader=false,pastHeader=false;
+  days.forEach(function(d){
+    var dt=d.race_date?new Date(d.race_date+'T00:00:00'):null,isPast=dt&&dt<today;
+    if(!isPast&&!nextHeader){box.appendChild(el('div','UPCOMING & UNDATED','event-list-note'));nextHeader=true}
+    if(isPast&&!pastHeader){box.appendChild(el('div','PAST EVENTS','event-list-note'));pastHeader=true}
+    var b=el('button',null,'day'+(cur&&cur.id===d.id?' on':''));b.appendChild(el('b',eventLabel(d.title)));
+    var meta=el('span',null,'day-meta');meta.appendChild(el('span',fmt(d.race_date)+(d.venue?' · '+d.venue:'')));
+    if(dt)meta.appendChild(el('span',isPast?'PAST':'UPCOMING','status'+(isPast?' past':'')));
+    b.appendChild(meta);b.onclick=function(){pick(d.id)};box.appendChild(b)
+  });
   pick(keep||(cur&&days.some(function(d){return d.id===cur.id})?cur.id:days[0].id));
 }
 async function pick(id){
   cur=days.find(function(d){return d.id===id});if(!cur)return;
   document.querySelectorAll('.day').forEach(function(b,i){b.classList.toggle('on',days[i].id===id)});
   $('detail').hidden=false;msg('');
-  $('dT').textContent=eventLabel(cur.title);$('dD').textContent=fmt(cur.race_date);$('dV').textContent=cur.venue||'\u2014';$('dS').textContent=cur.start_time||'\u2014';$('dI').textContent=cur.info||'';
+  $('dT').textContent=eventLabel(cur.title);$('dD').textContent=fmt(cur.race_date);$('dV').textContent=cur.venue||'\u2014';$('dS').textContent=cur.start_time||'\u2014';$('dI').textContent=cur.info||'';$('instructionsPanel').hidden=!cur.info||!cur.info.trim();
   $('rAct').textContent=cap?'Actions':'';$('rAdd').hidden=!cap;$('fAdd').hidden=!cap;$('delDay').hidden=!cap;
   roster();files();
 }
@@ -402,9 +429,13 @@ async function roster(){
     var a=el('td');
     if(cap){
       var e=el('button','Edit','btn sm line');e.onclick=async function(){
-        var nr=prompt('Rider for stint '+x.stint+':',x.rider_name);if(nr===null)return;
+        var ns=prompt('Stint number:',x.stint);if(ns===null)return;
+        var nr=prompt('Rider:',x.rider_name);if(nr===null)return;
         var nm=prompt('Minutes:',x.minutes==null?'':x.minutes);if(nm===null)return;
-        var u=await sb.from('roster_entries').update({rider_name:nr.trim()||x.rider_name,minutes:nm.trim()?+nm:null}).eq('id',x.id);
+        var nn=prompt('Notes:',x.notes||'');if(nn===null)return;
+        if(!ns.trim()||!Number.isInteger(Number(ns))||Number(ns)<1)return msg('Enter a valid positive stint number.',1);
+        if(nm.trim()&&(!Number.isFinite(Number(nm))||Number(nm)<0))return msg('Enter a valid number of minutes.',1);
+        var u=await sb.from('roster_entries').update({stint:Number(ns),rider_name:nr.trim()||x.rider_name,minutes:nm.trim()?Number(nm):null,notes:nn.trim()||null}).eq('id',x.id);
         if(u.error)msg(u.error.message,1);else roster()};
       var d=el('button','Remove','btn sm bad');d.style.marginLeft='6px';d.onclick=async function(){
         var u=await sb.from('roster_entries').delete().eq('id',x.id);if(u.error)msg(u.error.message,1);else roster()};
@@ -413,11 +444,11 @@ async function roster(){
   $('rTot').textContent=rows.length?rows.length+' stints \u00b7 '+tot+' minutes in total':'';
 }
 async function files(){
-  var r=await sb.from('race_files').select('*').eq('race_day_id',cur.id).order('created_at');
+  var r=await sb.from('race_files').select('*').eq('race_day_id',cur.id).order('created_at',{ascending:false});
   var rows=r.data||[],box=$('fl');box.textContent='';box.className='';
   if(!rows.length){box.className='dim';box.textContent='No files yet.'}
   rows.forEach(function(f){
-    var d=el('div',null,'file');d.appendChild(el('span',f.file_name));var g=el('span',null,'row');
+    var d=el('div',null,'file');d.appendChild(el('span',f.file_name,'file-name'));var g=el('span',null,'row');
     var o=el('button','Open','btn sm');o.onclick=async function(){
       var w=window.open('','_blank');var u=await sb.storage.from('race-files').createSignedUrl(f.path,300);
       if(u.error){if(w)w.close();msg(u.error.message,1)}else if(w){w.location=u.data.signedUrl}};
