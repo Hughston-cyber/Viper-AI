@@ -413,6 +413,25 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
 @media(max-width:820px){.strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.strengths-panel{padding:12px}}
 @media(max-width:520px){.strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strength-card{padding:9px}}
 
+
+/* Homepage rider list — force a compact layout over earlier theme rules */
+#vApp .analytics-grid > .strengths-panel{padding:12px 14px!important}
+#vApp .strengths-panel .strengths-heading{margin:0!important}
+#vApp .strengths-panel .strengths-heading .section-kicker{font-size:9px!important;line-height:1.2!important;margin:0 0 3px!important}
+#vApp .strengths-panel .strengths-heading .chart-title{font-size:18px!important;line-height:1.1!important;margin:0!important}
+#vApp .strengths-panel .strengths-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-top:9px!important}
+#vApp .strengths-panel .strength-card{min-height:0!important;padding:8px 9px!important;border-radius:7px!important;box-shadow:none!important}
+#vApp .strengths-panel .strength-card h4{font-size:15px!important;line-height:1.05!important;margin:0!important;letter-spacing:0!important}
+@media(max-width:820px){
+ #vApp .strengths-panel{padding:11px!important}
+ #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
+ #vApp .strengths-panel .strength-card{padding:7px!important}
+ #vApp .strengths-panel .strength-card h4{font-size:14px!important}
+}
+@media(max-width:480px){
+ #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
 </style></head><body>
 <header class="bar"><div class="wrap"><div class="brand">VIPER<span>TEAM VENOM HPR</span></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><a id="navRace" href="race-days.html" class="btn line sm" hidden>Race days</a><a id="navRiders" href="rider-data.html" class="btn line sm">Rider Data</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></div></div></header>
 <main>
