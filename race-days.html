@@ -331,7 +331,7 @@ footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-to
 <body>
 <header class="bar"><div class="wrap">
   <a class="brand" href="index.html">VIPER<span>RACE OPERATIONS</span></a>
-  <div class="row"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="rider-data.html">Rider Data</a><button id="out" class="btn line sm" hidden>Sign out</button></div>
+  <div class="row"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="rider-data.html">Rider Data</a><a id="navAttendance" class="btn line sm" href="attendance.html" hidden>Attendance roll</a><button id="out" class="btn line sm" hidden>Sign out</button></div>
 </div></header>
 
 <div id="gate" hidden class="wrap"><div class="card"><h2>Members only</h2>
@@ -408,7 +408,7 @@ async function init(){
   if(!s){$('gate').hidden=false;return}
   var p=await sb.from('profiles').select('*').eq('id',s.user.id).single();
   if(p.error||!p.data||p.data.status!=='approved'){$('gate').hidden=false;return}
-  cap=p.data.role==='captain';$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
+  cap=p.data.role==='captain';$('navAttendance').hidden=!(p.data.role==='captain'||p.data.role==='leadership');$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
   list();
 }
 $('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
