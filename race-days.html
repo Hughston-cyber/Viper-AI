@@ -375,10 +375,21 @@ html body{padding-left:248px!important}
  html body>header.bar .site-nav>a.btn,html body>header.bar .site-nav>button.btn{font-size:12px!important;padding:8px!important}
 }
 
+
+/* Leadership dropdown inside the fixed sidebar */
+html body>header.bar .site-nav>.lead-menu{display:block!important;width:100%!important;position:relative!important;z-index:10000!important;font-size:13px!important}
+html body>header.bar .site-nav>.lead-menu[hidden]{display:none!important}
+html body>header.bar .site-nav>.lead-menu>summary{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-height:40px!important;padding:9px 11px!important;box-sizing:border-box!important;text-align:left!important;white-space:normal!important;border:1px solid currentColor!important;border-radius:6px!important;cursor:pointer!important}
+html body>header.bar .site-nav>.lead-menu[open]>summary{border-color:var(--sig)!important;color:var(--sig)!important;background:#17271d!important}
+html body>header.bar .site-nav>.lead-menu .lead-menu-pop{position:static!important;display:grid!important;min-width:0!important;width:auto!important;margin-top:6px!important;padding:6px!important;gap:5px!important;box-shadow:none!important;background:#101a14!important;border:1px solid #3b4d40!important;border-radius:8px!important}
+html body>header.bar .site-nav>.lead-menu:not([open])>.lead-menu-pop{display:none!important}
+html body>header.bar .site-nav>.lead-menu .lead-menu-pop a{display:flex!important;align-items:center!important;width:100%!important;min-height:38px!important;padding:9px 10px!important;box-sizing:border-box!important;text-decoration:none!important}
+html body>header.bar .site-nav>#navCaptain{display:none!important}
+
 </style>
 </head>
 <body>
-<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Race Operations</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" aria-current="page" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><a id="leadershipMenu" class="btn line sm" href="attendance.html" aria-current="page">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
+<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Race Operations</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" aria-current="page" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><details id="leadershipMenu" class="lead-menu" hidden><summary>Leadership <span aria-hidden="true">▾</span></summary><div class="lead-menu-pop"><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></div></details><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
 <div id="gate" hidden class="wrap"><div class="card"><h2>Members only</h2>
   <p class="dim">Sign in with an approved Team Venom account to see race day information and rosters.</p>
   <a class="btn" href="index.html">Go to sign in</a></div></div>
