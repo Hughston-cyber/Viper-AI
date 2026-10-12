@@ -573,7 +573,7 @@ async function init(){
  }
 }
 $('out').onclick=async()=>{await sb.auth.signOut();window.location.href='index.html'};
-$('backHome').onclick=()=>window.location.href='index.html';
+const backHome=$('backHome');if(backHome)backHome.onclick=()=>window.location.href='index.html';
 sb.auth.onAuthStateChange(()=>{setTimeout(init,0)});init();
 })();</script>
 <script>
