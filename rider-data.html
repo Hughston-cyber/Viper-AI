@@ -112,7 +112,7 @@ footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
 'use strict';
 const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 const $=id=>document.getElementById(id);
-function eventLabel(value){return typeof value==='string'&&/^casey fields(?:\s+round)?\s+2$/i.test(value.trim())?'Casey Fields 1':value}
+function eventLabel(value){return value}
 function isPlaceholderLapEvent(value){return /^casey fields 1$/i.test(String(value||'').trim())}
 let editableRaces=[];
 function fillRaceEditor(){const x=editableRaces.find(x=>String(x.id)===$('editRacePick').value);$('editRaceEvent').value=x?.event||'';$('editRaceDate').value=x?.race_date||'';$('editRaceResult').value=x?.result||'';$('editRaceLaps').value=x?.laps??''}
