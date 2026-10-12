@@ -115,7 +115,6 @@ async function dash(){
  lr.forEach(x=>{const k=eventKey(x.event);if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
  const eventRows=new Map();
  ar.forEach(x=>{const k=eventKey(x.event);if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),race_date:x.race_date,result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0)})});
- lr.forEach(x=>{const k=eventKey(x.event);if(k&&!eventRows.has(k))eventRows.set(k,{event:eventLabel(x.event),race_date:null,result:null,laps:lapCounts.get(k)||0})});
  const displayRaces=[...eventRows.values()].sort((x,y)=>String(y.race_date||'').localeCompare(String(x.race_date||''))||String(x.event).localeCompare(String(y.event)));
  fill($('rr'),displayRaces,['event','race_date','result','laps']);
  fill($('rs'),br.map(x=>({...x,event:eventLabel(x.event)})),['rider_name','event','laps']);
