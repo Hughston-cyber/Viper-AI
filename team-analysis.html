@@ -30,7 +30,7 @@
 <section class="panel"><h2>Analyst's race report</h2><div class="in"><div id="insights" class="insight-list"><p class="empty-state">Building insights from the latest records…</p></div></div></section>
 <section class="panel"><h2>Official laps by event</h2><div class="in"><div id="eventChart" class="bar-chart"><p class="empty-state">Loading event comparison…</p></div><p class="small-note">Uses official race-record lap totals, not a sum of individual rider entries.</p></div></section>
 </div>
-<section class="panel"><h2>Rider lap leaderboard</h2><div class="in"><p class="sub">Ranked by recorded rider-stat entries across events. Duplicate event labels are consolidated to avoid double-counting.</p><div class="scroll"><table><thead><tr><th>Rank</th><th>Rider</th><th>Events recorded</th><th>Total recorded laps</th><th>Average per event</th></tr></thead><tbody id="leaderRows"><tr><td colspan="5">Loading rider statistics…</td></tr></tbody></table></div><p class="small-note">Rider totals are based on available individual records and may not add up to the official team total when some rider entries are missing.</p></div></section>
+<section class="panel"><h2>Rider performance overview</h2><div class="in"><p class="sub">A team-wide summary of recorded rider activity, without ranking teammates against each other.</p><div class="scroll"><table><thead><tr><th>Rider</th><th>Events recorded</th><th>Total recorded laps</th><th>Average per event</th></tr></thead><tbody id="leaderRows"><tr><td colspan="4">Loading rider statistics…</td></tr></tbody></table></div><p class="small-note">These totals reflect available rider-stat entries. They may not add up to the official team total if some individual records are missing.</p></div></section>
 <section class="panel"><h2>Official race results</h2><div class="in"><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading official results…</td></tr></tbody></table></div></div></section>
 <section class="panel"><h2>Fastest recorded lap</h2><div class="in" id="fastestLap"><p class="empty-state">Checking lap-time records…</p></div></section>
 </main>
@@ -77,11 +77,11 @@ try{
  const picked=new Map();
  stats.forEach(s=>{const key=normalizeEvent(s.event)+'|'+String(s.rider_name).trim().toLowerCase();if(!key||key.startsWith('placeholder|'))return;const old=picked.get(key);const official=officialByKey.get(normalizeEvent(s.event));const exact=official&&String(official.event).trim().toLowerCase()===String(s.event).trim().toLowerCase();const oldExact=old&&official&&String(official.event).trim().toLowerCase()===String(old.event).trim().toLowerCase();if(!old||(exact&&!oldExact)||(!oldExact&&!exact&&lapsNumber(s.laps)>lapsNumber(old.laps)))picked.set(key,s)});
  const byRider=new Map();picked.forEach((s,key)=>{const name=String(s.rider_name).trim();const k=name.toLowerCase();if(!byRider.has(k))byRider.set(k,{name,events:new Set(),laps:0});const r=byRider.get(k);r.events.add(normalizeEvent(s.event));r.laps+=lapsNumber(s.laps)});
- const leaderboard=[...byRider.values()].sort((a,b)=>b.laps-a.laps||b.events.size-a.events.size||a.name.localeCompare(b.name));
+ const leaderboard=[...byRider.values()].sort((a,b)=>a.name.localeCompare(b.name));
  $('riderCount').textContent=String(leaderboard.length);
  const leaderBody=$('leaderRows');leaderBody.textContent='';
- if(!leaderboard.length)renderEmpty(leaderBody,5,'No rider statistics recorded yet.');
- else leaderboard.forEach((r,i)=>{const tr=el('tr');const rank=td(tr,'#'+(i+1),'rank');td(tr,r.name);td(tr,r.events.size);td(tr,r.laps.toLocaleString('en-AU'));td(tr,r.events.size?(r.laps/r.events.size).toFixed(1):'—');leaderBody.appendChild(tr)});
+ if(!leaderboard.length)renderEmpty(leaderBody,4,'No rider statistics recorded yet.');
+ else leaderboard.forEach(r=>{const tr=el('tr');td(tr,r.name);td(tr,r.events.size);td(tr,r.laps.toLocaleString('en-AU'));td(tr,r.events.size?(r.laps/r.events.size).toFixed(1):'—');leaderBody.appendChild(tr)});
  const raceBody=$('raceRows');raceBody.textContent='';
  if(!races.length)renderEmpty(raceBody,4,'No official race results recorded yet.');
  else races.slice().sort((a,b)=>String(b.race_date||'').localeCompare(String(a.race_date||''))).forEach(r=>{const tr=el('tr');td(tr,r.event);td(tr,dateLabel(r.race_date));td(tr,r.result||'—');td(tr,lapsNumber(r.laps).toLocaleString('en-AU'));raceBody.appendChild(tr)});
