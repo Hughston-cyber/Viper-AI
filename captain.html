@@ -556,10 +556,44 @@ sb.auth.onAuthStateChange(()=>{setTimeout(init,0)});init();
   const menu=document.getElementById('leadershipMenu');
   const toggle=document.getElementById('leadershipToggle');
   const submenu=document.getElementById('leadershipSubmenu');
+  const roll=document.getElementById('leadAttendanceLink');
+  const captain=document.getElementById('leadCaptainLink');
   if(!menu||!toggle||!submenu)return;
-  const setOpen=(open)=>{submenu.hidden=!open;toggle.setAttribute('aria-expanded',String(open));};
-  setOpen(Boolean(submenu.querySelector('[aria-current="page"]')));
-  toggle.addEventListener('click',()=>setOpen(submenu.hidden));
+
+  const page=(window.location.pathname.split('/').pop()||'index.html').toLowerCase();
+  if(roll){
+    if(page==='attendance.html') roll.setAttribute('aria-current','page');
+    else roll.removeAttribute('aria-current');
+  }
+  if(captain){
+    if(page==='captain.html') captain.setAttribute('aria-current','page');
+    else captain.removeAttribute('aria-current');
+  }
+
+  function setOpen(open){
+    submenu.hidden=!open;
+    toggle.setAttribute('aria-expanded',String(open));
+    toggle.setAttribute('aria-controls','leadershipSubmenu');
+  }
+
+  setOpen(page==='attendance.html'||page==='captain.html');
+
+  // Delegate in capture phase so the menu still responds if older page scripts
+  // attach competing handlers or styles.
+  document.addEventListener('click',function(event){
+    const button=event.target&&event.target.closest?event.target.closest('#leadershipToggle'):null;
+    if(!button)return;
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(submenu.hidden);
+  },true);
+
+  toggle.addEventListener('keydown',function(event){
+    if(event.key==='Escape'){
+      setOpen(false);
+      toggle.focus();
+    }
+  });
 })();
 </script>
 
