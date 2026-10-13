@@ -11,6 +11,7 @@ const groups=[
  {title:'Leadership',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧'],['Training Planner','training.html','▦'],['Race Day Command Centre','race-command.html','🏁'],['Rider Availability','rider-availability.html','◉']]}
 ];
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+if(current==='index.html')return; // Dashboard keeps its existing side navigation; all other pages use the top Navigate menu.
 const wrap=document.createElement('div');wrap.className='viper-menu-wrap';
 const trigger=document.createElement('button');trigger.type='button';trigger.className='viper-menu-trigger';trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-haspopup','true');
 trigger.innerHTML='<span class="viper-menu-icon" aria-hidden="true">☰</span><span>Navigate</span><span aria-hidden="true">▾</span>';
