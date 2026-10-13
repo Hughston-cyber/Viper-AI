@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b100d">
+<title>Race Performance Dashboard — VIPER AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="viper-polish.css?v=1">
+<style>
+main{padding-bottom:64px}.dash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}.filter{min-width:170px}.dash-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}.event-bars{display:grid;gap:13px}.event-row{display:grid;grid-template-columns:minmax(100px,1fr) minmax(90px,2fr) 42px;gap:10px;align-items:center;font-size:13px}.event-name{overflow-wrap:anywhere;color:#d7e3d8}.track{height:11px;border-radius:99px;background:#253229;overflow:hidden}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#4b8c43,#c8f169)}.value{text-align:right;color:var(--sig);font-weight:850;font-variant-numeric:tabular-nums}.insights{display:grid;gap:10px}.insight{padding:13px 14px;border:1px solid #304333;border-radius:9px;background:#121c15}.insight b{display:block;color:var(--sig);font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}.insight p{margin:0;color:#d7e3d8}.status-line{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}.muted{color:var(--mute);font-size:12px}.rank{color:var(--sig);font-weight:800}.empty{padding:14px;color:var(--mute)}.table-wrap{overflow-x:auto}.table-wrap table{min-width:620px}@media(max-width:820px){.dash-grid{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}}@media(max-width:520px){.tiles{grid-template-columns:1fr}.event-row{grid-template-columns:minmax(80px,1fr) minmax(50px,1fr) 34px;gap:7px}.table-wrap table{min-width:560px}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Race Performance</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="race-days.html">Race days</a><a class="btn line sm" href="rider-data.html">Rider Data</a><a class="btn line sm" href="team-analysis.html">Data Analysis</a><a class="btn line sm" aria-current="page" href="performance-dashboard.html">Performance</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="leadRiderManagementLink" href="riders.html" hidden>Rider Management</a></div></div><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
+<div id="gate" class="wrap" hidden><div class="card"><h2>Approved members only</h2><p class="dim">Sign in with an approved Team Venom account to view race performance.</p><a class="btn" href="index.html">Go to dashboard and sign in</a></div></div>
+<main id="main" class="wrap" hidden>
+<div class="dash-head"><div><div class="eyebrow">VIPER intelligence · Season overview</div><h1>Race Performance <span style="color:var(--sig)">Dashboard.</span></h1><p class="sub">A clear snapshot of official team results and recorded rider laps, using the existing VIPER AI race data.</p></div><label class="filter">Season<select id="season"><option value="all">All recorded seasons</option></select></label></div>
+<div class="status-line"><div id="status" role="status">Loading official results and rider statistics…</div><button id="refresh" class="btn line sm" type="button">Refresh data</button></div>
+<section class="tiles" aria-label="Performance summary">
+<div class="tile"><b id="events">—</b><span>Official race events</span></div>
+<div class="tile"><b id="teamLaps">—</b><span>Official team laps</span></div>
+<div class="tile"><b id="podiums">—</b><span>Recorded podium finishes</span></div>
+<div class="tile"><b id="riders">—</b><span>Riders with recorded stats</span></div>
+</section>
+<div class="dash-grid">
+<section class="panel"><h2>Season highlights</h2><div class="in"><div id="insights" class="insights"><p class="empty">Calculating highlights…</p></div></div></section>
+<section class="panel"><h2>Official laps by event</h2><div class="in"><div id="eventBars" class="event-bars"><p class="empty">Loading event comparison…</p></div><p class="muted">Bars use official team lap totals from race records, not a sum of rider entries.</p></div></section>
+</div>
+<section class="panel"><h2>Rider performance</h2><div class="in"><p class="sub">Totals and averages are calculated from available rider-stat entries. Missing individual entries can mean rider totals do not add up to the official team total.</p><div class="table-wrap"><table><thead><tr><th>Rider</th><th>Events recorded</th><th>Total laps</th><th>Average laps / event</th><th>Highest recorded event</th></tr></thead><tbody id="riderRows"><tr><td colspan="5">Loading rider data…</td></tr></tbody></table></div></div></section>
+<section class="panel"><h2>Official race results</h2><div class="in"><div class="table-wrap"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading results…</td></tr></tbody></table></div></div></section>
+</main>
+<footer><div class="wrap">VIPER AI · VENOM INTELLIGENCE. PERFORMANCE. RESULTS.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const $=id=>document.getElementById(id);
+function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
+function normalizeEvent(value){const s=String(value||'').trim().toLowerCase();if(/^casey fields 1$/.test(s))return 'placeholder';if(s.includes('casey fields'))return 'casey-fields';if(s.includes('sandown'))return 'sandown';if(s.includes('calder'))return 'calder';return s.replace(/\s*\(round\s*#?\d+\)/i,'').replace(/\s+202\d$/,'').replace(/[^a-z0-9]+/g,' ').trim()}
+function laps(value){const n=Number(value);return Number.isFinite(n)&&n>0?n:0}
+function dateLabel(value){if(!value)return '—';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?value:d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
+function yearOf(value){return value&&/^\d{4}/.test(value)?value.slice(0,4):'Unknown'}
+function emptyRow(body,cols,msg){body.textContent='';const tr=el('tr');const td=el('td',msg);td.colSpan=cols;tr.append(td);body.append(tr)}
+function td(row,value){row.append(el('td',value===null||value===undefined||value===''?'—':String(value)))}
+function insight(label,description){const d=el('div',undefined,'insight');d.append(el('b',label),el('p',description));$('insights').append(d)}
+let allRaces=[],allStats=[],profile=null;
+function selectedYear(){return $('season').value}
+function render(){
+ const yr=selectedYear();
+ const races=allRaces.filter(r=>yr==='all'||yearOf(r.race_date)===yr);
+ const officialByKey=new Map(allRaces.map(r=>[normalizeEvent(r.event),r]));
+ const picked=new Map();
+ allStats.forEach(s=>{
+  const key=normalizeEvent(s.event)+'|'+String(s.rider_name||'').trim().toLowerCase();
+  if(!String(s.rider_name||'').trim()||normalizeEvent(s.event)==='placeholder')return;
+  const official=officialByKey.get(normalizeEvent(s.event));
+  if(yr!=='all'&&(!official||yearOf(official.race_date)!==yr))return;
+  const old=picked.get(key);
+  const exact=official&&String(official.event).trim().toLowerCase()===String(s.event).trim().toLowerCase();
+  const oldExact=old&&official&&String(official.event).trim().toLowerCase()===String(old.event).trim().toLowerCase();
+  if(!old||(exact&&!oldExact)||(!oldExact&&!exact&&laps(s.laps)>laps(old.laps)))picked.set(key,s);
+ });
+ const byRider=new Map();
+ picked.forEach(s=>{const name=String(s.rider_name).trim(),k=name.toLowerCase();if(!byRider.has(k))byRider.set(k,{name,events:new Set(),laps:0,byEvent:new Map()});const r=byRider.get(k),ek=normalizeEvent(s.event);r.events.add(ek);r.laps+=laps(s.laps);r.byEvent.set(ek,{name:s.event,laps:laps(s.laps)})});
+ const riders=[...byRider.values()].sort((a,b)=>b.laps-a.laps||a.name.localeCompare(b.name));
+ const total=races.reduce((sum,r)=>sum+laps(r.laps),0);
+ const podiums=races.filter(r=>/\b(?:1st|2nd|3rd|first|second|third)\b/i.test(String(r.result||''))).length;
+ $('events').textContent=races.length.toLocaleString('en-AU');$('teamLaps').textContent=total.toLocaleString('en-AU');$('podiums').textContent=podiums.toLocaleString('en-AU');$('riders').textContent=riders.length.toLocaleString('en-AU');
+ const insights=$('insights');insights.textContent='';
+ if(!races.length)insight('No official results yet','When official race results are recorded, season highlights will appear here.');
+ else{
+  const best=races.slice().sort((a,b)=>laps(b.laps)-laps(a.laps))[0];
+  insight('Highest-lap event',best.event+' recorded '+laps(best.laps)+' official team laps.');
+  insight('Average event total',(total/races.length).toFixed(1)+' official team laps across '+races.length+' event(s).');
+  insight('Podium finishes',podiums+' recorded result(s) labelled 1st, 2nd or 3rd.');
+  const latest=races.slice().sort((a,b)=>String(b.race_date||'').localeCompare(String(a.race_date||'')))[0];
+  insight('Most recent result',latest.event+' · '+(latest.result||'Result not recorded')+' · '+dateLabel(latest.race_date)+'.');
+ }
+ if(riders.length){insight('Most recorded rider laps',riders[0].name+' has '+riders[0].laps+' recorded laps across '+riders[0].events.size+' event(s).');}
+ const bars=$('eventBars');bars.textContent='';
+ if(!races.length)bars.append(el('p','No event totals available.','empty'));
+ else{const max=Math.max(1,...races.map(r=>laps(r.laps)));races.slice().sort((a,b)=>String(b.race_date||'').localeCompare(String(a.race_date||''))).forEach(r=>{const row=el('div',undefined,'event-row');const name=el('div',r.event,'event-name');const track=el('div',undefined,'track');const fill=el('div',undefined,'fill');fill.style.width=(laps(r.laps)/max*100)+'%';track.append(fill);row.append(name,track,el('div',String(laps(r.laps)),'value'));bars.append(row)})}
+ const riderBody=$('riderRows');riderBody.textContent='';
+ if(!riders.length)emptyRow(riderBody,5,'No rider statistics recorded for this selection.');
+ else riders.forEach(r=>{const tr=el('tr');td(tr,r.name);td(tr,r.events.size);td(tr,r.laps.toLocaleString('en-AU'));td(tr,r.events.size?(r.laps/r.events.size).toFixed(1):'—');const best=[...r.byEvent.values()].sort((a,b)=>b.laps-a.laps)[0];td(tr,best?best.name+' ('+best.laps+' laps)':'—');riderBody.append(tr)});
+ const raceBody=$('raceRows');raceBody.textContent='';
+ if(!races.length)emptyRow(raceBody,4,'No official race results for this season.');
+ else races.slice().sort((a,b)=>String(b.race_date||'').localeCompare(String(a.race_date||''))).forEach(r=>{const tr=el('tr');td(tr,r.event);td(tr,dateLabel(r.race_date));td(tr,r.result||'—');td(tr,laps(r.laps).toLocaleString('en-AU'));raceBody.append(tr)});
+ $('status').textContent='Showing '+(yr==='all'?'all recorded seasons':yr)+' · data from VIPER AI race records and rider statistics.';
+}
+async function load(){
+ $('status').textContent='Loading official results and rider statistics…';$('refresh').disabled=true;
+ try{
+  const sessionResult=await sb.auth.getSession();if(sessionResult.error)throw sessionResult.error;
+  if(!sessionResult.data.session){$('gate').hidden=false;$('main').hidden=true;return}
+  const p=await sb.from('profiles').select('id,full_name,status,role').eq('id',sessionResult.data.session.user.id).single();
+  if(p.error||!p.data||p.data.status!=='approved'){$('gate').hidden=false;$('main').hidden=true;return}
+  profile=p.data;$('gate').hidden=true;$('main').hidden=false;$('who').textContent=profile.full_name||'';$('out').hidden=false;
+  $('leadershipMenu').hidden=!(profile.role==='captain'||profile.role==='leadership');$('leadCaptainLink').hidden=profile.role!=='captain';$('leadRiderManagementLink').hidden=profile.role!=='captain';
+  const [raceRes,statsRes]=await Promise.all([
+   sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:true}),
+   sb.from('rider_stats').select('rider_name,event,laps,notes').order('event').order('rider_name')
+  ]);
+  if(raceRes.error)throw raceRes.error;if(statsRes.error)throw statsRes.error;
+  allRaces=(raceRes.data||[]).filter(r=>normalizeEvent(r.event)!=='placeholder');
+  allStats=(statsRes.data||[]).filter(s=>normalizeEvent(s.event)!=='placeholder'&&String(s.rider_name||'').trim());
+  const years=[...new Set(allRaces.map(r=>yearOf(r.race_date)).filter(y=>y!=='Unknown'))].sort((a,b)=>b.localeCompare(a));
+  const select=$('season'),previous=select.value;select.innerHTML='';
+  const all=el('option','All recorded seasons');all.value='all';select.append(all);
+  years.forEach(y=>{const o=el('option',y);o.value=y;select.append(o)});
+  select.value=years.includes(previous)?previous:'all';render();
+ }catch(e){console.error('Performance dashboard failed',e);$('status').textContent='Could not load data: '+(e.message||'Please refresh or sign in again.')}
+ finally{$('refresh').disabled=false}
+}
+$('season').addEventListener('change',render);
+$('refresh').addEventListener('click',load);
+$('out').addEventListener('click',async()=>{await sb.auth.signOut();location.href='index.html'});
+sb.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.href='index.html'});
+load();
+})();
+</script>
+<script>
+(function(){const menu=document.getElementById('leadershipMenu'),toggle=document.getElementById('leadershipToggle'),submenu=document.getElementById('leadershipSubmenu');if(!menu||!toggle||!submenu)return;toggle.addEventListener('click',()=>{const open=submenu.hidden;submenu.hidden=!open;toggle.setAttribute('aria-expanded',String(open))})})();
+</script>
+</body>
+</html>
