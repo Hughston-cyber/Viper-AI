@@ -48,7 +48,7 @@
 </style>
 </head>
 <body>
-<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Data Analysis</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="race-days.html">Race days</a><a class="btn line sm" href="rider-data.html">Rider Data</a><a class="btn line sm" aria-current="page" href="team-analysis.html">Data Analysis</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></div></div><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
+<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Data Analysis</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="race-days.html">Race days</a><a class="btn line sm" href="rider-data.html">Rider Data</a><a class="btn line sm" aria-current="page" href="team-analysis.html">Data Analysis</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="leadRiderManagementLink" href="riders.html" hidden>Rider Management</a></div></div><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
 <div id="gate" class="wrap" hidden><div class="card"><h2>Approved members only</h2><p class="dim">Sign in with an approved Team Venom account to view team analysis.</p><a class="btn" href="index.html">Go to dashboard and sign in</a></div></div>
 <main id="main" class="wrap" hidden>
 <div class="eyebrow">VIPER intelligence · Team performance</div>
@@ -120,7 +120,7 @@ try{
  const {data:profile,error:profileError}=await sb.from('profiles').select('id,full_name,status,role').eq('id',sessionData.session.user.id).single();
  if(profileError||!profile||profile.status!=='approved'){$('gate').hidden=false;$('main').hidden=true;return}
  $('gate').hidden=true;$('main').hidden=false;$('who').textContent=profile.full_name||'';$('out').hidden=false;
- $('leadershipMenu').hidden=!(profile.role==='captain'||profile.role==='leadership');$('leadCaptainLink').hidden=profile.role!=='captain'||profile.id!==OWNER_ID;
+ $('leadershipMenu').hidden=!(profile.role==='captain'||profile.role==='leadership');$('leadCaptainLink').hidden=profile.role!=='captain'||profile.id!==OWNER_ID;$('leadRiderManagementLink').hidden=profile.role!=='captain';
  const [raceRes,statRes,lapRes]=await Promise.all([
  sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:true}),
  sb.from('rider_stats').select('rider_name,event,laps,notes').order('event').order('rider_name'),
