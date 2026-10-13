@@ -83,7 +83,7 @@
 </div>
 <p id="caseySummary" class="small-note">Preparing Casey Fields Round 2 graphs…</p>
 </div></section>
-<section class="panel"><h2>Official race results</h2><div class="in"><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading official results…</td></tr></tbody></table></div></div></section>
+<section class="panel"><h2>Official race results</h2><div class="in"><label for="officialResultsSearch">Search official results</label><input id="officialResultsSearch" type="search" placeholder="Search event, date, result or laps…" autocomplete="off" style="width:100%;padding:10px;margin:6px 0 12px"><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Team laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4">Loading official results…</td></tr></tbody></table></div></div></section>
 </main>
 <footer><div class="wrap">VIPER MOTORSPORT — RACE DATA. TEAM PERFORMANCE.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -103,6 +103,15 @@ function renderEmpty(body,colspan,message){body.textContent='';const tr=el('tr')
 function timeToSeconds(value){const m=String(value||'').trim().match(/^(\d+):(\d{2})(?:\.(\d+))?$/);if(!m)return null;return Number(m[1])*60+Number(m[2])+Number('0.'+(m[3]||'0'))}
 let liveResultsChannel=null,liveResultsTimer=null;
 function watchLiveResults(){if(liveResultsChannel)return;const refresh=()=>{if(liveResultsTimer)clearTimeout(liveResultsTimer);liveResultsTimer=setTimeout(()=>{liveResultsTimer=null;load()},400)};liveResultsChannel=sb.channel('viper-live-race-results-analysis').on('postgres_changes',{event:'*',schema:'public',table:'race_records'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'rider_stats'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'lap_records'},refresh).subscribe((status,error)=>{if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')console.warn('Live race result subscription:',status,error||'')})}
+function setupOfficialResultsSearch(){
+ const input=$('officialResultsSearch'),body=$('raceRows');
+ if(!input||!body||input.dataset.searchReady)return;
+ input.dataset.searchReady='true';
+ const apply=()=>{const query=input.value.trim().toLocaleLowerCase();[...body.rows].forEach(row=>{row.hidden=!!query&&!row.textContent.toLocaleLowerCase().includes(query)});};
+ input.addEventListener('input',apply);
+ new MutationObserver(apply).observe(body,{childList:true,subtree:true});
+}
+setupOfficialResultsSearch();
 async function load(){
 $('status').textContent='Refreshing live records…';
 try{
