@@ -1,7 +1,7 @@
 /* VIPER AI shared navigation overhaul */
 .viper-legacy-nav>a[href],.viper-legacy-nav>.lead-menu{display:none!important}.viper-legacy-nav .hidden{display:none!important}.viper-menu-wrap{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .viper-menu-wrap{position:relative;display:inline-flex;align-items:center;z-index:1000}
-.viper-menu-trigger{display:inline-flex;align-items:center;gap:9px;min-height:38px;padding:9px 13px;border:1px solid #3d5b43;border-radius:8px;background:#17251a;color:#e8f1e9;font:750 12px/1.2 inherit;cursor:pointer;white-space:nowrap}
+.viper-menu-trigger{display:inline-flex;align-items:center;gap:9px;min-height:38px;padding:9px 13px;border:1px solid #3d5b43;border-radius:8px;background:#17251a;color:#e8f1e9;font-family:inherit;font-size:12px;font-weight:750;line-height:1.2;cursor:pointer;white-space:nowrap}
 .viper-menu-trigger:hover,.viper-menu-trigger[aria-expanded="true"]{border-color:#c8f169;background:#202f22;color:#c8f169}
 .viper-menu-trigger .viper-menu-icon{font-size:17px;line-height:1}
 .viper-menu-panel{position:absolute;top:calc(100% + 10px);right:0;width:min(680px,calc(100vw - 28px));padding:16px;border:1px solid #304634;border-radius:13px;background:#0c140e;box-shadow:0 18px 50px #0009;display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;color:#e7f0e8}
