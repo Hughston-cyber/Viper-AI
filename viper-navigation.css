@@ -40,3 +40,10 @@ body.viper-has-sidebar main{margin-left:248px}
  .viper-sidebar-group a{font-size:11px;padding:8px 6px}
  body.viper-has-sidebar main{margin-left:0}
 }
+
+/* Dashboard: the sidebar replaces every dropdown and navigation link in the header. */
+html body header.bar .site-nav.viper-dashboard-top-nav>a[href],
+html body header.bar .site-nav.viper-dashboard-top-nav>.lead-menu,
+html body header.bar .site-nav.viper-dashboard-top-nav>.viper-menu-wrap,
+html body header.bar .site-nav.viper-dashboard-top-nav>#leadershipMenu,
+html body header.bar .site-nav.viper-dashboard-top-nav>#navCaptain{display:none!important}
