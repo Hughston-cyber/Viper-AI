@@ -196,7 +196,7 @@ const sec=s=>{const p=s.split(':');return Number(p[0])*60+Number(p[1]);};
 const fmt=s=>{const m=Math.floor(s/60),v=(s%60).toFixed(1).padStart(4,'0');return m+':'+v;};
 const names=['Tenny','Nick','Oscar','Hugh','Hutch','Josh','Dylan','Felix'];
 const clean=raw.filter(x=>!x[4]);
-const averages=names.map(name=>{const rows=clean.filter(x=>x[2]===name);return {name,count:rows.length,avg:rows.reduce((sum,x)=>sum+sec(x[1]),0)/rows.length};}).sort((a,b)=>a.avg-b.avg);
+const averages=names.map(name=>{const rows=clean.filter(x=>x[2]===name);return {name,count:rows.length,avg:rows.reduce((sum,x)=>sum+sec(x[1]),0)/rows.length};});
 const palette=names.map(()=> '#a5e65a');
 const c1=document.getElementById('caseyLapChart'),c2=document.getElementById('caseyRiderChart');
 if(!c1||!c2||!window.Chart)return;
