@@ -6,7 +6,7 @@ if(!nav||nav.querySelector('.viper-menu-wrap'))return;
 const groups=[
  {title:'Home',items:[['Dashboard','index.html','⌂'],['Race Days','race-days.html','🏁']]},
  {title:'Performance',items:[['Rider Data','rider-data.html','↗'],['Data Analysis','team-analysis.html','▥'],['Performance Dashboard','performance-dashboard.html','◫']]},
- {title:'Team',items:[['Roll Call','attendance.html','✓'],['Announcements','announcements.html','▤'],['Assistant','assistant.html','✦']]},
+ {title:'Team',items:[['Roll Call','attendance.html','✓'],['Announcements','announcements.html','▤']]},
  {title:'Leadership',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧'],['Training Planner','training.html','▦'],['Race Day Command Centre','race-command.html','🏁'],['Rider Availability','rider-availability.html','◉']]}
 ];
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
@@ -44,7 +44,7 @@ function setAccess(role,status){
  panel.querySelectorAll('a').forEach(a=>{
   const href=a.dataset.href;
   const isLeadership=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(href);
-  const allowed=approved&&(!isLeadership||leadership);
+  const allowed=!isLeadership||(approved&&leadership);
   a.hidden=!allowed;
  });
  panel.querySelectorAll('.viper-menu-group').forEach(section=>{
