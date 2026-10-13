@@ -1,7 +1,7 @@
 /* VIPER AI shared grouped navigation. Keeps page-specific auth and feature code intact. */
 (function(){
 'use strict';
-const nav=document.querySelector('header .site-nav');
+const nav=document.querySelector('header .site-nav,header .links,.sidebar .nav');
 if(!nav||nav.querySelector('.viper-menu-wrap'))return;
 const groups=[
  {title:'Home',items:[['Dashboard','index.html','⌂'],['Race Days','race-days.html','🏁']]},
@@ -30,9 +30,8 @@ groups.forEach(group=>{
  panel.append(section);
 });
 panel.append(user);wrap.append(trigger,panel);
-const accountControls=[...nav.querySelectorAll('#who,#out')];
+nav.classList.add('viper-legacy-nav');
 nav.insertBefore(wrap,nav.firstChild);
-document.documentElement.classList.add('viper-nav-ready');
 function close(){panel.dataset.open='false';trigger.setAttribute('aria-expanded','false')}
 function toggle(){const open=panel.dataset.open!=='true';panel.dataset.open=String(open);trigger.setAttribute('aria-expanded',String(open))}
 trigger.addEventListener('click',toggle);
