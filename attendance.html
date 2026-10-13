@@ -93,7 +93,7 @@ html body>header.bar .site-nav #leadershipSubmenu a{display:flex!important;align
 html body>header.bar .site-nav #leadershipSubmenu a:hover,html body>header.bar .site-nav #leadershipSubmenu a[aria-current="page"]{border-color:#405344!important;background:#1b2a1f!important;color:var(--sig)!important}
 html body>header.bar .site-nav>#navCaptain{display:none!important}
 
-</style><link rel="stylesheet" href="viper-polish.css?v=1">
+.roll-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.65fr);gap:6px 12px;align-items:end;margin:0 0 16px}.roll-filters label{margin:0}.roll-filters input,.roll-filters select{width:100%;min-width:0}@media(max-width:520px){.roll-filters{grid-template-columns:1fr}}\n</style><link rel="stylesheet" href="viper-polish.css?v=1">
 </head>
 <body>
 <header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Roll Call</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><a id="navAnalysis" class="btn line sm" href="team-analysis.html">Data Analysis</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span id="leadershipChevron" aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html" aria-current="page">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a></div></div><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header><div id="gate" class="wrap gate" hidden><div class="eyebrow">Restricted area</div><h2 style="margin-top:8px">Leadership access required.</h2><p class="muted">The attendance register is available to approved captains and approved leadership members only. Sign in with an authorised account to continue.</p><a class="btn primary" href="index.html">Go to sign in</a></div>
@@ -101,7 +101,7 @@ html body>header.bar .site-nav>#navCaptain{display:none!important}
 <div class="eyebrow">Team Venom · People & race operations</div><h1>Leadership <span style="color:var(--sig)">Roll Call.</span></h1><p class="sub">A race-by-race attendance register. Mark each rider Present, Late, Absent or Unmarked; updates are saved to Viper AI.</p>
 <section class="panel"><div class="panel-head"><h2>Choose race day</h2><span id="eventDate" class="pill">Select an event</span></div><div class="panel-body"><div class="controls"><div class="field"><label for="raceSelect">Race day / event</label><select id="raceSelect"><option value="">Loading race days…</option></select></div><button id="refresh" class="btn" type="button">Refresh register</button></div><div id="message" class="msg" role="status" aria-live="polite"></div></div></section>
 <div class="stats" aria-label="Attendance totals"><div class="stat"><b id="total">0</b><span>On the roll</span></div><div class="stat"><b id="present">0</b><span>Present</span></div><div class="stat"><b id="late">0</b><span>Late</span></div><div class="stat"><b id="absent">0</b><span>Absent</span></div><div class="stat"><b id="unmarked">0</b><span>Unmarked</span></div></div>
-<section class="panel"><div class="panel-head"><h2>Attendance roll</h2><span class="muted" id="savedHint">Choose an event to begin</span></div><div class="panel-body"><div id="roll" class="roll"></div><div class="add-row"><input id="newRider" maxlength="80" placeholder="Add a rider to this roll…" aria-label="New rider name"><button id="addRider" class="btn primary" type="button">Add rider</button></div><p class="small-note">A rider added here is saved for this race day. Choose Unmarked to clear a status. Only approved leadership can view or change attendance.</p></div></section>
+<section class="panel"><div class="panel-head"><h2>Attendance roll</h2><span class="muted" id="savedHint">Choose an event to begin</span></div><div class="panel-body"><div class="roll-filters"><label for="attendanceSearch">Find rider</label><input id="attendanceSearch" type="search" placeholder="Search rider name…" autocomplete="off"><label for="attendanceStatusFilter">Show status</label><select id="attendanceStatusFilter"><option value="all">All statuses</option><option value="present">Present</option><option value="late">Late</option><option value="absent">Absent</option><option value="unmarked">Unmarked</option></select></div><div id="roll" class="roll"></div><div class="add-row"><input id="newRider" maxlength="80" placeholder="Add a rider to this roll…" aria-label="New rider name"><button id="addRider" class="btn primary" type="button">Add rider</button></div><p class="small-note">A rider added here is saved for this race day. Choose Unmarked to clear a status. Only approved leadership can view or change attendance.</p></div></section>
 <section class="panel"><div class="panel-head"><h2>Race attendance history</h2><span class="muted">Saved records</span></div><div class="table-wrap"><table><thead><tr><th>Race day</th><th>Date</th><th>Present</th><th>Late</th><th>Absent</th><th>Unmarked</th></tr></thead><tbody id="history"><tr><td colspan="6" class="muted">Loading attendance history…</td></tr></tbody></table></div></section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -122,14 +122,18 @@ function renderRoll(){
  var box=$('roll');box.textContent='';
  if(!activeDay){box.textContent='Choose a race day to load its roll.';updateStats();return}
  if(!attendance.length){box.textContent='No riders on this roll yet. Add a rider below.';updateStats();return}
- attendance.slice().sort(function(a,b){return a.rider_name.localeCompare(b.rider_name)}).forEach(function(r){
+ var query=($('attendanceSearch')&&$('attendanceSearch').value||'').trim().toLowerCase();
+ var statusFilter=$('attendanceStatusFilter')&&$('attendanceStatusFilter').value||'all';
+ var visible=attendance.filter(function(r){return (!query||r.rider_name.toLowerCase().includes(query))&&(statusFilter==='all'||r.status===statusFilter)});
+ if(!visible.length){box.textContent='No riders match these filters.';updateStats();return}
+ visible.slice().sort(function(a,b){return a.rider_name.localeCompare(b.rider_name)}).forEach(function(r){
   var card=document.createElement('article');card.className='rider';
   var top=document.createElement('div');top.className='rider-top';
   var name=document.createElement('div');name.className='rider-name';name.textContent=r.rider_name;
   var st=document.createElement('div');st.className='rider-status '+r.status;st.textContent=r.status;
   top.append(name,st);card.appendChild(top);
   var buttons=document.createElement('div');buttons.className='status-buttons';
-  [['present','Present'],['late','Late'],['absent','Absent'],['unmarked','Unmarked']].forEach(function(x){buttons.appendChild(makeStatusButton(r,x[0],x[1]))});
+  [['present','Present'],['late','Late'],['absent','Absent'],['unmarked','Unmarked']].forEach(function(x){var b=makeStatusButton(r,x[0],x[1]);b.disabled=busy;buttons.appendChild(b)});
   card.appendChild(buttons);box.appendChild(card);
  });
  updateStats();
@@ -196,7 +200,7 @@ async function init(){
  days.forEach(function(day){var o=document.createElement('option');o.value=day.id;o.textContent=day.title+(day.race_date?' — '+fmtDate(day.race_date):'');sel.appendChild(o)});
  var future=days.filter(function(x){return x.race_date&&x.race_date>=new Date().toISOString().slice(0,10)});var initial=future[0]||days[days.length-1];sel.value=String(initial.id);await loadDay();await loadHistory();
 }
-$('raceSelect').addEventListener('change',loadDay);$('refresh').onclick=async function(){await loadDay();await loadHistory()};$('addRider').onclick=addRider;$('newRider').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addRider()}});
+$('attendanceSearch').addEventListener('input',renderRoll);$('attendanceStatusFilter').addEventListener('change',renderRoll);$('raceSelect').addEventListener('change',loadDay);$('refresh').onclick=async function(){await loadDay();await loadHistory()};$('addRider').onclick=addRider;$('newRider').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addRider()}});
 $('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
 sb.auth.onAuthStateChange(function(event,session){if(event==='SIGNED_OUT')location.href='index.html'});
 init();
