@@ -46,7 +46,7 @@
 }
 
 </style>
-<link rel="stylesheet" href="viper-navigation.css?v=2">
+<link rel="stylesheet" href="viper-navigation.css?v=4">
 </head>
 <body>
 <header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Data Analysis</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" href="index.html">Dashboard</a><a class="btn line sm" href="race-days.html">Race days</a><a class="btn line sm" href="rider-data.html">Rider Data</a><a class="btn line sm" aria-current="page" href="team-analysis.html">Data Analysis</a><a class="btn line sm" href="performance-dashboard.html">Performance</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="leadRiderManagementLink" href="riders.html" hidden>Rider Management</a></div></div><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header>
@@ -219,6 +219,6 @@ const fastest=clean.reduce((a,b)=>sec(a[1])<sec(b[1])?a:b);
 document.getElementById('caseySummary').textContent=raw.length+' race laps recorded across '+names.length+' riders · Fastest clean lap: '+fastest[1]+' — Lap '+fastest[0]+', '+fastest[2]+'. Lap 58 is marked as a roll lap and excluded from clean-lap averages. Tooltips include time of day.';
 })();
 </script>
-\n<script src="viper-navigation.js?v=2"></script>
+\n<script src="viper-navigation.js?v=4"></script>
 </body>
 </html>
