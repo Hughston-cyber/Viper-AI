@@ -111,7 +111,7 @@ html body>header.bar .site-nav>#navCaptain{display:none!important}
 var sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
 var $=function(id){return document.getElementById(id)};
 var user=null,profile=null,days=[],attendance=[],activeDay=null,busy=false;
-var DEFAULT_RIDERS=['Felix Maskiell','Oscar Layton','Hugh Fletcher','Hutch Freckleton','Josh Lichomets','Nicholas Katsabis','Tenny Hearn','Ross'];
+var DEFAULT_RIDERS=['Felix Maskiell','Oscar Layton','Hugh Fletcher','Hutch Freckleton','Josh Lichomets','Nicholas Katsabis','Tenny Hearn','Dylan McGilton'];
 function say(text,error){$('message').textContent=text||'';$('message').className='msg'+(error?' err':'')}
 function fmtDate(s){return s?new Date(s+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'Date not set'}
 function canLead(p){return !!p&&p.status==='approved'&&(p.role==='captain'||p.role==='leadership')}
