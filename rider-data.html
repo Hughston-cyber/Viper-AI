@@ -483,7 +483,8 @@ async function init(){
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
     $('raceCount').textContent=String(displayRaces.length);
     $('lapCount').textContent=String(displayRaces.reduce((total,x)=>total+(Number(x.laps)||0),0));
-    $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);\n     watchLiveResults();
+    $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
+     watchLiveResults();
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
 }
 $('refreshRecords').addEventListener('click',async()=>{const btn=$('refreshRecords');btn.disabled=true;btn.textContent='Refreshing…';try{await init()}finally{btn.disabled=false;btn.textContent='Refresh records'}});
