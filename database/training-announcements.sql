@@ -34,9 +34,12 @@ create table if not exists public.team_announcements (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
 create index if not exists training_sessions_date_idx on public.training_sessions(session_date);
-create index if not exists training_attendance_session_idx on public.training_attendance(session_id);
+create index if not exists training_sessions_created_by_idx on public.training_sessions(created_by);
+create index if not exists training_attendance_marked_by_idx on public.training_attendance(marked_by);
 create index if not exists team_announcements_feed_idx on public.team_announcements(status, pinned desc, created_at desc);
+create index if not exists team_announcements_created_by_idx on public.team_announcements(created_by);
 
 alter table public.training_sessions enable row level security;
 alter table public.training_attendance enable row level security;
@@ -51,25 +54,43 @@ drop policy if exists "approved members read training sessions" on public.traini
 create policy "approved members read training sessions" on public.training_sessions
   for select to authenticated using (public.is_approved());
 drop policy if exists "leadership manages training sessions" on public.training_sessions;
-create policy "leadership manages training sessions" on public.training_sessions
-  for all to authenticated
+drop policy if exists "leadership inserts training sessions" on public.training_sessions;
+create policy "leadership inserts training sessions" on public.training_sessions for insert to authenticated
+  with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership updates training sessions" on public.training_sessions;
+create policy "leadership updates training sessions" on public.training_sessions for update to authenticated
   using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')))
   with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership deletes training sessions" on public.training_sessions;
+create policy "leadership deletes training sessions" on public.training_sessions for delete to authenticated
+  using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
 
 drop policy if exists "approved members read training attendance" on public.training_attendance;
 create policy "approved members read training attendance" on public.training_attendance
   for select to authenticated using (public.is_approved());
 drop policy if exists "leadership manages training attendance" on public.training_attendance;
-create policy "leadership manages training attendance" on public.training_attendance
-  for all to authenticated
+drop policy if exists "leadership inserts training attendance" on public.training_attendance;
+create policy "leadership inserts training attendance" on public.training_attendance for insert to authenticated
+  with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership updates training attendance" on public.training_attendance;
+create policy "leadership updates training attendance" on public.training_attendance for update to authenticated
   using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')))
   with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership deletes training attendance" on public.training_attendance;
+create policy "leadership deletes training attendance" on public.training_attendance for delete to authenticated
+  using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
 
 drop policy if exists "approved members read published announcements" on public.team_announcements;
 create policy "approved members read published announcements" on public.team_announcements
   for select to authenticated using (public.is_approved() and status='published');
 drop policy if exists "leadership manages announcements" on public.team_announcements;
-create policy "leadership manages announcements" on public.team_announcements
-  for all to authenticated
+drop policy if exists "leadership inserts announcements" on public.team_announcements;
+create policy "leadership inserts announcements" on public.team_announcements for insert to authenticated
+  with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership updates announcements" on public.team_announcements;
+create policy "leadership updates announcements" on public.team_announcements for update to authenticated
   using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')))
   with check (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+drop policy if exists "leadership deletes announcements" on public.team_announcements;
+create policy "leadership deletes announcements" on public.team_announcements for delete to authenticated
+  using (exists (select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
