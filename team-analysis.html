@@ -197,7 +197,7 @@ const fmt=s=>{const m=Math.floor(s/60),v=(s%60).toFixed(1).padStart(4,'0');retur
 const names=['Tenny','Nick','Oscar','Hugh','Hutch','Josh','Dylan','Felix'];
 const clean=raw.filter(x=>!x[4]);
 const averages=names.map(name=>{const rows=clean.filter(x=>x[2]===name);return {name,count:rows.length,avg:rows.reduce((sum,x)=>sum+sec(x[1]),0)/rows.length};}).sort((a,b)=>a.avg-b.avg);
-const palette=['#a5e65a','#64b5f6','#ffb74d','#ce93d8','#4dd0e1','#ef9a9a','#dce775','#90a4ae'];
+const palette=names.map(()=> '#a5e65a');
 const c1=document.getElementById('caseyLapChart'),c2=document.getElementById('caseyRiderChart');
 if(!c1||!c2||!window.Chart)return;
 new Chart(c1,{type:'line',data:{datasets:names.map((name,i)=>({label:name,data:raw.filter(x=>x[2]===name).map(x=>({x:x[0],y:sec(x[1]),time:x[1],tod:x[3],incident:x[4]||''})),borderColor:palette[i],backgroundColor:palette[i],pointRadius:raw.filter(x=>x[2]===name).map(x=>x[4]?5:2.5),pointStyle:raw.filter(x=>x[2]===name).map(x=>x[4]?'triangle':'circle'),pointHoverRadius:6,borderWidth:2,tension:.15,spanGaps:false}))},options:{responsive:true,parsing:true,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.time+(c.raw.incident?' ('+c.raw.incident+')':''),afterLabel:c=>'Lap '+c.parsed.x+' · Time of day: '+c.raw.tod}}},scales:{x:{type:'linear',title:{display:true,text:'Race lap number'},ticks:{stepSize:5,precision:0,maxTicksLimit:14}},y:{title:{display:true,text:'Lap time (minutes:seconds)'},grid:{color:'rgba(160,180,160,.12)'},ticks:{callback:v=>fmt(v),maxTicksLimit:8}}}}});
