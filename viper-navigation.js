@@ -10,6 +10,59 @@ const groups=[
  {title:'Leadership',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧'],['Training Planner','training.html','▦'],['Race Day Command Centre','race-command.html','🏁'],['Rider Availability','rider-availability.html','◉']]}
 ];
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+if(current==='index.html'){
+ nav.classList.add('viper-dashboard-top-nav');
+ const sidebar=document.createElement('aside');sidebar.className='viper-dashboard-sidebar';sidebar.setAttribute('aria-label','Main navigation');
+ sidebar.innerHTML='<div class="viper-sidebar-brand">VIPER AI<span>TEAM VENOM HPR</span></div><div class="viper-sidebar-label">NAVIGATION</div><div class="viper-sidebar-links"></div><div class="viper-sidebar-footer">EVERY LAP. EVERY RIDER.</div>';
+ const links=sidebar.querySelector('.viper-sidebar-links');
+ groups.forEach(group=>{
+  const section=document.createElement('section');section.className='viper-sidebar-group';section.dataset.group=group.title;
+  const heading=document.createElement('h3');heading.textContent=group.title.toUpperCase();section.append(heading);
+  group.items.forEach(([label,href,icon])=>{
+   const a=document.createElement('a');a.href=href;a.dataset.href=href;
+   const ico=document.createElement('span');ico.className='viper-sidebar-icon';ico.setAttribute('aria-hidden','true');ico.textContent=icon;
+   const name=document.createElement('span');name.textContent=label;a.append(ico,name);
+   if(current===href.toLowerCase())a.setAttribute('aria-current','page');
+   section.append(a);
+  });
+  links.append(section);
+ });
+ document.body.append(sidebar);
+ function setSidebarAccess(role,status){
+  const approved=status==='approved',leadership=approved&&(role==='captain'||role==='leadership');
+  sidebar.querySelectorAll('a').forEach(a=>{
+   const restricted=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(a.dataset.href);
+   a.hidden=restricted&&!leadership;
+  });
+  sidebar.querySelectorAll('.viper-sidebar-group').forEach(section=>section.hidden=![...section.querySelectorAll('a')].some(a=>!a.hidden));
+ }
+ function updateSidebarVisibility(){
+  const app=document.querySelector('#vApp');
+  const visible=!!app&&!app.hidden&&getComputedStyle(app).display!=='none';
+  sidebar.classList.toggle('is-visible',visible);
+  document.body.classList.toggle('viper-has-sidebar',visible);
+ }
+ const app=document.querySelector('#vApp');
+ if(app)new MutationObserver(updateSidebarVisibility).observe(app,{attributes:true,attributeFilter:['hidden','style','class']});
+ updateSidebarVisibility();
+ (async()=>{
+  try{
+   if(!window.supabase||!window.supabase.createClient){setSidebarAccess('','');return}
+   const client=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+   const {data,error}=await client.auth.getSession();
+   if(error||!data.session){setSidebarAccess('','');return}
+   const {data:profile,error:profileError}=await client.from('profiles').select('status,role').eq('id',data.session.user.id).single();
+   if(profileError||!profile){setSidebarAccess('','');return}
+   setSidebarAccess(profile.role,profile.status);
+   client.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_OUT'||!session){setSidebarAccess('','');return}
+    const p=await client.from('profiles').select('status,role').eq('id',session.user.id).single();
+    setSidebarAccess(p.data?.role,p.data?.status);
+   });
+  }catch(e){console.warn('VIPER sidebar permissions could not be refreshed.',e)}
+ })();
+ return;
+}
 const wrap=document.createElement('div');wrap.className='viper-menu-wrap';
 const trigger=document.createElement('button');trigger.type='button';trigger.className='viper-menu-trigger';trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-haspopup','true');
 trigger.innerHTML='<span class="viper-menu-icon" aria-hidden="true">☰</span><span>Navigate</span><span aria-hidden="true">▾</span>';
