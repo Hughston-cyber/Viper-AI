@@ -55,3 +55,12 @@ create policy "leadership deletes rider availability" on public.rider_availabili
 -- Let approved leadership add race result rows; existing read and captain-write policies remain intact.
 drop policy if exists "approved leadership inserts race results" on public.race_records;
 create policy "approved leadership inserts race results" on public.race_records for insert to authenticated with check (exists(select 1 from public.profiles p where p.id=(select auth.uid()) and p.status='approved' and p.role in ('captain','leadership')));
+
+-- Expose only through authenticated role grants; RLS remains the row-level gate.
+grant select, insert, update, delete on public.race_day_checklist, public.race_day_updates, public.rider_availability to authenticated;
+grant usage, select on all sequences in schema public to authenticated;
+-- Enable Supabase Realtime for the shared race-day update feed (run once).
+do $$ begin
+  alter publication supabase_realtime add table public.race_day_updates;
+exception when duplicate_object then null;
+end $$;
