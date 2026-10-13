@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b100d"><title>Rider Management — VIPER Motorsport</title>
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#0b100d;--panel:#111913;--panel2:#17231a;--line:#2b3b2f;--text:#edf4ef;--muted:#a1afa5;--accent:#c8f169;--red:#ff7770;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#203d2b 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:26px 16px;background:#090f0b;border-right:2px solid var(--accent);display:flex;flex-direction:column;gap:26px}.brand{font:700 29px/1 var(--disp);letter-spacing:.1em}.brand small{display:block;margin-top:8px;color:var(--accent);font:800 10px system-ui;letter-spacing:.16em}.nav{display:grid;gap:8px}.nav a,.nav button{display:block;padding:10px 12px;border:1px solid #344638;border-radius:7px;background:#111a14;text-decoration:none;color:var(--text);font:750 13px system-ui;text-align:left;cursor:pointer}.nav a:hover,.nav button:hover,.nav a[aria-current=page]{border-color:var(--accent);color:var(--accent);background:#17271d}.side-note{margin-top:auto;color:var(--muted);font-size:12px}
+main{min-width:0;padding:clamp(22px,4vw,48px);max-width:1600px;width:100%;margin:auto}.eyebrow{color:var(--accent);font-size:10px;font-weight:850;letter-spacing:.2em;text-transform:uppercase}h1,h2,h3{font-family:var(--disp);letter-spacing:-.02em;margin:0}h1{font-size:clamp(42px,5vw,68px);line-height:.98;margin:8px 0 10px}h2{font-size:25px}.sub{max-width:780px;color:var(--muted);margin:0 0 22px}.topline{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--accent);border-radius:7px;background:var(--accent);color:#10170d;padding:10px 14px;font:800 13px system-ui;cursor:pointer;text-decoration:none}.btn.secondary{background:transparent;color:var(--text);border-color:#405343}.btn:disabled{opacity:.55;cursor:wait}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}.stat,.panel{border:1px solid var(--line);border-radius:11px;background:var(--panel)}.stat{padding:17px;border-left:3px solid var(--accent)}.stat b{display:block;color:var(--accent);font:700 38px/1 var(--disp);font-variant-numeric:tabular-nums}.stat span{display:block;margin-top:7px;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+.panel{overflow:hidden;margin-bottom:18px}.panel-head{padding:15px 18px;background:linear-gradient(100deg,var(--panel2),var(--panel));border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.panel-body{padding:17px}.filters{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(150px,.6fr);gap:10px;margin-bottom:15px}input,select{width:100%;min-height:42px;padding:10px 12px;border:1px solid #394c3d;border-radius:7px;background:#0b120d;color:var(--text);font:inherit}input:focus,select:focus{outline:2px solid #c8f16955;border-color:var(--accent)}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:720px;font-size:13px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid #28382c;vertical-align:top}th{background:#17221a;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}tbody tr:hover td{background:#c8f16908}.rider-link{border:0;background:none;padding:0;color:var(--accent);font:800 15px system-ui;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.pill{display:inline-block;padding:3px 8px;border-radius:99px;border:1px solid #405343;background:#1a281d;color:#d4f59d;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.pill.pending{color:#f5d66e;border-color:#6c5d25;background:#29250f}.pill.declined{color:var(--red);border-color:#70403d;background:#291614}.empty,.muted{color:var(--muted)}.msg{min-height:22px;margin:8px 0 0;color:var(--muted);font-size:13px}.msg.err{color:var(--red)}.profile{display:none}.profile.active{display:block}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.fact{border:1px solid var(--line);background:#0c130e;border-radius:8px;padding:13px}.fact span{display:block;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}.fact b{display:block;margin-top:5px;font-size:18px;overflow-wrap:anywhere}.back{margin-bottom:16px}.notice{padding:12px 14px;border:1px solid #62592b;border-radius:8px;background:#29250f;color:#f2e7b2;font-size:13px}
+[hidden]{display:none!important}:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:900px){.layout{grid-template-columns:190px minmax(0,1fr)}.sidebar{padding:20px 10px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.layout{display:block}.sidebar{position:relative;height:auto;min-height:0;border-right:0;border-bottom:2px solid var(--accent);padding:16px;gap:14px}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.side-note{display:none}main{padding:22px 14px}.filters{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:13px}.stat b{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar"><div class="brand">VIPER<small>TEAM VENOM · MANAGEMENT</small></div>
+<nav class="nav" aria-label="Management navigation"><a href="./index.html">Dashboard</a><a href="./rider-data.html">Rider Data</a><a href="./attendance.html">Attendance</a><a href="./captain.html">Captain Controls</a><a href="./riders.html" aria-current="page">Rider Management</a><button id="signOut" type="button">Sign out</button></nav>
+<div class="side-note">Private team operations<br>Existing records are read-only here.</div></aside>
+<main>
+<div id="gate" class="panel" hidden><div class="panel-body"><h2>Captain access required</h2><p class="muted">Sign in with an approved captain account to view the full rider directory. Profile access is enforced by the existing database permissions.</p><a class="btn" href="./index.html">Go to sign in</a></div></div>
+<div id="app" hidden>
+<div class="topline"><div><div class="eyebrow">Team operations / People</div><h1>Rider management</h1><p class="sub">One place to review member accounts, rider stats, race participation and attendance history. This page does not overwrite or delete existing records.</p></div><div class="actions"><button class="btn secondary" id="refresh" type="button">Refresh data</button></div></div>
+<div class="stats"><div class="stat"><b id="totalRiders">—</b><span>Member accounts</span></div><div class="stat"><b id="approvedRiders">—</b><span>Approved</span></div><div class="stat"><b id="raceCount">—</b><span>Race events</span></div><div class="stat"><b id="attendanceCount">—</b><span>Attendance marks</span></div></div>
+<section class="panel"><div class="panel-head"><h2>Rider directory</h2><span class="pill">Live database</span></div><div class="panel-body"><div class="filters"><input id="search" type="search" placeholder="Search rider name or email…" aria-label="Search riders"><select id="statusFilter" aria-label="Filter by account status"><option value="all">All account statuses</option><option value="approved">Approved</option><option value="pending">Pending</option><option value="declined">Declined</option></select></div><div class="table-wrap"><table><thead><tr><th>Rider</th><th>Account status</th><th>Team role</th><th>Recorded events</th><th>Total recorded laps</th><th>Attendance</th></tr></thead><tbody id="riderRows"><tr><td colspan="6" class="empty">Loading rider directory…</td></tr></tbody></table></div><p class="msg" id="directoryMsg" role="status"></p></div></section>
+<section class="panel profile" id="profilePanel" aria-live="polite"><div class="panel-head"><div><div class="eyebrow">Rider overview</div><h2 id="profileName">Rider profile</h2></div><button id="closeProfile" class="btn secondary" type="button">Back to directory</button></div><div class="panel-body"><div class="profile-grid" id="profileFacts"></div><h2 style="margin:24px 0 10px">Race statistics</h2><div class="table-wrap"><table><thead><tr><th>Event</th><th>Laps</th><th>Notes</th></tr></thead><tbody id="profileStats"></tbody></table></div><h2 style="margin:24px 0 10px">Attendance history</h2><div class="table-wrap"><table><thead><tr><th>Race day</th><th>Date</th><th>Status</th></tr></thead><tbody id="profileAttendance"></tbody></table></div></div></section>
+<div class="notice">Data integrity: member profiles, race records, rider statistics and attendance are displayed from their existing tables. Editing member roles, account approval, or historical records remains in the existing Captain Controls workflow.</div>
+</div>
+</main>
+</div>
+<script>
+(function(){
+'use strict';
+const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const $=id=>document.getElementById(id);
+let profiles=[],stats=[],days=[],attendance=[],races=[],selected=null;
+const norm=v=>String(v||'').trim().toLocaleLowerCase();
+const dash=v=>v===null||v===undefined||v===''?'—':String(v);
+function statusPill(value){const span=document.createElement('span');span.className='pill '+(value==='pending'?'pending':value==='declined'?'declined':'');span.textContent=value||'unknown';return span}
+function td(tr,value){const el=document.createElement('td');el.textContent=dash(value);tr.appendChild(el);return el}
+function rowEmpty(tbody,cols,msg){tbody.textContent='';const tr=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=cols;cell.className='empty';cell.textContent=msg;tr.appendChild(cell);tbody.appendChild(tr)}
+function dateLabel(v){if(!v)return '—';const d=new Date(v+'T00:00:00');return Number.isNaN(d.getTime())?v:d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}
+function riderStats(name){return stats.filter(x=>norm(x.rider_name)===norm(name))}
+function riderAttendance(name){return attendance.filter(x=>norm(x.rider_name)===norm(name))}
+function renderDirectory(){
+ const q=norm($('search').value),filter=$('statusFilter').value,body=$('riderRows');body.textContent='';
+ const shown=profiles.filter(p=>(filter==='all'||p.status===filter)&&(!q||norm(p.full_name).includes(q)||norm(p.email).includes(q)));
+ if(!shown.length){rowEmpty(body,6,'No riders match those filters.');$('directoryMsg').textContent='';return}
+ shown.sort((a,b)=>String(a.full_name||'').localeCompare(String(b.full_name||''))).forEach(p=>{
+   const rs=riderStats(p.full_name),att=riderAttendance(p.full_name),totalLaps=rs.reduce((sum,x)=>sum+(Number(x.laps)||0),0);
+   const tr=document.createElement('tr'),nameCell=document.createElement('td'),open=document.createElement('button');
+   open.type='button';open.className='rider-link';open.textContent=p.full_name||'Unnamed member';open.addEventListener('click',()=>showProfile(p));nameCell.appendChild(open);tr.appendChild(nameCell);
+   const sc=td(tr,'');sc.textContent='';sc.appendChild(statusPill(p.status));
+   td(tr,p.role);td(tr,new Set(rs.map(x=>norm(x.event)).filter(Boolean)).size);td(tr,totalLaps);td(tr,att.length);
+   body.appendChild(tr);
+ });
+ $('directoryMsg').textContent='Showing '+shown.length+' of '+profiles.length+' member accounts. Click a rider name to inspect their profile.';
+}
+function fact(label,value){const d=document.createElement('div');d.className='fact';const s=document.createElement('span');s.textContent=label;const b=document.createElement('b');b.textContent=dash(value);d.append(s,b);$('profileFacts').appendChild(d)}
+function showProfile(p){
+ selected=p;$('profilePanel').classList.add('active');$('profilePanel').scrollIntoView({behavior:'smooth',block:'start'});$('profileName').textContent=p.full_name||'Unnamed member';$('profileFacts').textContent='';
+ const rs=riderStats(p.full_name),att=riderAttendance(p.full_name),events=new Set(rs.map(x=>norm(x.event)).filter(Boolean)),laps=rs.reduce((s,x)=>s+(Number(x.laps)||0),0);
+ const present=att.filter(x=>x.status==='present').length,late=att.filter(x=>x.status==='late').length,absent=att.filter(x=>x.status==='absent').length;
+ fact('Email',p.email);fact('Team role',p.role);fact('Account status',p.status);fact('Member since',p.created_at?new Date(p.created_at).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'—');fact('Events with rider stats',events.size);fact('Laps in rider stats',laps);fact('Present marks',present);fact('Late marks',late);fact('Absent marks',absent);
+ const sbod=$('profileStats');sbod.textContent='';const own=rs.slice().sort((a,b)=>String(a.event||'').localeCompare(String(b.event||'')));
+ if(!own.length)rowEmpty(sbod,3,'No rider statistics recorded for this name yet.');else own.forEach(x=>{const tr=document.createElement('tr');td(tr,x.event);td(tr,x.laps);td(tr,x.notes);sbod.appendChild(tr)});
+ const abod=$('profileAttendance');abod.textContent='';const ownA=att.slice().sort((a,b)=>String(b.race_date||'').localeCompare(String(a.race_date||'')));
+ if(!ownA.length)rowEmpty(abod,3,'No attendance marks recorded for this rider yet.');else ownA.forEach(x=>{const tr=document.createElement('tr');td(tr,x.title);td(tr,dateLabel(x.race_date));const c=td(tr,'');c.textContent='';c.appendChild(statusPill(x.status));abod.appendChild(tr)});
+}
+function hideProfile(){$('profilePanel').classList.remove('active');selected=null}
+async function load(){
+ $('refresh').disabled=true;$('refresh').textContent='Refreshing…';$('directoryMsg').textContent='Loading data…';
+ try{
+  const session=await sb.auth.getSession();if(session.error)throw session.error;
+  if(!session.data.session){$('gate').hidden=false;$('app').hidden=true;return}
+  const me=await sb.from('profiles').select('id,full_name,status,role').eq('id',session.data.session.user.id).single();
+  if(me.error||!me.data||me.data.status!=='approved'||me.data.role!=='captain'){$('gate').hidden=false;$('app').hidden=true;return}
+  $('gate').hidden=true;$('app').hidden=false;
+  const results=await Promise.all([
+   sb.from('profiles').select('id,full_name,email,role,status,created_at').order('full_name'),
+   sb.from('rider_stats').select('rider_name,event,laps,notes').order('event'),
+   sb.from('race_days').select('id,title,race_date').order('race_date',{ascending:false,nullsFirst:false}),
+   sb.from('race_attendance').select('race_day_id,rider_name,status,created_at'),
+   sb.from('race_records').select('event,race_date,laps')
+  ]);
+  const errors=results.filter(r=>r.error);if(errors.length)throw new Error(errors.map(r=>r.error.message).join(' · '));
+  [profiles,stats,days,attendance,races]=results.map(r=>r.data||[]);
+  const dayMap=new Map(days.map(d=>[String(d.id),d]));
+  attendance=attendance.map(a=>({...a,title:dayMap.get(String(a.race_day_id))?.title||'Unknown race day',race_date:dayMap.get(String(a.race_day_id))?.race_date||null}));
+  $('totalRiders').textContent=profiles.length;$('approvedRiders').textContent=profiles.filter(p=>p.status==='approved').length;$('raceCount').textContent=races.length;$('attendanceCount').textContent=attendance.length;
+  renderDirectory();if(selected){const fresh=profiles.find(p=>p.id===selected.id);if(fresh)showProfile(fresh)}
+ }catch(e){console.error('Rider management load failed',e);$('directoryMsg').textContent='Could not load all team data: '+e.message;$('directoryMsg').classList.add('err')}finally{$('refresh').disabled=false;$('refresh').textContent='Refresh data'}
+}
+$('search').addEventListener('input',renderDirectory);$('statusFilter').addEventListener('change',renderDirectory);$('refresh').addEventListener('click',load);$('closeProfile').addEventListener('click',hideProfile);
+$('signOut').addEventListener('click',async()=>{await sb.auth.signOut();location.href='./index.html'});
+sb.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.href='./index.html'});
+load();
+})();
+</script>
+</body></html>
