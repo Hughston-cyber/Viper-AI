@@ -149,28 +149,27 @@ document.getElementById('sandownSummary').textContent='65 laps recorded · '+rid
 <script>
 (function(){
 const raw=[
-['Felix',11,'03:32.0'],['Felix',10,'04:00.0'],['Felix',9,'03:52.0'],['Felix',8,'03:57.0'],['Felix',7,'04:02.0'],['Felix',6,'04:00.0'],['Felix',5,'03:58.0'],['Felix',4,'03:42.0'],['Felix',3,'03:39.0'],['Felix',2,'03:29.0'],['Felix',1,'03:28.0'],
-['Oscar',20,'03:52.0'],['Oscar',19,'04:07.0'],['Oscar',18,'04:05.0'],['Oscar',17,'04:04.0'],['Oscar',16,'04:02.0'],['Oscar',15,'04:02.0'],['Oscar',14,'04:00.0'],['Oscar',13,'04:03.0'],['Oscar',12,null],
-['Ross',8,'04:02.0'],['Ross',7,'03:59.0'],['Ross',6,'04:11.0'],['Ross',5,'04:10.0'],['Ross',4,'04:09.0'],['Ross',3,'04:06.0'],['Ross',2,'05:56.0','roll'],['Ross',1,null,'pit'],
-['Nick',10,'04:39.0'],['Nick',9,'04:31.0'],['Nick',8,'04:20.0'],['Nick',7,'04:22.0'],['Nick',6,'04:18.0'],['Nick',5,'04:08.0'],['Nick',4,'03:56.0'],['Nick',3,'04:03.0'],['Nick',2,'04:16.0'],['Nick',1,'06:11.0','pit'],
-['Josh',10,'03:33.0'],['Josh',9,'04:01.0'],['Josh',8,'03:50.0'],['Josh',7,'03:58.0'],['Josh',6,'03:55.0'],['Josh',5,'03:47.0'],['Josh',4,'03:44.0'],['Josh',3,'03:40.0'],['Josh',2,'03:43.0'],['Josh',2,'03:43.0'],['Josh',1,'06:08.0','pit'],
-['Dylan',17,'03:30.0'],['Dylan',16,'03:36.0'],['Dylan',15,'03:36.0'],['Dylan',14,'03:33.0'],['Dylan',13,'03:30.0'],['Dylan',12,'03:30.0'],['Dylan',11,'03:31.0'],['Dylan',10,'03:29.0'],['Dylan',9,'03:25.0'],['Dylan',8,'03:27.0'],['Dylan',7,'03:27.0'],['Dylan',6,'03:28.0'],['Dylan',5,'03:28.0'],['Dylan',4,'03:24.0'],['Dylan',3,'03:27.0'],['Dylan',2,'03:21.0'],['Dylan',1,null,'pit'],
-['Tenny',9,'03:45.0'],['Tenny',8,'03:51.0'],['Tenny',7,'03:44.0'],['Tenny',6,'03:41.0'],['Tenny',5,'03:39.0'],['Tenny',4,'03:29.0'],['Tenny',3,'03:32.0'],['Tenny',2,'03:33.0'],['Tenny',1,'05:31.0','pit'],
-['Hugh',7,'03:57.0'],['Hugh',6,'03:45.0'],['Hugh',5,'03:50.0'],['Hugh',4,'03:56.0'],['Hugh',3,'04:32.0'],['Hugh',2,'03:55.0'],['Hugh',1,'06:25.0','pit'],
-['Felix (stint 2)',5,'03:44.0'],['Felix (stint 2)',4,'03:45.0'],['Felix (stint 2)',3,'03:48.0'],['Felix (stint 2)',2,'03:30.0'],['Felix (stint 2)',1,'05:13.0','pit']
+[1,'07:01.2','Tenny','9:07:06'],[2,'05:58.9','Tenny','9:13:04'],[3,'06:06.1','Tenny','9:19:11'],[4,'05:54.4','Tenny','9:25:05'],[5,'06:03.5','Tenny','9:31:08'],[6,'06:10.5','Tenny','9:37:19'],[7,'06:27.3','Tenny','9:43:46'],[8,'08:39.9','Tenny','9:52:26'],
+[9,'07:34.1','Nick','10:00:00'],[10,'07:49.5','Nick','10:07:50'],[11,'07:40.0','Nick','10:15:30'],[12,'07:31.2','Nick','10:23:01'],[13,'07:29.5','Nick','10:30:31'],[14,'09:32.3','Nick','10:40:03'],
+[15,'07:35.7','Oscar','10:47:39'],[16,'07:02.8','Oscar','10:54:41'],[17,'07:09.3','Oscar','11:01:51'],[18,'07:08.0','Oscar','11:08:59'],[19,'07:13.0','Oscar','11:16:12'],[20,'07:22.7','Oscar','11:23:34'],[21,'07:59.8','Oscar','11:31:34'],
+[22,'06:23.5','Hugh','11:37:58'],[23,'06:21.7','Hugh','11:44:19'],[24,'06:24.7','Hugh','11:50:44'],[25,'06:51.0','Hugh','11:57:35'],[26,'06:48.1','Hugh','12:04:23'],[27,'07:01.8','Hugh','12:11:25'],[28,'07:34.8','Hugh','12:19:00'],[29,'06:39.3','Hugh','12:25:39'],[30,'06:21.2','Hugh','12:32:00'],[31,'06:46.3','Hugh','12:38:47'],[32,'08:15.9','Hugh','12:47:03'],
+[33,'06:14.0','Hutch','12:53:16'],[34,'06:12.4','Hutch','12:59:29'],[35,'06:23.7','Hutch','13:05:53'],[36,'06:22.0','Hutch','13:12:15'],[37,'07:58.8','Hutch','13:20:13'],
+[38,'05:58.3','Josh','13:26:12'],[39,'05:56.9','Josh','13:32:09'],[40,'05:43.1','Josh','13:37:52'],[41,'06:12.1','Josh','13:44:04'],[42,'06:04.3','Josh','13:50:08'],[43,'06:04.6','Josh','13:56:13'],[44,'06:16.9','Josh','14:02:30'],[45,'06:09.6','Josh','14:08:39'],[46,'06:03.3','Josh','14:14:43'],[47,'06:26.8','Josh','14:21:09'],
+[48,'04:57.9','Dylan','14:26:07'],[49,'05:07.7','Dylan','14:31:15'],[50,'05:15.6','Dylan','14:36:31'],[51,'05:19.2','Dylan','14:41:50'],[52,'05:16.2','Dylan','14:47:06'],[53,'05:19.5','Dylan','14:52:26'],[54,'05:53.7','Dylan','14:58:19'],[55,'07:14.5','Dylan','15:05:34'],[56,'05:06.2','Dylan','15:10:40'],[57,'04:55.0','Dylan','15:15:35'],[58,'07:04.2','Dylan','15:22:39','roll'],
+[59,'05:26.1','Felix','15:28:05'],[60,'05:32.5','Felix','15:33:38'],[61,'05:44.8','Felix','15:39:23'],[62,'05:59.0','Felix','15:45:22'],[63,'05:56.9','Felix','15:51:18'],[64,'06:03.6','Felix','15:57:22'],[65,'05:51.6','Felix','16:03:14']
 ];
-const sec=s=>{if(!s)return null;const p=s.split(':');return Number(p[0])*60+Number(p[1]);};
+const sec=s=>{const p=s.split(':');return Number(p[0])*60+Number(p[1]);};
 const fmt=s=>{const m=Math.floor(s/60),v=(s%60).toFixed(1).padStart(4,'0');return m+':'+v;};
-const names=['Felix','Oscar','Ross','Nick','Josh','Dylan','Tenny','Hugh','Felix (stint 2)'];
-const clean=raw.filter(x=>x[2]&&!x[3]);
-const averages=names.map(name=>{const rows=clean.filter(x=>x[0]===name);return {name,count:rows.length,avg:rows.length?rows.reduce((sum,x)=>sum+sec(x[2]),0)/rows.length:null};}).filter(x=>x.avg!==null).sort((a,b)=>a.avg-b.avg);
-const palette=['#a5e65a','#64b5f6','#ffb74d','#ce93d8','#4dd0e1','#ef9a9a','#dce775','#90a4ae','#81c784'];
+const names=['Tenny','Nick','Oscar','Hugh','Hutch','Josh','Dylan','Felix'];
+const clean=raw.filter(x=>!x[4]);
+const averages=names.map(name=>{const rows=clean.filter(x=>x[2]===name);return {name,count:rows.length,avg:rows.reduce((sum,x)=>sum+sec(x[1]),0)/rows.length};}).sort((a,b)=>a.avg-b.avg);
+const palette=['#a5e65a','#64b5f6','#ffb74d','#ce93d8','#4dd0e1','#ef9a9a','#dce775','#90a4ae'];
 const c1=document.getElementById('caseyLapChart'),c2=document.getElementById('caseyRiderChart');
 if(!c1||!c2||!window.Chart)return;
-new Chart(c1,{type:'line',data:{datasets:names.map((name,i)=>({label:name,data:raw.filter(x=>x[0]===name&&x[2]&&!x[3]).map(x=>({x:x[1],y:sec(x[2]),time:x[2]})).sort((a,b)=>a.x-b.x),borderColor:palette[i],backgroundColor:palette[i],pointRadius:2.5,pointHoverRadius:5,borderWidth:2,tension:.15,spanGaps:false}))},options:{responsive:true,parsing:true,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.parsed.y)+' (stint lap '+c.parsed.x+')'}}},scales:{x:{type:'linear',reverse:true,title:{display:true,text:'Stint lap number'},ticks:{stepSize:1,precision:0,autoSkip:true,maxTicksLimit:12}},y:{title:{display:true,text:'Lap time (minutes:seconds)'},grid:{color:'rgba(160,180,160,.12)'},ticks:{callback:v=>fmt(v),maxTicksLimit:8}}}}});
-new Chart(c2,{type:'bar',data:{labels:averages.map(x=>x.name),datasets:[{label:'Average clean lap time (seconds)',data:averages.map(x=>x.avg),backgroundColor:averages.map((x,i)=>palette[names.indexOf(x.name)]),borderRadius:5}]},options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Average: '+fmt(c.parsed.x)+' ('+averages[c.dataIndex].count+' clean laps)'}}},scales:{x:{title:{display:true,text:'Average lap time'},ticks:{callback:v=>fmt(v)}}}}});
-const fastest=clean.reduce((a,b)=>sec(a[2])<sec(b[2])?a:b);
-document.getElementById('caseySummary').textContent=clean.length+' clean lap-time entries across '+names.length+' stints · Fastest clean recorded lap: '+fastest[2]+' — '+fastest[0]+', stint lap '+fastest[1]+'. Pit/roll entries are excluded from averages. Oscar lap 12 was marked as a pit-time entry and is not graphed as a clean lap.';
+new Chart(c1,{type:'line',data:{datasets:names.map((name,i)=>({label:name,data:raw.filter(x=>x[2]===name).map(x=>({x:x[0],y:sec(x[1]),time:x[1],tod:x[3],incident:x[4]||''})),borderColor:palette[i],backgroundColor:palette[i],pointRadius:raw.filter(x=>x[2]===name).map(x=>x[4]?5:2.5),pointStyle:raw.filter(x=>x[2]===name).map(x=>x[4]?'triangle':'circle'),pointHoverRadius:6,borderWidth:2,tension:.15,spanGaps:false}))},options:{responsive:true,parsing:true,plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10,padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.time+(c.raw.incident?' ('+c.raw.incident+')':''),afterLabel:c=>'Lap '+c.parsed.x+' · Time of day: '+c.raw.tod}}},scales:{x:{type:'linear',title:{display:true,text:'Race lap number'},ticks:{stepSize:5,precision:0,maxTicksLimit:14}},y:{title:{display:true,text:'Lap time (minutes:seconds)'},grid:{color:'rgba(160,180,160,.12)'},ticks:{callback:v=>fmt(v),maxTicksLimit:8}}}}});
+new Chart(c2,{type:'bar',data:{labels:averages.map(x=>x.name),datasets:[{label:'Average clean lap time (seconds)',data:averages.map(x=>x.avg),backgroundColor:averages.map(x=>palette[names.indexOf(x.name)]),borderRadius:5}]},options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Average: '+fmt(c.parsed.x)+' ('+averages[c.dataIndex].count+' clean laps)'}}},scales:{x:{title:{display:true,text:'Average clean lap time'},ticks:{callback:v=>fmt(v)}}}}});
+const fastest=clean.reduce((a,b)=>sec(a[1])<sec(b[1])?a:b);
+document.getElementById('caseySummary').textContent=raw.length+' race laps recorded across '+names.length+' riders · Fastest clean lap: '+fastest[1]+' — Lap '+fastest[0]+', '+fastest[2]+'. Lap 58 is marked as a roll lap and excluded from clean-lap averages. Tooltips include time of day.';
 })();
 </script>
 \n</body>
