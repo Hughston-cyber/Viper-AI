@@ -394,6 +394,8 @@ const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_pu
 const $=id=>document.getElementById(id);
 function eventLabel(value){return value}
 function isPlaceholderLapEvent(value){return /^casey fields 1$/i.test(String(value||'').trim())}
+let liveResultsChannel=null,liveResultsTimer=null;
+function watchLiveResults(){if(liveResultsChannel)return;const refresh=()=>{if(liveResultsTimer)clearTimeout(liveResultsTimer);liveResultsTimer=setTimeout(()=>{liveResultsTimer=null;init()},400)};liveResultsChannel=sb.channel('viper-live-race-results-rider-data').on('postgres_changes',{event:'*',schema:'public',table:'race_records'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'rider_stats'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'lap_records'},refresh).subscribe((status,error)=>{if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')console.warn('Live race result subscription:',status,error||'')})}
 let editableRaces=[];
 function fillRaceEditor(){const x=editableRaces.find(x=>String(x.id)===$('editRacePick').value);$('editRaceEvent').value=x?.event||'';$('editRaceDate').value=x?.race_date||'';$('editRaceResult').value=x?.result||'';$('editRaceLaps').value=x?.laps??''}
 function loadRaceEditor(rows){editableRaces=rows||[];const sel=$('editRacePick');sel.textContent='';if(!editableRaces.length){const o=document.createElement('option');o.value='';o.textContent='No race records available';sel.appendChild(o);return}editableRaces.forEach(x=>{const o=document.createElement('option');o.value=String(x.id);o.textContent='#'+x.id+' · '+(x.event||'Unnamed event')+(x.race_date?' · '+x.race_date:'');sel.appendChild(o)});fillRaceEditor()}
@@ -481,7 +483,7 @@ async function init(){
     renderRows('rosterRows',rosterRows,['race_day','date','rider','stint','minutes'],'No roster assignments have been recorded.');
     $('raceCount').textContent=String(displayRaces.length);
     $('lapCount').textContent=String(displayRaces.reduce((total,x)=>total+(Number(x.laps)||0),0));
-    $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);
+    $('riderCount').textContent=String(new Set(riders.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size);\n     watchLiveResults();
   }catch(error){console.error('Rider Data failed:',error);$('gate').hidden=false;$('status').textContent='Could not load Rider Data. Please sign in again.'}
 }
 $('refreshRecords').addEventListener('click',async()=>{const btn=$('refreshRecords');btn.disabled=true;btn.textContent='Refreshing…';try{await init()}finally{btn.disabled=false;btn.textContent='Refresh records'}});
