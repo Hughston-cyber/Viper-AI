@@ -1,649 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-
-<link rel="icon" type="image/png" sizes="32x32" href="./favicon.png?v=2">
-<link rel="shortcut icon" type="image/png" href="./favicon.png?v=2">
-  
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="./viper-redesign.css?v=4">
-
-<title>VIPER Motorsport — Team Venom HPR</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0f0d">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+<title>VIPER // Engineering Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--viper:#0e3b2e;--moss:#1f6b4f;--paper:#eef2ef;--ink:#0b1512;--mute:#52635b;--line:#c9d3cd;--sig:#f5c400;--bad:#b3261e;--white:#fff;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:6px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}.wrap{max-width:1080px;margin:0 auto;padding:0 22px}.bar{background:var(--viper);color:white;border-bottom:3px solid var(--sig)}.bar .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px}.brand{font-family:var(--disp);font-weight:700;font-size:26px}.brand span{font-weight:600;font-size:17px;opacity:.7;margin-left:10px}.who{font-size:14px;opacity:.85}.btn{display:inline-block;padding:10px 16px;border-radius:var(--r);font:inherit;font-weight:700;border:2px solid var(--sig);background:var(--sig);color:var(--ink);cursor:pointer;text-decoration:none}.btn:hover{filter:brightness(.96)}.btn.sm{padding:5px 11px;font-size:13px}.btn.line{background:transparent;color:inherit;border-color:currentColor}.btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}button:disabled{opacity:.55;cursor:wait}.hero{background:var(--viper);color:white;padding:64px 0 72px;background-image:radial-gradient(circle at 50% 0,transparent 52%,rgba(255,255,255,.06) 54%,transparent 58%);background-size:34px 34px}.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}h1,h2,h3{font-family:var(--disp)}h1{font-size:clamp(46px,8vw,92px);line-height:.95;margin:0 0 18px}p.lead{font-size:19px;max-width:520px;color:#cfe3d9}.auth{background:white;color:var(--ink);border-radius:var(--r);padding:26px;border-top:6px solid var(--sig)}.auth h2{font-size:28px;margin:0 0 14px}.tabs{display:flex;border-bottom:2px solid var(--line)}.tabs button{flex:1;padding:10px;background:none;border:0;border-bottom:3px solid transparent;font:inherit;font-weight:700;color:var(--mute);cursor:pointer}.tabs button.on{color:var(--viper);border-color:var(--viper)}label{display:block;font-size:14px;font-weight:600;margin:12px 0 5px}input,select,textarea{width:100%;padding:10px 12px;border-radius:var(--r);border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit}textarea{min-height:76px;resize:vertical}.msg{margin:10px 0;font-size:14px;min-height:20px;color:var(--moss);font-weight:600}.msg.err{color:var(--bad)}.note,.dim{font-size:13px;color:var(--mute)}.page{padding:36px 0 0}h2.h{font-size:38px;line-height:1;margin:0 0 8px}.sub{color:var(--mute);margin:0 0 22px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}.tile{background:var(--viper);color:white;border-radius:var(--r);padding:16px 20px;border-left:6px solid var(--sig)}.tile b{display:block;font-family:var(--disp);font-size:52px;line-height:1}.tile span{font-size:14px;color:#cfe3d9}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}.panel{background:white;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px}.panel h3{margin:0;padding:12px 16px;background:var(--ink);color:white;font-size:22px;letter-spacing:.03em}.in{padding:16px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}th{font-size:13px;color:var(--mute);background:#f6f8f6}td:last-child,th:last-child{text-align:right}.f{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f .full{grid-column:1/-1}.req{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.req .actions{display:flex;gap:6px;flex-wrap:wrap}.tag{display:inline-block;background:#e5efe8;color:var(--viper);padding:2px 8px;border-radius:3px;font-size:12px;font-weight:700}.card{background:white;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:560px;margin-top:36px}footer{margin-top:64px;background:var(--viper);color:#a9c4b8;padding:24px 0;font-size:14px}[hidden]{display:none!important}@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}.brand span{display:block;margin-left:0;font-size:14px}.bar .wrap{padding-top:8px;padding-bottom:8px}}
-
-/* VIPER Motorsport — performance-focused visual system */
-:root{--viper:#0a110e;--moss:#8fce63;--paper:#090e0c;--ink:#edf4ee;--mute:#9aaca0;--line:#28372e;--sig:#c8f169;--bad:#ff7168;--white:#f6faf7;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:13px;color-scheme:dark}
-html{scroll-behavior:smooth;scroll-padding-top:86px}
-body{background:radial-gradient(ellipse at 78% -15%,#203b2a 0,transparent 38%),var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.005em}
-.wrap{max-width:1240px}
-.bar,header{position:sticky;top:0;z-index:30;background:rgba(8,15,11,.91);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #314531;box-shadow:0 8px 28px #0003}
-.bar .wrap,header .wrap{min-height:72px}
-.brand{letter-spacing:.055em;text-transform:uppercase}
-.brand span,.brand small{color:#c8f169;opacity:1;letter-spacing:.11em;text-transform:uppercase}
-.btn{border:1px solid var(--sig);border-radius:9px;background:var(--sig);color:#10170d;font-weight:800;box-shadow:0 0 0 0 #c8f16900;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
-.btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 7px 22px #c8f1691c}
-.btn.line,.btn.outline{background:#ffffff08;color:var(--ink);border-color:#435748}
-.btn.line:hover,.btn.outline:hover{border-color:var(--sig);color:var(--sig)}
-.btn.bad{border-color:var(--bad);color:var(--bad)}
-h1,h2,h3{letter-spacing:-.025em}
-h1{font-size:clamp(46px,7vw,78px);line-height:.94;letter-spacing:-.035em}
-h2.h{font-size:clamp(34px,4vw,44px)}
-.eyebrow{color:var(--sig);letter-spacing:.19em}
-.sub,.intro,.dim,.note,.small,.welcome{color:var(--mute)}
-.hero{position:relative;overflow:hidden;background:linear-gradient(112deg,#0a110e 0%,#112319 60%,#1b3220 100%);border-bottom:1px solid #314531}
-.hero:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;background:repeating-linear-gradient(132deg,transparent 0 56px,#c8f16910 57px 58px,transparent 59px 112px);mask-image:linear-gradient(90deg,transparent,#000)}
-.hero .wrap{position:relative;z-index:1}
-.auth,.card,.locked,.panel,.tile{border-radius:var(--r);border:1px solid var(--line);box-shadow:0 14px 40px #0002}
-.auth,.card,.locked{background:#121a15;color:var(--ink)}
-.panel{background:#101813;border-color:#26372b;overflow:hidden}
-.panel h2,.panel h3,.panelhead{background:linear-gradient(100deg,#17241a,#111a14);color:#f3f8f3;border-bottom:1px solid #2d402f}
-.panel h2,.panel h3{padding:16px 19px;font-size:24px}
-.in{padding:20px}
-.tiles{gap:16px}
-.tile{position:relative;overflow:hidden;background:linear-gradient(125deg,#17251a,#0f1712);border:1px solid #304332;border-left:3px solid var(--sig);padding:21px 22px}
-.tile:after{content:"";position:absolute;right:-22px;top:-38px;width:110px;height:110px;border:1px solid #c8f16920;transform:rotate(35deg);pointer-events:none}
-.tile b{color:var(--sig);font-variant-numeric:tabular-nums}
-.tile span{color:#b1c1b4}
-input,select,textarea,.composer textarea{background:#0a100c!important;color:var(--ink)!important;border:1px solid #35483a!important;border-radius:9px!important}
-input::placeholder,textarea::placeholder{color:#738579}
-input:focus,select:focus,textarea:focus,.composer textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
-label{color:#dbe6dc}
-.tabs{border-color:var(--line)}
-.tabs button{color:var(--mute)}
-.tabs button.on{color:var(--sig);border-color:var(--sig)}
-table{color:var(--ink);font-variant-numeric:tabular-nums}
-th{background:#17221a;color:#a8b9aa;border-color:#2b3b2e}
-td{border-color:#26362a}
-tbody tr{transition:background .15s ease}
-tbody tr:hover td{background:#c8f1690a}
-.tag,.count-pill{background:#263a24;color:#d4f59d;border:1px solid #415d34}
-.day{background:#111913;color:var(--ink);border-color:#26362a}
-.day span{color:var(--mute)}
-.day.on,.day:hover{background:#1a281b;border-left-color:var(--sig)}
-.messages{background:#0b120e}
-.bubble.bot{background:#18231b;color:var(--ink);border-color:#2e4232}
-.bubble.user{background:#c8f169;color:#11170e;border-color:#c8f169}
-.suggestions button{background:#111a14;color:#d8e8d8;border-color:#344737}
-.suggestions button:hover{background:#1b2b1c;border-color:var(--sig);color:var(--sig)}
-.notice{background:#29250f;color:#f4e6a4;border-color:#6c5d25}
-.msg{color:#b8dc91}
-.msg.err,.error{color:var(--bad)}
-footer{background:#070b09;color:#82988a;border-top:1px solid #26372b}
-#status{padding:10px 13px;background:#101a13;border:1px solid #293a2c;border-radius:9px}
-:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
-@media(max-width:820px){.bar .wrap,header .wrap{min-height:64px}.hero{padding:44px 0}.in{padding:15px}.panel h2,.panel h3{padding:14px 16px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
-
-
-/* VIPER Motorsport — analytics layout foundation */
-:root{--viper:#123d2b;--moss:#26734b;--paper:#f3f6f3;--ink:#17251d;--mute:#637469;--line:#d9e2db;--sig:#b9e36b;--bad:#b3261e;--white:#fff;--r:14px;color-scheme:light}
-body{background:#f3f6f3;color:var(--ink);letter-spacing:0}
-.wrap{max-width:1320px}
-.bar,header{background:rgba(255,255,255,.94);color:#173a29;border-bottom:1px solid #dce5de;box-shadow:0 5px 24px #163d2910}
-.brand{color:#143d2b}.brand span,.brand small{color:#34744d}
-.who{color:#53675a}
-.btn{background:#174c34;color:#fff;border-color:#174c34;border-radius:9px;box-shadow:none}
-.btn:hover{background:#226442;filter:none;box-shadow:0 5px 15px #174c341c}
-.btn.line,.btn.outline{background:#fff;color:#174c34;border-color:#c8d8cc}
-.btn.line:hover,.btn.outline:hover{background:#eff6ef;color:#174c34;border-color:#80a88a}
-.hero{background:linear-gradient(120deg,#123d2b 0%,#1b5a3b 70%,#2d7148 100%);color:#fff;border-bottom:0;padding:58px 0 62px}
-.hero:after{opacity:.16;background:repeating-linear-gradient(135deg,transparent 0 50px,#fff 51px 52px,transparent 53px 105px)}
-.hero .wrap{grid-template-columns:1.2fr .8fr;gap:56px}
-h1{font-size:clamp(48px,6.4vw,76px)}
-p.lead{color:#d9e9de}
-.auth,.card,.locked{background:#fff;color:#17251d;border:1px solid #dce5de;box-shadow:0 18px 55px #061d101c}
-.auth{border-top:5px solid var(--sig);border-radius:15px;padding:28px}
-.auth h2{color:#173d2b}
-.tabs{border-color:#dce5de}.tabs button{color:#718076}.tabs button.on{color:#174c34;border-color:#26734b}
-input,select,textarea,.composer textarea{background:#fff!important;color:#17251d!important;border:1px solid #cad8ce!important;border-radius:9px!important}
-input::placeholder,textarea::placeholder{color:#87958b}
-input:focus,select:focus,textarea:focus,.composer textarea:focus{outline:3px solid #26734b22!important;border-color:#26734b!important}
-label{color:#304c3b}
-.page{padding-top:42px}
-h2.h{color:#183d2b;font-size:clamp(34px,4vw,44px);margin-bottom:10px}
-.sub,.intro,.dim,.note,.small,.welcome{color:#637469}
-.tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0}
-.tile{background:#fff;color:#173d2b;border:1px solid #dce5de;border-left:4px solid #26734b;border-radius:14px;padding:23px 24px;box-shadow:0 7px 22px #183d2b08}
-.tile:after{border-color:#26734b18}
-.tile b{color:#174c34;font-size:50px}
-.tile span{color:#66796c}
-.grid2{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.panel{background:#fff;border:1px solid #dce5de;border-radius:14px;box-shadow:0 7px 24px #183d2b08}
-.panel h2,.panel h3,.panelhead{background:#f7faf7;color:#183d2b;border-bottom:1px solid #e1e9e3}
-.panel h3{padding:17px 20px;font-size:23px}
-.in{padding:20px}
-table{color:#21372a;font-size:14px}
-th{background:#f2f6f2;color:#637469;border-color:#e1e8e2;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-td{border-color:#e7ede8}
-tbody tr:hover td{background:#f5faf4}
-.tag,.count-pill{background:#e8f3e6;color:#225a36;border:1px solid #d0e5ca}
-#status{background:#f3f8f3;border-color:#dce5de}
-.msg{color:#26734b}
-footer{background:#123d2b;color:#c1d7c8;border-top:0;margin-top:70px}
-.analytics-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin:4px 0 24px}
-.chart-panel{background:#fff;border:1px solid #dce5de;border-radius:14px;padding:20px 22px;box-shadow:0 7px 24px #183d2b08;min-width:0}
-.chart-title{font-size:21px;font-weight:750;color:#183d2b;margin:0}
-.chart-caption{font-size:13px;color:#77867b;margin:4px 0 18px}
-.bar-chart{display:flex;flex-direction:column;gap:13px}
-.bar-row{display:grid;grid-template-columns:minmax(88px,1fr) minmax(70px,2fr) 34px;gap:12px;align-items:center;font-size:13px}
-.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#42584a}
-.bar-track{height:10px;background:#edf2ed;border-radius:99px;overflow:hidden}
-.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#1c6240,#8cbd58);min-width:2px}
-.bar-value{text-align:right;font-weight:750;color:#1b4c32;font-variant-numeric:tabular-nums}
-.chart-empty{font-size:14px;color:#7b897f;padding:12px 0}
-.section-kicker{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#438057;margin-bottom:8px}
-@media(max-width:820px){.hero .wrap{grid-template-columns:1fr;gap:28px}.tiles{grid-template-columns:1fr}.grid2,.analytics-grid{grid-template-columns:1fr}.hero{padding:42px 0}.page{padding-top:30px}.auth{padding:22px}}
-
-/* Team Venom hero photography */
-.hero-photo{position:relative;margin:30px 0 0;overflow:hidden;border:1px solid #d6e3d8;border-radius:14px;background:#e5ece6;box-shadow:0 18px 42px #07190e30;isolation:isolate}
-.hero-photo:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(0deg,rgba(5,19,11,.88),transparent);pointer-events:none}
-.hero-photo img{display:block;width:100%;height:clamp(210px,25vw,320px);object-fit:cover;object-position:center 55%}
-.hero-photo figcaption{position:absolute;z-index:1;left:18px;right:18px;bottom:16px;display:flex;align-items:end;justify-content:space-between;gap:12px;color:#fff;text-shadow:0 1px 8px #0008}
-.hero-photo figcaption strong{font-family:var(--disp);font-size:clamp(20px,2.5vw,29px);letter-spacing:.07em}
-.hero-photo figcaption span{font-size:10px;font-weight:800;letter-spacing:.16em;text-align:right}
-@media(max-width:820px){.hero-photo{margin-top:22px}.hero-photo img{height:230px}.hero-photo figcaption{left:13px;right:13px;bottom:12px}}
-
-
-/* Keep the Team Venom photo visible while auth switches between landing and dashboard */
-.trike-banner{padding-top:22px}
-.trike-banner .hero-photo{margin:0 0 4px}
-.trike-banner .hero-photo img{height:clamp(220px,29vw,360px);object-position:center 55%}
-@media(max-width:820px){.trike-banner{padding-top:16px}.trike-banner .hero-photo img{height:230px}}
-
-
-/* Homepage spacing and layout refinement */
-.hero{padding:clamp(42px,5vw,58px) 0 clamp(28px,3.8vw,42px)}
-.hero .wrap{gap:clamp(28px,4.5vw,56px)}
-.hero h1{max-width:760px;margin-bottom:22px}
-p.lead{max-width:580px;line-height:1.7;margin-top:0}
-.auth{padding:clamp(22px,2.5vw,30px)}
-.trike-banner{padding-top:24px;padding-bottom:0}
-.trike-banner .hero-photo{max-width:1120px;margin:0 auto;border-color:#dce5de}
-.trike-banner .hero-photo img{height:clamp(220px,26vw,340px)}
-#landing>section{padding:42px 0 12px!important}
-#landing .grid2{gap:18px 24px}
-#landing .grid2>div{padding:20px 22px;background:#fff;border:1px solid #dce5de;border-radius:12px}
-#landing .grid2 p{margin:8px 0 0;line-height:1.65}
-.page{padding-top:36px}
-#vApp>.sub{margin-bottom:22px}
-.tiles{margin:24px 0;gap:18px}
-.analytics-grid{gap:18px;margin-bottom:22px}
-.grid2{gap:18px}
-.panel{margin-bottom:18px}
-footer{margin-top:52px;padding:24px 0}
-@media(max-width:820px){
- .hero{padding:36px 0 30px}
- .hero .wrap{gap:24px}
- .hero h1{margin-bottom:16px}
- .auth{padding:21px}
- .trike-banner{padding-top:16px}
- .trike-banner .hero-photo img{height:230px}
- #landing>section{padding:32px 0 8px!important}
- #landing .grid2{gap:12px}
- #landing .grid2>div{padding:17px 18px}
- .page{padding-top:28px}
- .tiles{gap:12px;margin:20px 0}
- .analytics-grid,.grid2{gap:14px}
- footer{margin-top:40px}
-}
-
-
-/* VIPER MOTORSPORT — unified race-operations design system */
-:root{
- --viper:#101713;--moss:#a8e45b;--paper:#0b100d;--ink:#edf4ef;--mute:#a1afa5;
- --line:#2c3a30;--sig:#c8f169;--bad:#ff756d;--white:#f6faf7;--disp:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--r:12px;
- color-scheme:dark
-}
-html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--paper)}
-body{background:radial-gradient(ellipse at 78% -18%,#203d2b 0,transparent 36%),linear-gradient(180deg,#0b100d 0%,#0e1510 45%,#0b100d 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.005em}
-.wrap{max-width:1320px}
-.bar,header{position:sticky;top:0;z-index:50;background:rgba(9,15,11,.94);color:var(--ink);border-bottom:1px solid #344538;box-shadow:0 12px 34px #0005;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.bar .wrap,header .wrap{min-height:74px;gap:16px}
-.brand{font-family:var(--disp);font-size:29px;line-height:1;letter-spacing:.09em;text-transform:uppercase;color:#f3f7f3;text-decoration:none}
-.brand span,.brand small{display:inline-block;margin-left:12px;color:var(--sig);font:800 11px/1.2 system-ui,sans-serif;letter-spacing:.17em;text-transform:uppercase;opacity:1}
-h1,h2,h3{font-family:var(--disp);letter-spacing:-.025em}
-h1{font-size:clamp(44px,6.4vw,78px);line-height:.94;letter-spacing:-.035em}
-h2.h{font-size:clamp(32px,4vw,44px);line-height:1}
-.eyebrow{color:var(--sig);font-size:11px;font-weight:850;letter-spacing:.2em;text-transform:uppercase}
-.sub,.intro,.dim,.note,.small,.welcome,.chart-caption{color:var(--mute)}
-.btn{border:1px solid var(--sig);border-radius:8px;background:var(--sig);color:#11170d;font-weight:850;letter-spacing:.015em;box-shadow:none;transition:transform .16s ease,background .16s ease,border-color .16s ease}
-.btn:hover{background:#d8ff83;border-color:#d8ff83;filter:none;transform:translateY(-1px);box-shadow:0 8px 22px #c8f16920}
-.btn.line,.btn.outline{background:#111a14;color:#e8f1e9;border-color:#3b4d40}
-.btn.line:hover,.btn.outline:hover{background:#1b2b1e;color:var(--sig);border-color:var(--sig)}
-.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}
-.hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(112deg,#0b100d 0%,#12251a 58%,#1d3924 100%);border-bottom:1px solid #344638;padding-top:60px;padding-bottom:62px}
-.hero:before{content:"";position:absolute;z-index:-1;inset:0;opacity:.18;background:repeating-linear-gradient(135deg,transparent 0 42px,#c8f169 43px,#c8f169 44px,transparent 45px 88px);mask-image:linear-gradient(90deg,transparent,#000 65%,transparent)}
-.hero:after{content:"";position:absolute;z-index:-1;right:-7vw;bottom:-100px;width:38vw;height:38vw;border:1px solid #c8f16920;transform:rotate(35deg);pointer-events:none}
-p.lead{color:#c7d9cb;max-width:610px}
-.auth,.card,.locked{background:linear-gradient(145deg,#18221b,#101712);color:var(--ink);border:1px solid #344538;border-radius:14px;box-shadow:0 20px 60px #0004}
-.auth{border-top:4px solid var(--sig)}
-.panel,.chart-panel{background:linear-gradient(150deg,#141e17,#101712);border:1px solid #2d3d31;border-radius:13px;box-shadow:0 12px 34px #0002;overflow:hidden}
-.panel h2,.panel h3,.panelhead{background:linear-gradient(100deg,#1b2a1d,#121a14);color:#f1f7f1;border-bottom:1px solid #304433}
-.panel h2,.panel h3{padding:16px 20px;font-size:23px}
-.in{padding:20px}
-.tiles{gap:16px;margin-top:22px;margin-bottom:24px}
-.tile{position:relative;overflow:hidden;background:linear-gradient(125deg,#1a2a1d,#111913);color:var(--ink);border:1px solid #344b35;border-left:3px solid var(--sig);border-radius:12px;padding:21px 23px;box-shadow:0 12px 30px #0002}
-.tile:after{content:"";position:absolute;right:-25px;top:-43px;width:112px;height:112px;border:1px solid #c8f16925;transform:rotate(35deg);pointer-events:none}
-.tile b{color:var(--sig);font-family:var(--disp);font-size:clamp(38px,4vw,52px);font-variant-numeric:tabular-nums;line-height:1}
-.tile span{color:#b6c7b9}
-.analytics-grid{gap:18px}
-.chart-panel{padding:22px}
-.chart-title{color:#f1f7f1}
-.chart-caption{margin-bottom:20px}
-.bar-label{color:#b8c9bb}
-.bar-track{background:#253229}
-.bar-fill{background:linear-gradient(90deg,#4c8a40,#c8f169)}
-.grid2,.grid{gap:18px}
-.page,main{padding-top:38px}
-table{width:100%;border-collapse:collapse;color:#e7f0e8;font-size:14px;font-variant-numeric:tabular-nums}
-th,td{padding:12px 15px;text-align:left;border-bottom:1px solid #2b3b2e}
-th{background:#1a261d;color:#a9b9ac;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
-td{color:#e0eae1}
-tbody tr{transition:background .15s ease}
-tbody tr:hover td{background:#c8f1690b}
-.scroll{overflow-x:auto}
-input,select,textarea,.composer textarea{background:#0b120d!important;color:#edf4ef!important;border:1px solid #3a4b3d!important;border-radius:8px!important}
-input::placeholder,textarea::placeholder{color:#718376}
-input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
-label{color:#cbd8cd}
-.tabs{border-color:#344538}
-.tabs button{color:#a1afa5}
-.tabs button.on{color:var(--sig);border-color:var(--sig)}
-.tag,.count-pill{background:#203321;color:#d7f6a1;border:1px solid #3e5b38}
-.day{background:#111a14;color:var(--ink);border-bottom:1px solid #2c3b30;border-left:3px solid transparent}
-.day span{color:var(--mute)}
-.day.on,.day:hover{background:#1c2b1e;border-left-color:var(--sig)}
-.facts b{color:var(--sig);font-family:var(--disp)}
-.facts span{color:var(--mute)}
-.notice{background:#2a260f;color:#f2e7b2;border-color:#635b29}
-.msg{color:#bce98b}
-.msg.err,.error{color:var(--bad)}
-#status{padding:12px 14px;background:#131e16;border:1px solid #314634;border-radius:9px}
-footer{margin-top:64px;background:#080d0a;color:#82988a;border-top:1px solid #2d3d31;padding:26px 0}
-:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
-#vPending .card{margin-top:34px}
-#vApp>.sub{max-width:780px}
-.trike-banner{padding-top:26px}
-.hero-photo{border:1px solid #3a4c3c;border-radius:14px;overflow:hidden;box-shadow:0 22px 55px #0005;background:#101712}
-.hero-photo img{display:block;width:100%;object-fit:cover}
-.hero-photo figcaption{background:linear-gradient(90deg,#09100bdf,#09100b77);color:#f3f8f3}
-.hero-photo figcaption strong{letter-spacing:.12em}
-.hero-photo figcaption span{color:var(--sig);letter-spacing:.15em}
-#landing{padding-top:10px}
-#landing>section{border-top:1px solid #2b3b2e}
-@media(max-width:820px){
- .bar .wrap,header .wrap{min-height:66px;align-items:center}
- .brand{font-size:25px}
- .brand span,.brand small{display:block;margin:5px 0 0;font-size:10px}
- .hero{padding:42px 0}
- .hero .wrap{grid-template-columns:1fr;gap:25px}
- .tiles{grid-template-columns:1fr}
- .grid2,.grid,.analytics-grid,.layout{grid-template-columns:1fr}
- .page,main{padding-top:27px}
- .in{padding:15px}
- .panel h2,.panel h3{padding:14px 16px}
- .trike-banner{padding-top:16px}
- .hero-photo img{height:230px}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
-
-
-/* VIPER MOTORSPORT — final professional refinement */
-:root{
-  --viper:#101a13;--moss:#5f9f43;--paper:#0b100d;--ink:#eef4ef;
-  --mute:#a4b1a7;--line:#2b3a2f;--sig:#c8f169;--bad:#ff7770;
-  --white:#f7faf7;--r:10px;
-}
-*{box-sizing:border-box}
-html{background:#0b100d;scroll-padding-top:100px}
-body{background:linear-gradient(180deg,#0b100d 0%,#0d140f 55%,#0a0f0c 100%);color:#eef4ef;line-height:1.6}
-.wrap{width:min(100% - 44px,1240px);max-width:1240px}
-.bar,header{background:rgba(9,15,11,.96);border-bottom:1px solid #2e4032;box-shadow:0 8px 28px #0003}
-.bar .wrap,header .wrap{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{display:inline-flex;align-items:baseline;gap:12px;font-size:30px;letter-spacing:.1em;white-space:nowrap}
-.brand span,.brand small{margin:0;color:#c8f169;font:750 10px/1.3 system-ui,sans-serif;letter-spacing:.18em}
-.nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.nav .btn{min-height:39px;padding:8px 13px;font-size:13px}
-h1,h2,h3{font-family:var(--disp);letter-spacing:-.02em}
-h1{font-size:clamp(44px,5.7vw,72px);line-height:.98;max-width:900px}
-h2.h{font-size:clamp(32px,3.8vw,42px);line-height:1.05}
-.eyebrow{font-size:10px;letter-spacing:.2em;font-weight:850;text-transform:uppercase;color:var(--sig)}
-.sub,.dim,.note,.small,.welcome{color:#a4b1a7;line-height:1.65}
-.hero{padding:clamp(38px,5vw,60px) 0 clamp(34px,4vw,50px);background:linear-gradient(115deg,#0d1710 0%,#14271a 64%,#1b3220 100%);border-bottom:1px solid #2e4032}
-.hero .wrap{gap:clamp(28px,4vw,54px)}
-p.lead{font-size:clamp(16px,1.5vw,19px);line-height:1.75;color:#d1dfd3}
-.auth,.card,.locked{border:1px solid #334637;border-radius:12px;background:#121b15;box-shadow:0 16px 42px #0003}
-.auth{padding:clamp(20px,2.5vw,28px);border-top:3px solid var(--sig)}
-.panel,.chart-panel{border:1px solid #2b3b2f;border-radius:11px;background:#111913;box-shadow:0 8px 24px #0002}
-.panel h2,.panel h3,.panelhead{background:#17231a;color:#f1f6f1;border-bottom:1px solid #2b3b2f}
-.panel h2,.panel h3{padding:16px 20px;font-size:22px;line-height:1.15}
-.in{padding:clamp(15px,2vw,21px)}
-.tiles{gap:14px;margin:22px 0 24px}
-.tile{border:1px solid #304333;border-left:3px solid var(--sig);border-radius:10px;background:linear-gradient(135deg,#17251a,#111812);padding:20px 21px;box-shadow:none}
-.tile b{font-family:var(--disp);font-size:clamp(38px,4vw,49px);line-height:1.05;color:var(--sig);font-variant-numeric:tabular-nums}
-.tile span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b6c5b8}
-.grid2,.grid,.analytics-grid{gap:16px}
-.page,main{padding-top:34px}
-.btn{min-height:42px;padding:10px 16px;border-radius:7px;font-size:14px;font-weight:800;letter-spacing:.015em;transition:background .15s ease,border-color .15s ease,transform .15s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn.sm{min-height:32px;padding:5px 10px;font-size:12px}
-.btn.line,.btn.outline{background:transparent;border-color:#46594a;color:#e1ebe2}
-.btn.line:hover,.btn.outline:hover{background:#1b2a1d;border-color:var(--sig);color:var(--sig)}
-input,select,textarea,.composer textarea{min-height:42px;background:#0b120d!important;color:#eef4ef!important;border:1px solid #394c3d!important;border-radius:7px!important;padding:10px 12px}
-textarea{min-height:96px}
-label{font-size:12px;font-weight:750;letter-spacing:.025em;color:#cbd8cd;margin:14px 0 6px}
-input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:var(--sig)!important}
-.tabs{border-bottom:1px solid #304033}
-.tabs button{padding:12px 10px;color:#a4b1a7}
-.tabs button.on{color:var(--sig);border-color:var(--sig)}
-.scroll{border-radius:7px;max-width:100%}
-table{font-size:13px;line-height:1.55}
-th,td{padding:12px 14px;border-bottom:1px solid #29382d}
-th{background:#18241b;color:#aebdaf;font-size:10px;letter-spacing:.12em;font-weight:800;text-transform:uppercase;white-space:nowrap}
-td{color:#e0e9e1;vertical-align:top}
-tbody tr:last-child td{border-bottom:0}
-tbody tr:hover td{background:#c8f1690a}
-.tag,.count-pill{display:inline-flex;align-items:center;border-radius:4px;padding:3px 8px;font-size:11px;font-weight:800;background:#203321;color:#d7f6a1;border:1px solid #3e5b38}
-#status{padding:11px 14px;background:#131e16;border:1px solid #304233;border-radius:7px}
-.msg{line-height:1.5}
-.hero-photo{border-radius:10px;border-color:#344737;box-shadow:0 16px 38px #0004}
-footer{margin-top:56px;padding:23px 0;background:#080d0a;color:#89998d;border-top:1px solid #2b3b2f;font-size:11px;font-weight:750;letter-spacing:.15em}
-:focus-visible{outline:2px solid var(--sig);outline-offset:3px}
-[hidden]{display:none!important}
-@media(max-width:820px){
- .wrap{width:min(100% - 30px,1240px)}
- .bar .wrap,header .wrap{min-height:66px;gap:12px;flex-wrap:wrap;padding-top:11px;padding-bottom:11px}
- .brand{font-size:25px;gap:8px;white-space:normal}
- .brand span,.brand small{font-size:9px;letter-spacing:.12em}
- .nav{gap:6px}
- .nav .btn{padding:7px 10px;min-height:35px;font-size:12px}
- .hero{padding:36px 0 32px}
- .hero .wrap{grid-template-columns:1fr;gap:23px}
- .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
- .tile{padding:15px 12px}
- .tile b{font-size:35px}
- .tile span{font-size:10px;letter-spacing:.04em}
- .grid2,.grid,.analytics-grid,.layout{grid-template-columns:1fr}
- .page,main{padding-top:26px}
- .panel h2,.panel h3{padding:14px 15px}
- .in{padding:14px}
- table{min-width:580px}
- footer{margin-top:40px}
-}
-@media(max-width:480px){
- .brand{font-size:23px}
- .brand span,.brand small{display:block;margin:4px 0 0}
- .bar .wrap,header .wrap{align-items:flex-start}
- .nav{width:100%;justify-content:flex-start}
- .tiles{grid-template-columns:1fr}
- .tile{display:flex;align-items:center;justify-content:space-between;gap:12px}
- .tile b{font-size:34px}
- .tile span{text-align:right}
- h1{font-size:clamp(40px,12vw,56px)}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
-
-
-/* Rider strengths — replace lap-total chart with practical team profiles */
-.strengths-panel{padding:20px 22px}
-.strengths-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
-.strengths-heading .section-kicker{margin-bottom:5px}
-.strengths-note{font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#637469}
-.strengths-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
-.strength-card{position:relative;min-width:0;padding:17px 16px 16px;border:1px solid #dce5de;border-radius:11px;background:linear-gradient(145deg,#fff,#f7faf7);overflow:hidden}
-.strength-index{position:absolute;top:12px;right:13px;color:#9aada0;font-size:11px;font-weight:850;letter-spacing:.08em}
-.strength-card h4{margin:0 28px 8px 0;color:#183d2b;font:700 23px/1.1 var(--disp);letter-spacing:.01em}
-.strength-card p{margin:0 0 9px;color:#225a36;font-size:14px;font-weight:800}
-.strength-detail{display:block;color:#637469;font-size:12px;line-height:1.55}
-.strength-pending{background:#f7f8f6;border-style:dashed}
-.strength-pending p{color:#68776c}
-@media(max-width:820px){.strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strengths-panel{padding:17px}}
-@media(max-width:480px){.strengths-grid{grid-template-columns:1fr}.strength-card{padding:15px}}
-
-
-
-/* Compact rider list on the homepage */
-.strengths-panel{padding:14px 16px}
-.strengths-heading .section-kicker{font-size:10px;margin-bottom:2px}
-.strengths-heading .chart-title{font-size:19px}
-.strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:10px}
-.strength-card{padding:9px 11px;border-radius:8px;box-shadow:none}
-.strength-card h4{font-size:17px;line-height:1.05;margin:0}
-@media(max-width:820px){.strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.strengths-panel{padding:12px}}
-@media(max-width:520px){.strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.strength-card{padding:9px}}
-
-
-/* Homepage rider list — force a compact layout over earlier theme rules */
-#vApp .analytics-grid > .strengths-panel{padding:12px 14px!important}
-#vApp .strengths-panel .strengths-heading{margin:0!important}
-#vApp .strengths-panel .strengths-heading .section-kicker{font-size:9px!important;line-height:1.2!important;margin:0 0 3px!important}
-#vApp .strengths-panel .strengths-heading .chart-title{font-size:18px!important;line-height:1.1!important;margin:0!important}
-#vApp .strengths-panel .strengths-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin-top:9px!important}
-#vApp .strengths-panel .strength-card{min-height:0!important;padding:8px 9px!important;border-radius:7px!important;box-shadow:none!important}
-#vApp .strengths-panel .strength-card h4{font-size:15px!important;line-height:1.05!important;margin:0!important;letter-spacing:0!important}
-@media(max-width:820px){
- #vApp .strengths-panel{padding:11px!important}
- #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important}
- #vApp .strengths-panel .strength-card{padding:7px!important}
- #vApp .strengths-panel .strength-card h4{font-size:14px!important}
-}
-@media(max-width:480px){
- #vApp .strengths-panel .strengths-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-
-
-/* Leadership menu button styling */
-.lead-menu{position:relative;display:inline-block;z-index:50;color:inherit;font-size:13px}
-.lead-menu[hidden]{display:none!important}
-.lead-menu>summary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:34px;list-style:none;cursor:pointer;padding:6px 12px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;font:inherit;font-weight:800;line-height:1.2;white-space:nowrap;box-sizing:border-box}
-.lead-menu>summary::-webkit-details-marker{display:none}
-.lead-menu[open]>summary{border-color:var(--sig);color:var(--sig);background:#101a14}
-.lead-menu-pop{position:absolute;right:0;top:calc(100% + 7px);z-index:100;min-width:245px;padding:6px;background:#101a14;border:1px solid #3b4d40;border-radius:8px;box-shadow:0 14px 35px #0008;display:grid;gap:4px}
-.lead-menu:not([open])>.lead-menu-pop{display:none}
-.lead-menu-pop a{display:flex;align-items:center;min-height:34px;padding:7px 11px;border:1px solid #3b4d40;border-radius:6px;background:#15221a;color:#edf4ee;text-decoration:none;font-size:13px;font-weight:750;line-height:1.3;box-sizing:border-box}
-.lead-menu-pop a:hover,.lead-menu-pop a:focus-visible,.lead-menu-pop a[aria-current="page"]{border-color:var(--sig);background:#263a2b;color:var(--sig);outline:none}
-.lead-menu-pop a[hidden]{display:none!important}
-
-
-
-/* VIPER fixed left navigation */
-body{padding-left:248px!important}
-header.bar{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:248px!important;height:100vh!important;min-height:100vh!important;z-index:1000!important;border:0!important;border-right:3px solid var(--sig)!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;background:var(--viper)!important}
-header.bar>.wrap.topbar-inner{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:26px!important;width:100%!important;max-width:none!important;min-height:100vh!important;height:auto!important;margin:0!important;padding:24px 16px!important;box-sizing:border-box!important}
-header.bar .site-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:10px!important;flex:0 0 auto!important}
-header.bar .site-brand .brand{display:block!important;font-size:29px!important;line-height:1.05!important}
-header.bar .site-brand .brand span{display:block!important;margin:7px 0 0!important;font-size:11px!important;letter-spacing:.12em!important}
-header.bar .page-indicator{white-space:normal!important;font-size:10px!important}
-header.bar .site-nav{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:9px!important;width:100%!important;flex-wrap:nowrap!important}
-header.bar .site-nav>a.btn,header.bar .site-nav>button.btn{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:40px!important;padding:9px 11px!important;margin:0!important;box-sizing:border-box!important;text-align:left!important;white-space:normal!important}
-header.bar .site-nav .who{display:block!important;overflow-wrap:anywhere!important;padding:8px 3px!important}
-header.bar .site-nav #leadCaptainLink[hidden],header.bar .site-nav [hidden]{display:none!important}
-header.bar .site-nav a[aria-current="page"]{border-color:var(--sig)!important;color:var(--sig)!important;background:#17271d!important;box-shadow:inset 3px 0 0 var(--sig)!important}
-@media(max-width:760px){
- body{padding-left:190px!important}
- header.bar{width:190px!important}
- header.bar>.wrap.topbar-inner{padding:18px 10px!important;gap:20px!important}
- header.bar .site-brand .brand{font-size:25px!important}
- header.bar .site-nav>a.btn,header.bar .site-nav>button.btn{font-size:12px!important;padding:8px!important}
-}
-
-
-/* Enforce the same fixed sidebar on every VIPER page, including Captain Controls */
-html body>header.bar{position:fixed!important;left:0!important;top:0!important;right:auto!important;bottom:0!important;width:248px!important;height:100vh!important;min-height:100vh!important;max-height:none!important;transform:none!important;float:none!important;display:block!important;z-index:9999!important;overflow-y:auto!important;overflow-x:hidden!important;border-right:3px solid var(--sig)!important;border-bottom:0!important}
-html body>header.bar>.wrap.topbar-inner{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;max-width:none!important;height:auto!important;min-height:100vh!important;margin:0!important;padding:24px 16px!important;gap:26px!important;box-sizing:border-box!important}
-html body{padding-left:248px!important}
-@media(max-width:760px){
- html body>header.bar{position:fixed!important;left:0!important;top:0!important;right:auto!important;bottom:0!important;width:190px!important;height:100vh!important;min-height:100vh!important;max-height:none!important;transform:none!important;float:none!important;display:block!important;border-right:3px solid var(--sig)!important;border-bottom:0!important}
- html body>header.bar>.wrap.topbar-inner{width:100%!important;min-height:100vh!important;height:auto!important;padding:18px 10px!important;gap:20px!important}
- html body{padding-left:190px!important;padding-top:0!important}
- html body>header.bar .site-brand .brand{font-size:25px!important}
- html body>header.bar .site-nav>a.btn,html body>header.bar .site-nav>button.btn{font-size:12px!important;padding:8px!important}
-}
-
-
-/* Leadership dropdown inside the fixed sidebar */
-html body>header.bar .site-nav>.lead-menu{display:block!important;width:100%!important;position:relative!important;z-index:10000!important;font-size:13px!important}
-html body>header.bar .site-nav>.lead-menu[hidden]{display:none!important}
-html body>header.bar .site-nav>.lead-menu>summary{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-height:40px!important;padding:9px 11px!important;box-sizing:border-box!important;text-align:left!important;white-space:normal!important;border:1px solid currentColor!important;border-radius:6px!important;cursor:pointer!important}
-html body>header.bar .site-nav>.lead-menu[open]>summary{border-color:var(--sig)!important;color:var(--sig)!important;background:#17271d!important}
-html body>header.bar .site-nav>.lead-menu .lead-menu-pop{position:static!important;display:grid!important;min-width:0!important;width:auto!important;margin-top:6px!important;padding:6px!important;gap:5px!important;box-shadow:none!important;background:#101a14!important;border:1px solid #3b4d40!important;border-radius:8px!important}
-html body>header.bar .site-nav>.lead-menu:not([open])>.lead-menu-pop{display:none!important}
-html body>header.bar .site-nav>.lead-menu .lead-menu-pop a{display:flex!important;align-items:center!important;width:100%!important;min-height:38px!important;padding:9px 10px!important;box-sizing:border-box!important;text-decoration:none!important}
-html body>header.bar .site-nav>#navCaptain{display:none!important}
-
-
-/* Rebuilt sidebar Leadership menu: explicit button + controlled submenu */
-html body>header.bar .site-nav>.lead-menu{display:block!important;position:relative!important;width:100%!important;min-width:0!important;z-index:10000!important}
-html body>header.bar .site-nav>.lead-menu[hidden]{display:none!important}
-html body>header.bar .site-nav #leadershipToggle{appearance:none!important;-webkit-appearance:none!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;width:100%!important;min-height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #536456!important;border-radius:7px!important;background:#142018!important;color:#edf4ee!important;font:inherit!important;font-size:13px!important;font-weight:800!important;text-align:left!important;cursor:pointer!important;box-sizing:border-box!important}
-html body>header.bar .site-nav #leadershipToggle:hover,html body>header.bar .site-nav #leadershipToggle[aria-expanded="true"]{border-color:var(--sig)!important;color:var(--sig)!important;background:#1a2a1e!important}
-html body>header.bar .site-nav #leadershipChevron{display:inline-block!important;transition:transform .18s ease!important}
-html body>header.bar .site-nav #leadershipToggle[aria-expanded="true"] #leadershipChevron{transform:rotate(180deg)!important}
-html body>header.bar .site-nav #leadershipSubmenu{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important;margin:7px 0 0!important;padding:7px!important;border:1px solid #35463a!important;border-radius:7px!important;background:#0d150f!important;box-sizing:border-box!important}
-html body>header.bar .site-nav #leadershipSubmenu[hidden]{display:none!important}
-html body>header.bar .site-nav #leadershipSubmenu a{display:flex!important;align-items:center!important;width:100%!important;min-height:38px!important;margin:0!important;padding:9px 10px 9px 14px!important;border:1px solid transparent!important;border-radius:5px!important;background:transparent!important;color:#dce7de!important;text-decoration:none!important;font-size:12px!important;font-weight:750!important;line-height:1.3!important;box-sizing:border-box!important;white-space:normal!important}
-html body>header.bar .site-nav #leadershipSubmenu a:hover,html body>header.bar .site-nav #leadershipSubmenu a[aria-current="page"]{border-color:#405344!important;background:#1b2a1f!important;color:var(--sig)!important}
-html body>header.bar .site-nav>#navCaptain{display:none!important}
-
-
-
-/* Dashboard visual repair: remove the foggy header and stray decorative overlays. */
-header.bar,.bar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#080d0b!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important}
-body{background:#080d0b!important}
-body .hero:before,body .hero:after,body .hero-photo:after{display:none!important;content:none!important}
-body .viper-dashboard-sidebar{box-shadow:none!important}
-
-/* Fix: viper-redesign.css forced the fixed header to full width (dark overlay over the page) and
-   a display:flex rule overrode [hidden] on the Sign out button (green band). Out-rank both. */
-html body:not(.viper-redesign-dashboard)>header.bar{width:242px!important;margin-left:0!important;padding:0!important;border:0!important;background:#080d0b!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-html body .auth h2{color:#f0f5ef!important}
-html body>header.bar .site-nav [hidden]{display:none!important}
-@media(max-width:760px){html body:not(.viper-redesign-dashboard)>header.bar{width:190px!important;border:0!important}}
-</style><link rel="stylesheet" href="viper-polish.css?v=1">
-<link rel="stylesheet" href="viper-navigation.css?v=6">
-</head><body>
-<header class="bar"><div class="wrap topbar-inner"><div class="site-brand"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><span class="page-indicator" aria-current="page">Dashboard</span></div><nav class="site-nav" aria-label="Main navigation"><a class="btn line sm" aria-current="page" href="index.html">Dashboard</a><a id="navRace" class="btn line sm" href="race-days.html">Race days</a><a id="navRiders" class="btn line sm" href="rider-data.html">Rider Data</a><a id="navAnalysis" class="btn line sm" href="team-analysis.html">Data Analysis</a><a id="navPerformance" class="btn line sm" href="performance-dashboard.html">Performance</a><a id="navAnnouncements" class="btn line sm" href="announcements.html" hidden>Announcements</a><div id="leadershipMenu" class="lead-menu" hidden><button id="leadershipToggle" type="button" aria-expanded="false" aria-controls="leadershipSubmenu"><span>Leadership</span><span id="leadershipChevron" aria-hidden="true">▾</span></button><div id="leadershipSubmenu" hidden><a id="leadAttendanceLink" href="attendance.html">Roll Call</a><a id="leadCaptainLink" href="captain.html" hidden>Captain Controls</a><a id="leadRiderManagementLink" href="riders.html" hidden>Rider Management</a><a id="leadTrainingLink" href="training.html" hidden>Training Planner</a><a id="leadRaceCommandLink" href="race-command.html" hidden>Race Day Command Centre</a><a id="leadAvailabilityLink" href="rider-availability.html" hidden>Rider Availability</a></div></div><a id="navCaptain" class="btn line sm" href="captain.html" hidden>Captain controls</a><span id="who" class="who"></span><button id="out" class="btn line sm" hidden>Sign out</button></nav></div></header><main>
-<section id="vAuth" class="hero"><div class="wrap"><div><div class="eyebrow">Team Venom · Race operations platform</div><h1>Race data.<br><span style="color:var(--sig)">Race ready.</span></h1><p class="lead">The Team Venom race operations hub. Race records, rider performance and event logistics — organised for the people behind every lap.</p></div><div class="auth"><h2>Team sign in</h2><div class="tabs"><button class="on" data-t="in">Sign in</button><button data-t="reg">Register</button></div><div id="regOnly" hidden><label for="nm">Full name</label><input id="nm" autocomplete="name"><label for="code">Invitation code</label><input id="code" autocomplete="off"></div><label for="em">Email</label><input id="em" type="email" autocomplete="email"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><button class="btn" id="go" style="width:100%;margin-top:18px">Sign in</button><div class="msg" id="amsg" role="status"></div><p class="note">New accounts need an invitation code and captain approval before you can see team data.</p></div></div></section>
-<section class="wrap trike-banner" aria-label="Team Venom trike"><figure class="hero-photo"><img src="./images/team-venom-trike.jpg" alt="Team Venom trike" fetchpriority="high"><figcaption><strong>TEAM VENOM</strong><span>HPR · RACE PERFORMANCE</span></figcaption></figure></section>
-<div id="vPending" hidden class="wrap"><div class="card"><h3 id="pTitle">Waiting for captain approval</h3><p id="pText" class="dim">Your account is registered. The team captain will review your request.</p><button id="refreshProfile" class="btn sm">Check approval status</button></div></div>
-<div id="vApp" hidden class="wrap page"><h2 class="h" id="hello">Team dashboard</h2><p class="sub">Race records and rider statistics for approved members.</p><div class="tiles"><div class="tile"><b id="stRaces">0</b><span>Official races logged</span></div><div class="tile"><b id="stLaps">0</b><span>Recorded race laps</span></div><div class="tile"><b id="stRiders">0</b><span>Riders tracked</span></div></div>
-<div class="grid2" style="margin:22px 0"><a id="trainingFeature" href="training.html" hidden class="panel" style="display:block;padding:22px;text-decoration:none;color:inherit;border-left:3px solid var(--sig)"><div class="eyebrow">Leadership tools</div><h3 style="font-size:28px;margin:8px 0">Training & Attendance Planner ↗</h3><p class="dim">Schedule training, flag mandatory sessions and record rider attendance.</p></a><a id="announcementsFeature" href="announcements.html" class="panel" style="display:block;padding:22px;text-decoration:none;color:inherit;border-left:3px solid var(--sig)"><div class="eyebrow">Team communications</div><h3 style="font-size:28px;margin:8px 0">Team Announcements ↗</h3><p class="dim">Check race updates, training reminders and important team notices.</p></a></div><div class="analytics-grid"><section class="chart-panel"><h3 class="chart-title">Race comparison</h3><p class="chart-caption">Recorded laps by official event</p><div id="raceChart" class="bar-chart" aria-label="Race comparison chart"></div></section><section class="chart-panel strengths-panel"><div class="strengths-heading"><div><div class="section-kicker">Team rider profiles</div><h3 class="chart-title">Rider Strengths</h3></div></div><div class="strengths-grid">
-<article class="strength-card"><h4>Dylan</h4></article>
-<article class="strength-card"><h4>Felix</h4></article>
-<article class="strength-card"><h4>Hugh</h4></article>
-<article class="strength-card"><h4>Hutch</h4></article>
-<article class="strength-card"><h4>Josh</h4></article>
-<article class="strength-card"><h4>Nick</h4></article>
-<article class="strength-card"><h4>Oscar</h4></article>
-<article class="strength-card"><h4>Tenny</h4></article>
-</div></section></div>
-<div class="grid2"><div class="panel"><h3 style="display:flex;align-items:center;justify-content:space-between;gap:12px">Race records <button id="refreshDashData" type="button" class="btn line sm">Refresh data</button></h3><div class="scroll"><table><thead><tr><th>Event</th><th>Date</th><th>Result</th><th>Laps</th></tr></thead><tbody id="rr"></tbody></table></div></div><div class="panel"><h3>Rider statistics</h3><div class="scroll"><table><thead><tr><th>Rider</th><th>Total laps</th></tr></thead><tbody id="rs"></tbody></table></div></div></div>
-<div id="leader" hidden><h2 class="h" style="margin-top:36px">Leadership submissions</h2><p class="sub">Submit new data for Captain review. It won't appear in official records until approved.</p><div class="grid2"><div class="panel"><h3>Submit race record</h3><div class="in"><label>Event</label><input id="sEvent" placeholder="Sandown"><label>Race date</label><input id="sDate" type="date"><label>Result</label><input id="sResult" placeholder="2nd Middle Open"><label>Laps</label><input id="sLaps" type="number" min="0"><label>Notes</label><textarea id="sRaceNotes"></textarea><button class="btn sm" id="submitRace">Submit for approval</button></div></div><div class="panel"><h3>Submit rider statistics</h3><div class="in"><label>Rider name</label><input id="sRider"><label>Event</label><input id="sStatEvent" placeholder="Casey Fields"><label>Laps</label><input id="sStatLaps" type="number" min="0"><label>Notes</label><textarea id="sStatNotes"></textarea><button class="btn sm" id="submitStat">Submit for approval</button></div></div><div class="panel"><h3>Submit race day</h3><div class="in"><label>Title</label><input id="sDayTitle" placeholder="Casey Fields — Race 4"><label>Date</label><input id="sDayDate" type="date"><label>Venue</label><input id="sDayVenue"><label>Start time</label><input id="sDayTime" placeholder="9:00 am"><label>Information</label><textarea id="sDayInfo"></textarea><button class="btn sm" id="submitDay">Submit for approval</button></div></div><div class="panel"><h3>Submit roster entry</h3><div class="in"><label>Race day</label><select id="sRosterDay"></select><label>Stint number</label><input id="sStint" type="number" min="1"><label>Rider name</label><input id="sRosterRider"><label>Minutes</label><input id="sMinutes" type="number" min="0"><label>Notes</label><textarea id="sRosterNotes"></textarea><button class="btn sm" id="submitRoster">Submit for approval</button></div></div><div class="panel"><h3>Submit a race-day file</h3><div class="in"><label>Race day</label><select id="sFileDay"></select><label>File</label><input id="sFile" type="file"><p class="note">Maximum 10 MB. Files remain private until approved.</p><button class="btn sm" id="submitFile">Upload for approval</button></div></div><div class="panel"><h3>My submissions</h3><div class="in" id="mySubs">Loading…</div></div></div><div class="msg" id="lmsg" role="status"></div></div>
+:root{color-scheme:dark;--bg:#080c0a;--panel:#101713;--panel2:#151e18;--line:#29372e;--line2:#3b4c40;--text:#eaf0e9;--muted:#8c9b8f;--green:#b9ed5b;--green2:#7fae39;--amber:#f0bf57;--red:#ff756d;--mono:"IBM Plex Mono",ui-monospace,monospace;--display:"Barlow Condensed",Impact,sans-serif}
+*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 70% -20%,#263b29 0,transparent 42%),var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}button,input,select{font:inherit}button,a{touch-action:manipulation}a{color:inherit;text-decoration:none}.mono,.eyebrow,.metric-label,.tag,.data-table th,.tiny,.status-pill,.side-foot,.field-label{font-family:var(--mono)}.shell{min-height:100vh}.rail{position:fixed;inset:0 auto 0 0;width:236px;padding:22px 15px 16px;background:#090f0b;border-right:1px solid var(--line2);display:flex;flex-direction:column;gap:23px;z-index:5}.brand{display:flex;align-items:center;gap:11px;padding:0 7px 19px;border-bottom:1px solid var(--line)}.brand-mark{width:39px;height:39px;display:grid;place-items:center;background:var(--green);color:#10170c;font:800 25px var(--display);clip-path:polygon(0 0,100% 0,100% 73%,73% 100%,0 100%)}.brand-name{font:800 25px/.9 var(--display);letter-spacing:.07em}.brand-name small{display:block;color:var(--green);font:600 9px/1.5 var(--mono);letter-spacing:.15em;margin-top:7px}.nav-group{display:grid;gap:5px}.nav-label{color:#68776c;font:500 9px var(--mono);letter-spacing:.16em;padding:0 10px 7px;text-transform:uppercase}.nav-link{display:flex;align-items:center;gap:11px;padding:10px;border:1px solid transparent;border-radius:5px;color:#9eada1;font-size:12px;font-weight:650}.nav-link .glyph{width:20px;color:#7e927e;text-align:center;font-size:15px}.nav-link:hover{background:#152019;color:var(--text)}.nav-link.active{background:#19251a;border-color:#354d2e;color:var(--green)}.nav-link.active .glyph{color:var(--green)}.side-foot{margin-top:auto;border-top:1px solid var(--line);padding:15px 7px 0;color:#607064;font-size:9px;line-height:1.8;letter-spacing:.07em}.side-foot strong{color:var(--green);font-weight:500}.main{margin-left:236px;min-width:0}.topbar{min-height:65px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 28px;background:#0a100cdd;position:sticky;top:0;z-index:4;backdrop-filter:blur(15px)}.crumb{color:var(--muted);font:10px var(--mono);letter-spacing:.08em}.crumb strong{color:var(--text);font-weight:500}.top-right{display:flex;align-items:center;gap:12px}.live-dot{width:7px;height:7px;display:inline-block;background:var(--green);border-radius:50%;box-shadow:0 0 10px #b9ed5b66;margin-right:7px}.status-pill{font-size:9px;letter-spacing:.08em;padding:6px 8px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}.signout,.btn{border:1px solid var(--line2);background:#141e17;color:var(--text);padding:9px 12px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:700}.signout:hover,.btn:hover{border-color:var(--green);color:var(--green)}.btn.primary{background:var(--green);border-color:var(--green);color:#10170c}.btn.primary:hover{filter:brightness(1.07);color:#10170c}.btn:disabled{opacity:.5;cursor:wait}.content{padding:28px;max-width:1500px;margin:0 auto}.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{color:var(--green);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}.pagehead h1{font:700 clamp(35px,4vw,53px)/.93 var(--display);letter-spacing:.01em;margin:0;text-transform:uppercase}.pagehead h1 span{color:var(--green)}.pagehead p{margin:12px 0 0;color:var(--muted);font-size:12px}.tag{border:1px solid var(--line2);padding:7px 9px;color:var(--muted);font-size:9px;letter-spacing:.08em;white-space:nowrap}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}.metric{position:relative;min-height:115px;padding:15px 16px;background:linear-gradient(140deg,#151e17,#0f1511);border:1px solid var(--line);overflow:hidden}.metric:after{content:"";position:absolute;width:72px;height:72px;right:-30px;top:-32px;border:1px solid #b9ed5b20;transform:rotate(45deg)}.metric-label{font-size:9px;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}.metric-value{font:700 43px/.95 var(--display);color:var(--green);margin-top:13px;font-variant-numeric:tabular-nums}.metric-foot{font-size:10px;color:#708073;margin-top:7px}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.85fr);gap:14px}.panel{border:1px solid var(--line);background:#0f1511;min-width:0;margin-bottom:14px}.panel-head{min-height:48px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);background:#131b15}.panel-title{font:600 18px var(--display);letter-spacing:.035em;text-transform:uppercase}.panel-kicker{font:9px var(--mono);color:var(--muted);letter-spacing:.07em}.panel-body{padding:15px}.data-table{width:100%;border-collapse:collapse;font-size:11px}.data-table th{text-align:left;color:#829083;font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:10px 11px;border-bottom:1px solid var(--line);white-space:nowrap}.data-table td{padding:11px;border-bottom:1px solid #202c23;color:#cbd5cb;font-variant-numeric:tabular-nums}.data-table tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#152018}.data-table .num{text-align:right;font-family:var(--mono)}.empty{padding:25px 12px;color:var(--muted);text-align:center;font-size:11px}.race-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid #202c23}.race-row:last-child{border:0}.race-name{font-weight:700;font-size:12px}.race-meta{color:var(--muted);font:9px var(--mono);margin-top:4px}.race-laps{font:700 25px/.9 var(--display);color:var(--green);text-align:right}.race-laps small{display:block;font:9px var(--mono);color:var(--muted);margin-top:6px}.link-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.feature-link{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:13px;border:1px solid var(--line);background:#111a14;color:#b8c6b9;font-size:11px;font-weight:650;min-height:48px}.feature-link:hover{border-color:#567343;color:var(--green)}.feature-link span:last-child{color:#718171}.chart{display:flex;align-items:flex-end;gap:10px;height:125px;padding:13px 4px 0;border-bottom:1px solid var(--line);overflow:hidden}.bar-col{height:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px;min-width:0}.bar{width:min(100%,37px);min-height:3px;background:linear-gradient(180deg,var(--green),#42672c);border:1px solid #c8f16955}.bar-label{font:8px var(--mono);color:var(--muted);width:100%;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar-val{font:9px var(--mono);color:#c9d5c9}.notice{padding:12px 13px;border:1px solid #3b4b35;background:#151f16;color:#a7b7a8;font-size:11px;margin-bottom:12px}.notice.error{border-color:#693c38;color:#ffaaa2;background:#211412}.notice.warn{border-color:#62502f;color:#f0cf8a;background:#1e1a11}.auth-wrap{max-width:490px;margin:8vh auto;padding:24px}.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:25px}.auth-brand h1{font:700 35px var(--display);margin:0}.auth-brand p{font:9px var(--mono);letter-spacing:.1em;color:var(--green);margin:0}.auth-panel{border:1px solid var(--line2);background:#101713}.auth-tabs{display:flex;border-bottom:1px solid var(--line)}.auth-tabs button{flex:1;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);padding:14px;cursor:pointer;font:10px var(--mono);letter-spacing:.1em}.auth-tabs button.active{color:var(--green);border-bottom-color:var(--green)}.auth-body{padding:22px}.auth-body h2{font:600 24px var(--display);text-transform:uppercase;margin:0 0 7px}.auth-body>p{font-size:11px;color:var(--muted);margin:0 0 18px}.field{margin-bottom:13px}.field-label{display:block;font-size:9px;color:#9aa99b;letter-spacing:.08em;margin-bottom:6px;text-transform:uppercase}.field input{width:100%;padding:11px;background:#080e0a;border:1px solid var(--line2);border-radius:3px;color:var(--text);outline:none}.field input:focus{border-color:var(--green);box-shadow:0 0 0 2px #b9ed5b16}.auth-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px}.auth-actions .btn{flex:1}.auth-message{min-height:18px;color:var(--green);font-size:11px;margin-top:14px}.auth-message.error{color:var(--red)}.pending{padding:30px 22px;text-align:center}.pending h2{font:600 26px var(--display);margin:0 0 10px}.pending p{color:var(--muted);font-size:12px}.mobile-toggle{display:none}.hidden{display:none!important}.footer-line{border-top:1px solid var(--line);padding:13px 0;color:#5f6e61;font:9px var(--mono);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:1100px){.rail{width:205px}.main{margin-left:205px}.content{padding:22px}.topbar{padding:0 22px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.right-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.right-col .panel{min-width:0}}
+@media(max-width:700px){.rail{position:fixed;inset:0 auto 0 0;width:245px;transform:translateX(-101%);transition:transform .2s ease;box-shadow:0 15px 60px #000a}.rail.open{transform:translateX(0)}.main{margin-left:0}.topbar{min-height:58px;padding:0 14px}.mobile-toggle{display:inline-flex;width:35px;height:35px;align-items:center;justify-content:center;border:1px solid var(--line2);background:#131b15;color:var(--green);cursor:pointer}.crumb{margin-right:auto}.top-right .status-pill{display:none}.content{padding:20px 13px}.pagehead{align-items:flex-start;flex-direction:column;gap:12px}.pagehead h1{font-size:39px}.metrics{gap:7px}.metric{min-height:102px;padding:12px}.metric-value{font-size:36px}.metric-label{font-size:8px}.right-col{display:block}.panel-body{padding:10px}.data-table th,.data-table td{padding:9px 7px}.tag{white-space:normal}.auth-wrap{padding:15px;margin:4vh auto}.footer-line{font-size:8px}}
+</style>
+</head>
+<body>
+<div id="authView" class="auth-wrap">
+ <div class="auth-brand"><div class="brand-mark">V</div><div><h1>VIPER // <span style="color:var(--green)">AI</span></h1><p>TEAM VENOM HPR · ENGINEERING CONSOLE</p></div></div>
+ <div class="auth-panel">
+  <div class="auth-tabs"><button id="tabSignIn" class="active" type="button">SIGN IN</button><button id="tabRequest" type="button">REQUEST ACCESS</button></div>
+  <div class="auth-body">
+   <h2 id="authTitle">Member access</h2><p id="authDesc">Sign in with your existing VIPER AI account. New accounts still require an invitation code and Captain approval.</p>
+   <form id="authForm">
+    <div id="nameField" class="field hidden"><label class="field-label" for="fullName">Full name</label><input id="fullName" autocomplete="name" maxlength="100"></div>
+    <div class="field"><label class="field-label" for="email">Email address</label><input id="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label class="field-label" for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="8" required></div>
+    <div id="inviteField" class="field hidden"><label class="field-label" for="inviteCode">Invitation code</label><input id="inviteCode" autocomplete="off" maxlength="100"></div>
+    <div class="auth-actions"><button id="authSubmit" class="btn primary" type="submit">SIGN IN →</button></div>
+   </form>
+   <div id="authMessage" class="auth-message" role="status" aria-live="polite"></div>
+  </div>
+ </div>
+ <p class="tiny" style="color:var(--muted);font-size:9px;line-height:1.8;margin-top:14px">SECURE MEMBER GATE · EXISTING SUPABASE AUTHENTICATION · CAPTAIN APPROVAL REQUIRED</p>
 </div>
-<div id="landing" class="wrap"><section style="padding:56px 0 0"><h2 class="h">How joining works</h2><div class="grid2"><div><b>1. Get a code</b><p class="dim">A team member shares an invitation code.</p></div><div><b>2. Register</b><p class="dim">Sign up with your name and email.</p></div><div><b>3. Captain approves</b><p class="dim">The Captain reviews membership and Leadership submissions.</p></div><div><b>4. View the dashboard</b><p class="dim">Approved members can access race records, rider stats and race-day resources.</p></div></div></section></div>
-</main><footer><div class="wrap">VIPER MOTORSPORT — RACE DATA. TEAM PERFORMANCE.</div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><script>
-(function(){'use strict';const sb=supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');const $=id=>document.getElementById(id);let mode='in',me=null,sessionUser=null;
-function msg(el,t,err){$(el).textContent=t||'';$(el).className='msg'+(err?' err':'')}
-function td(tr,t){const c=document.createElement('td');c.textContent=t==null||t===''?'—':t;tr.appendChild(c)}
-function fill(body,rows,cols){body.textContent='';if(!rows.length){const r=document.createElement('tr');const c=document.createElement('td');c.colSpan=cols.length;c.textContent='No entries yet';r.appendChild(c);body.appendChild(r);return}rows.forEach(x=>{const r=document.createElement('tr');cols.forEach(k=>td(r,x[k]));body.appendChild(r)})}
-function show(id){['vAuth','vPending','vApp'].forEach(x=>$(x).hidden=x!==id);$('landing').hidden=id!=='vAuth'}
-function num(id){const v=$(id).value.trim();return v===''?null:Number(v)}
-async function submit(category,payload){msg('lmsg','Submitting…');const r=await sb.from('submissions').insert({category,payload,submitted_by:sessionUser.id}).select().single();if(r.error){msg('lmsg',r.error.message,1);return false}msg('lmsg','Submitted! It is now waiting for Captain approval.');await loadMySubs();return true}
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));$('regOnly').hidden=mode!=='reg';$('go').textContent=mode==='reg'?'Request access':'Sign in';msg('amsg','')});
-$('go').onclick=async()=>{const email=$('em').value.trim(),password=$('pw').value;msg('amsg','');if(!email||!password)return msg('amsg','Enter your email and password.',1);$('go').disabled=true;try{if(mode==='reg'){const name=$('nm').value.trim(),code=$('code').value.trim();if(!name||!code){msg('amsg','Enter your name and invitation code.',1)}else if(password.length<8){msg('amsg','Use a password with at least 8 characters.',1)}else{const r=await sb.auth.signUp({email,password,options:{data:{full_name:name,invite_code:code}}});if(r.error)msg('amsg',r.error.message,1);else if(!r.data.session)msg('amsg','Account created. Check your email to confirm, then sign in.');}}else{const r=await sb.auth.signInWithPassword({email,password});if(r.error)msg('amsg',r.error.message,1)}}finally{$('go').disabled=false}};
-$('out').onclick=async()=>{await sb.auth.signOut();};$('refreshProfile').onclick=()=>loadCurrent();
-async function loadCurrent(){const s=await sb.auth.getSession();await load(s.data.session)}
-async function load(session){sessionUser=session?.user||null;$('navCaptain').hidden=true;$('leadershipMenu').hidden=true;if(!session){stopLiveResults();me=null;$('navAnnouncements').hidden=true;$('announcementsFeature').hidden=true;$('trainingFeature').hidden=true;$('navRace').hidden=true;$('leadershipMenu').hidden=true;$('out').hidden=true;$('who').textContent='';$('leader').hidden=true;$('navCaptain').hidden=true;show('vAuth');return}$('out').hidden=false;const p=await sb.from('profiles').select('*').eq('id',session.user.id).single();if(p.error||!p.data){stopLiveResults();show('vPending');$('pTitle').textContent='Account setup incomplete';$('pText').textContent='We could not find your member profile. Contact the Captain.';return}me=p.data;$('who').textContent=me.full_name||me.email;$('navRace').hidden=me.status!=='approved';$('navAnnouncements').hidden=me.status!=='approved';$('announcementsFeature').hidden=me.status!=='approved';$('trainingFeature').hidden=!(me.status==='approved'&&(me.role==='captain'||me.role==='leadership'));$('leadershipMenu').hidden=!(me.status==='approved'&&(me.role==='captain'||me.role==='leadership'));$('leadCaptainLink').hidden=!(me.status==='approved'&&me.role==='captain');$('leadRiderManagementLink').hidden=!(me.status==='approved'&&me.role==='captain');$('leadTrainingLink').hidden=!(me.status==='approved'&&(me.role==='captain'||me.role==='leadership'));$('leadRaceCommandLink').hidden=!(me.status==='approved'&&(me.role==='captain'||me.role==='leadership'));$('leadAvailabilityLink').hidden=!(me.status==='approved'&&(me.role==='captain'||me.role==='leadership'));if(me.status!=='approved'){stopLiveResults();show('vPending');$('pTitle').textContent=me.status==='declined'?'Request declined':'Waiting for Captain approval';$('pText').textContent=me.status==='declined'?'Your membership request was not approved. Contact the Captain if you think this is a mistake.':'Your account is registered. The Captain will review your request.';return}show('vApp');await dash();watchLiveResults();$('leader').hidden=me.role!=='leadership';$('navCaptain').hidden=!(me.id==='8d693590-5efa-4878-97ec-0b01eb28caf9'&&me.role==='captain'&&me.status==='approved');if(!$('leader').hidden){await loadRaceDayOptions();await loadMySubs()}}
-
-function renderBars(id,items,labelKey,valueKey){const box=$(id);box.textContent='';if(!items.length){const e=document.createElement('div');e.className='chart-empty';e.textContent='No data available yet.';box.appendChild(e);return}const max=Math.max(1,...items.map(x=>Number(x[valueKey])||0));items.forEach(x=>{const row=document.createElement('div');row.className='bar-row';const label=document.createElement('div');label.className='bar-label';label.textContent=x[labelKey]||'Unknown';label.title=label.textContent;const track=document.createElement('div');track.className='bar-track';const fillBar=document.createElement('div');fillBar.className='bar-fill';fillBar.style.width=Math.max(0,Math.min(100,(Number(x[valueKey])||0)/max*100))+'%';track.appendChild(fillBar);const value=document.createElement('div');value.className='bar-value';value.textContent=String(Number(x[valueKey])||0);row.append(label,track,value);box.appendChild(row)})}
-function eventLabel(value){return value}
-function eventKey(value){return String(eventLabel(value)||'').trim().toLowerCase()}
-function isHiddenSandownRound3(value){return /^sandown\s*(?:\(\s*round\s*#?\s*3\s*\)|round\s*#?\s*3|\(\s*#?\s*3\s*\))$/i.test(String(value||'').trim())}
-let liveResultsChannel=null,liveResultsTimer=null;
-function stopLiveResults(){if(liveResultsTimer){clearTimeout(liveResultsTimer);liveResultsTimer=null}if(liveResultsChannel){sb.removeChannel(liveResultsChannel);liveResultsChannel=null}}
-function watchLiveResults(){if(liveResultsChannel)return;const refresh=()=>{if(liveResultsTimer)clearTimeout(liveResultsTimer);liveResultsTimer=setTimeout(()=>{liveResultsTimer=null;if(me&&me.status==='approved'&&!$('vApp').hidden)dash()},400)};liveResultsChannel=sb.channel('viper-live-race-results-dashboard').on('postgres_changes',{event:'*',schema:'public',table:'race_records'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'rider_stats'},refresh).on('postgres_changes',{event:'*',schema:'public',table:'lap_records'},refresh).subscribe((status,error)=>{if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')console.warn('Live race result subscription:',status,error||'')})}
-async function dash(){
- $('hello').textContent='Welcome, '+((me.full_name||'').split(' ')[0]||'member');
- const [a,b,l]=await Promise.all([
-  sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:false}),
-  sb.from('rider_stats').select('rider_name,event,laps').order('rider_name'),
-  sb.from('lap_records').select('event,lap_number_as_shown')
- ]);
- if(a.error||b.error||l.error){console.error('Viper dashboard data error',a.error,b.error,l.error);msg('lmsg','Could not refresh dashboard data. Reload the page or check database access.',1);return}
- const ar=a.data||[],br=(b.data||[]),lr=(l.data||[]);
- const lapCounts=new Map();
- lr.forEach(x=>{const k=eventKey(x.event);if(k&&/^\d+$/.test(String(x.lap_number_as_shown||'').trim()))lapCounts.set(k,(lapCounts.get(k)||0)+1)});
- const displayRaces=ar.map(x=>{const k=eventKey(x.event);return{event:eventLabel(x.event),race_date:x.race_date,result:x.result,laps:(lapCounts.get(k)||0)>0?lapCounts.get(k):(Number(x.laps)||0)}}).sort((x,y)=>String(y.race_date||'').localeCompare(String(x.race_date||''))||String(x.event).localeCompare(String(y.event)));
- fill($('rr'),displayRaces,['event','race_date','result','laps']);
- const riderTotals=new Map();
- br.forEach(x=>{const name=String(x.rider_name||'').trim();if(!name||/^ross$/i.test(name))return;const key=name.toLowerCase();const current=riderTotals.get(key)||{rider_name:name,laps:0};current.laps+=Number(x.laps)||0;riderTotals.set(key,current)});
- const totalRows=[...riderTotals.values()].sort((x,y)=>{const lastName=name=>name.trim().split(/\s+/).slice(-1)[0].toLowerCase();return lastName(x.rider_name).localeCompare(lastName(y.rider_name))||x.rider_name.localeCompare(y.rider_name)});
- fill($('rs'),totalRows,['rider_name','laps']);
- const raceChartItems=displayRaces.slice(0,5).map(x=>({label:x.event,value:Number(x.laps)||0}));
- renderBars('raceChart',raceChartItems.map(x=>({name:x.label,laps:x.value})),'name','laps');
- // Rider strengths are curated from the team's recorded race notes; no database records are changed.
- $('stRaces').textContent=String(displayRaces.length);
- $('stLaps').textContent=String(displayRaces.reduce((total,x)=>total+(Number(x.laps)||0),0));
- $('stRiders').textContent=String(new Set(br.map(x=>(x.rider_name||'').trim().toLowerCase()).filter(Boolean)).size)
-}
-$('refreshDashData').onclick=async()=>{const btn=$('refreshDashData');btn.disabled=true;btn.textContent='Refreshing…';try{await dash()}finally{btn.disabled=false;btn.textContent='Refresh data'}};
-async function loadRaceDayOptions(){const r=await sb.from('race_days').select('id,title,race_date').order('race_date',{ascending:false});['sRosterDay','sFileDay'].forEach(id=>{const sel=$(id);sel.textContent='';(r.data||[]).forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=eventLabel(d.title)+(d.race_date?' — '+d.race_date:'');sel.appendChild(o)});if(!r.data?.length){const o=document.createElement('option');o.value='';o.textContent='No approved race days available';sel.appendChild(o)}})}
-async function loadMySubs(){const r=await sb.from('submissions').select('id,category,payload,status,created_at,review_notes').eq('submitted_by',sessionUser.id).order('created_at',{ascending:false}).limit(30);const box=$('mySubs');box.textContent='';if(r.error){box.textContent=r.error.message;return}if(!r.data?.length){box.textContent='You have not submitted anything yet.';return}r.data.forEach(s=>{const d=document.createElement('div');d.className='req';const left=document.createElement('div');const b=document.createElement('b');b.textContent=s.category.replace('_',' ');left.appendChild(b);const p=document.createElement('div');p.className='dim';p.textContent=summary(s);left.appendChild(p);const status=document.createElement('span');status.className='tag';status.textContent=s.status;d.append(left,status);if(s.review_notes){const n=document.createElement('p');n.className='note';n.textContent='Captain note: '+s.review_notes;left.appendChild(n)}box.appendChild(d)})}
-function summary(s){const p=s.payload||{};return p.title||p.event||p.rider_name||p.file_name||('Submission #'+s.id)}
-$('submitRace').onclick=()=>submit('race_record',{event:$('sEvent').value.trim(),race_date:$('sDate').value||null,result:$('sResult').value.trim(),laps:num('sLaps'),notes:$('sRaceNotes').value.trim()});$('submitStat').onclick=()=>submit('rider_stat',{rider_name:$('sRider').value.trim(),event:$('sStatEvent').value.trim(),laps:num('sStatLaps'),notes:$('sStatNotes').value.trim()});$('submitDay').onclick=()=>submit('race_day',{title:$('sDayTitle').value.trim(),race_date:$('sDayDate').value||null,venue:$('sDayVenue').value.trim(),start_time:$('sDayTime').value.trim(),info:$('sDayInfo').value.trim()});$('submitRoster').onclick=()=>submit('roster_entry',{race_day_id:$('sRosterDay').value,stint:num('sStint'),rider_name:$('sRosterRider').value.trim(),minutes:num('sMinutes'),notes:$('sRosterNotes').value.trim()});
-$('submitFile').onclick=async()=>{const f=$('sFile').files[0],day=$('sFileDay').value;if(!f||!day)return msg('lmsg','Choose a race day and file first.',1);if(f.size>10*1024*1024)return msg('lmsg','File must be 10 MB or smaller.',1);if(!me||!sessionUser)return;const safe=f.name.replace(/[^\w.\-]/g,'_');const path='pending/'+sessionUser.id+'/'+Date.now()+'-'+safe;msg('lmsg','Uploading file…');$('submitFile').disabled=true;try{const up=await sb.storage.from('race-files').upload(path,f);if(up.error)return msg('lmsg',up.error.message,1);const r=await sb.from('submissions').insert({category:'file',payload:{race_day_id:day,file_name:f.name,pending_path:path},submitted_by:sessionUser.id});if(r.error){await sb.storage.from('race-files').remove([path]);return msg('lmsg',r.error.message,1)}$('sFile').value='';msg('lmsg','File uploaded privately and submitted for Captain approval.');await loadMySubs()}finally{$('submitFile').disabled=false}};
-sb.auth.onAuthStateChange((event,session)=>{setTimeout(()=>load(session),0)});window.addEventListener('pageshow',event=>{if(event.persisted)loadCurrent()});loadCurrent();
-})();
-</script>
+<div id="pendingView" class="auth-wrap hidden"><div class="auth-brand"><div class="brand-mark">V</div><div><h1>VIPER // <span style="color:var(--green)">AI</span></h1><p>MEMBERSHIP STATUS</p></div></div><section class="auth-panel pending"><div class="eyebrow">ACCESS CONTROL</div><h2 id="pendingTitle">Awaiting approval</h2><p id="pendingText">Your account status is being checked.</p><button class="btn" id="pendingRefresh" type="button">CHECK STATUS</button> <button class="btn" id="pendingSignOut" type="button">SIGN OUT</button><div id="pendingMessage" class="auth-message" role="status"></div></section></div>
+<div id="appView" class="shell hidden">
+ <aside id="rail" class="rail">
+  <a href="engineering-preview.html" class="brand"><div class="brand-mark">V</div><div class="brand-name">VIPER<small>TEAM VENOM HPR</small></div></a>
+  <div class="nav-group"><div class="nav-label">01 / Overview</div><a class="nav-link active" href="engineering-preview.html"><span class="glyph">⌁</span>Engineering Console</a><a class="nav-link" href="race-days.html"><span class="glyph">◷</span>Race Calendar</a><a class="nav-link" href="race-command.html" data-leadership><span class="glyph">⌘</span>Race Operations</a></div>
+  <div class="nav-group"><div class="nav-label">02 / Performance</div><a class="nav-link" href="rider-data.html"><span class="glyph">▥</span>Rider Data & Lap Log</a><a class="nav-link" href="team-analysis.html"><span class="glyph">⌁</span>Data Analysis</a><a class="nav-link" href="performance-dashboard.html"><span class="glyph">◫</span>Performance Trends</a></div>
+  <div class="nav-group"><div class="nav-label">03 / Team Systems</div><a class="nav-link" href="attendance.html" data-leadership>Roll Call</a><a class="nav-link" href="announcements.html">Team Briefings</a><a class="nav-link" href="rider-availability.html" data-leadership>Rider Availability</a><a class="nav-link" href="training.html" data-leadership>Training Planner</a></div>
+  <div class="nav-group" data-leadership><div class="nav-label">04 / Leadership</div><a class="nav-link" href="riders.html" data-captain>Rider Management</a><a class="nav-link" href="captain.html" data-captain>Captain Controls</a></div>
+  <div class="side-foot"><strong>VIPER / 2026</strong><br>RACE ENGINEERING INTERFACE<br>MEMBER DATA · ACCESS CONTROLLED</div>
+ </aside>
+ <main class="main">
+  <header class="topbar"><button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button><div class="crumb">TEAM VENOM / <strong>ENGINEERING CONSOLE</strong></div><div class="top-right"><span class="status-pill"><i class="live-dot"></i>AUTHENTICATED SESSION</span><span id="memberName" class="tiny" style="color:var(--muted)">MEMBER</span><button id="signOut" class="signout" type="button">SIGN OUT</button></div></header>
+  <div class="content">
+   <section class="pagehead"><div><div class="eyebrow">System overview / 2026 season</div><h1>Race <span>Engineering.</span></h1><p>Team performance, recorded race data and operational tools — in one controlled workspace.</p></div><div class="tag">BUILD / ENGINEERING PREVIEW</div></section>
+   <div id="dataNotice" class="notice hidden" role="status"></div>
+   <section class="metrics">
+    <article class="metric"><div class="metric-label">Recorded events</div><div id="metricRaces" class="metric-value">—</div><div class="metric-foot">Race records in current data set</div></article>
+    <article class="metric"><div class="metric-label">Recorded laps</div><div id="metricLaps" class="metric-value">—</div><div class="metric-foot">Numeric lap entries in the log</div></article>
+    <article class="metric"><div class="metric-label">Riders logged</div><div id="metricRiders" class="metric-value">—</div><div class="metric-foot">Distinct rider names in rider stats</div></article>
+    <article class="metric"><div class="metric-label">Session access</div><div id="metricAccess" class="metric-value" style="font-size:29px">APPROVED</div><div class="metric-foot">Existing member profile status</div></article>
+   </section>
+   <div class="layout">
+    <div class="left-col">
+     <section class="panel"><div class="panel-head"><div><div class="panel-title">Official race records</div><div class="panel-kicker">SOURCE / race_records + lap_records</div></div><button id="refreshData" class="btn" type="button">↻ REFRESH</button></div><div class="panel-body" style="padding:0;overflow-x:auto"><table class="data-table"><thead><tr><th>Event</th><th>Date</th><th>Official result</th><th style="text-align:right">Laps</th></tr></thead><tbody id="raceRows"><tr><td colspan="4" class="empty">Loading records…</td></tr></tbody></table></div></section>
+     <section class="panel"><div class="panel-head"><div><div class="panel-title">Lap-volume comparison</div><div class="panel-kicker">RECORDED LAP ENTRIES BY EVENT</div></div><span class="tag">READ ONLY</span></div><div class="panel-body"><div id="raceChart" class="chart"><div class="empty">Loading race data…</div></div></div></section>
+    </div>
+    <div class="right-col">
+     <section class="panel"><div class="panel-head"><div><div class="panel-title">Team rider totals</div><div class="panel-kicker">SOURCE / rider_stats</div></div><a href="rider-data.html" class="panel-kicker">OPEN ↗</a></div><div class="panel-body" style="padding:0;overflow-x:auto"><table class="data-table"><thead><tr><th>Rider</th><th style="text-align:right">Laps</th></tr></thead><tbody id="riderRows"><tr><td colspan="2" class="empty">Loading riders…</td></tr></tbody></table></div></section>
+     <section class="panel"><div class="panel-head"><div><div class="panel-title">Subsystems</div><div class="panel-kicker">FEATURE DIRECTORY</div></div></div><div class="panel-body"><div class="link-grid"><a class="feature-link" href="race-days.html"><span>Race calendar</span><span>↗</span></a><a class="feature-link" href="race-command.html" data-leadership><span>Race operations</span><span>↗</span></a><a class="feature-link" href="rider-data.html"><span>Rider & lap data</span><span>↗</span></a><a class="feature-link" href="team-analysis.html"><span>Data analysis</span><span>↗</span></a><a class="feature-link" href="performance-dashboard.html"><span>Performance trends</span><span>↗</span></a><a class="feature-link" href="attendance.html" data-leadership><span>Roll call</span><span>↗</span></a><a class="feature-link" href="announcements.html"><span>Team briefings</span><span>↗</span></a><a class="feature-link" href="rider-availability.html" data-leadership><span>Rider availability</span><span>↗</span></a><a class="feature-link" href="training.html" data-leadership><span>Training planner</span><span>↗</span></a><a class="feature-link" href="riders.html" data-captain><span>Rider management</span><span>↗</span></a><a class="feature-link" href="captain.html" data-captain><span>Captain controls</span><span>↗</span></a></div></div></section>
+    </div>
+   </div>
+   <div class="footer-line"><span>VIPER AI · TEAM VENOM HPR</span><span>DATA IS DISPLAYED FROM EXISTING TABLES · NO IMPORTS OR MIGRATIONS</span></div>
+  </div>
+ </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function(){
-  const menu=document.getElementById('leadershipMenu');
-  const toggle=document.getElementById('leadershipToggle');
-  const submenu=document.getElementById('leadershipSubmenu');
-  const roll=document.getElementById('leadAttendanceLink');
-  const captain=document.getElementById('leadCaptainLink');
-  if(!menu||!toggle||!submenu)return;
-
-  const page=(window.location.pathname.split('/').pop()||'index.html').toLowerCase();
-  if(roll){
-    if(page==='attendance.html') roll.setAttribute('aria-current','page');
-    else roll.removeAttribute('aria-current');
-  }
-  if(captain){
-    if(page==='captain.html') captain.setAttribute('aria-current','page');
-    else captain.removeAttribute('aria-current');
-  }
-
-  function setOpen(open){
-    submenu.hidden=!open;
-    toggle.setAttribute('aria-expanded',String(open));
-    toggle.setAttribute('aria-controls','leadershipSubmenu');
-  }
-
-  setOpen(page==='attendance.html'||page==='captain.html');
-
-  // Delegate in capture phase so the menu still responds if older page scripts
-  // attach competing handlers or styles.
-  document.addEventListener('click',function(event){
-    const button=event.target&&event.target.closest?event.target.closest('#leadershipToggle'):null;
-    if(!button)return;
-    event.preventDefault();
-    event.stopPropagation();
-    setOpen(submenu.hidden);
-  },true);
-
-  toggle.addEventListener('keydown',function(event){
-    if(event.key==='Escape'){
-      setOpen(false);
-      toggle.focus();
-    }
-  });
+'use strict';
+const sb=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const $=id=>document.getElementById(id);
+let mode='signin',profile=null,session=null;
+const show=(id)=>['authView','pendingView','appView'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
+const message=(id,text,error=false)=>{const el=$(id);el.textContent=text;el.classList.toggle('error',!!error)};
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const date=value=>{if(!value)return'—';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?esc(value):d.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'2-digit'})};
+function setMode(next){mode=next;const signup=mode==='request';$('tabSignIn').classList.toggle('active',!signup);$('tabRequest').classList.toggle('active',signup);$('nameField').classList.toggle('hidden',!signup);$('inviteField').classList.toggle('hidden',!signup);$('fullName').required=signup;$('inviteCode').required=signup;$('password').autocomplete=signup?'new-password':'current-password';$('authTitle').textContent=signup?'Request member access':'Member access';$('authDesc').textContent=signup?'Use your team invitation code. Your account remains pending until the Captain approves it.':'Sign in with your existing VIPER AI account. New accounts still require an invitation code and Captain approval.';$('authSubmit').textContent=signup?'REQUEST ACCESS →':'SIGN IN →';message('authMessage','');}
+$('tabSignIn').addEventListener('click',()=>setMode('signin'));$('tabRequest').addEventListener('click',()=>setMode('request'));
+$('authForm').addEventListener('submit',async event=>{event.preventDefault();const button=$('authSubmit');button.disabled=true;message('authMessage',mode==='request'?'Submitting membership request…':'Signing in…');try{let result;if(mode==='request'){result=await sb.auth.signUp({email:$('email').value.trim(),password:$('password').value,options:{data:{full_name:$('fullName').value.trim(),invite_code:$('inviteCode').value.trim()}}});if(result.error)throw result.error;message('authMessage',result.data.session?'Account created. Checking membership approval…':'Request submitted. Check your email to confirm, then sign in after confirmation.');if(!result.data.session)return;}else{result=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(result.error)throw result.error;}await routeSession(result.data.session);}catch(error){message('authMessage',error.message||'Authentication could not be completed.',true);}finally{button.disabled=false;}});
+async function routeSession(nextSession){session=nextSession||null;if(!session){profile=null;show('authView');return;}const result=await sb.from('profiles').select('id,full_name,email,status,role').eq('id',session.user.id).single();if(result.error||!result.data){show('pendingView');$('pendingTitle').textContent='Profile not available';$('pendingText').textContent='The account profile could not be found. Contact the Captain; no profile was created by this preview.';return;}profile=result.data;if(profile.status!=='approved'){show('pendingView');$('pendingTitle').textContent=profile.status==='declined'?'Request declined':'Waiting for Captain approval';$('pendingText').textContent=profile.status==='declined'?'Your membership request was not approved. Contact the Captain if you need this reviewed.':'Your account is registered. The Captain must approve it before member information is available.';return;}show('appView');$('memberName').textContent=(profile.full_name||profile.email||'MEMBER').toUpperCase();const leadership=['captain','leadership'].includes(profile.role);document.querySelectorAll('[data-leadership]').forEach(el=>el.classList.toggle('hidden',!leadership));document.querySelectorAll('[data-captain]').forEach(el=>el.classList.toggle('hidden',profile.role!=='captain'));await loadDashboard();}
+async function loadDashboard(){const notice=$('dataNotice');notice.classList.add('hidden');$('raceRows').innerHTML='<tr><td colspan="4" class="empty">Loading records…</td></tr>';$('riderRows').innerHTML='<tr><td colspan="2" class="empty">Loading rider totals…</td></tr>';try{const [raceResult,riderResult,lapResult]=await Promise.all([sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:false}),sb.from('rider_stats').select('rider_name,event,laps').order('rider_name'),sb.from('lap_records').select('event,lap_number_as_shown')]);if(raceResult.error||riderResult.error||lapResult.error)throw new Error([raceResult.error?.message,riderResult.error?.message,lapResult.error?.message].filter(Boolean).join(' · '));const races=raceResult.data||[],riders=riderResult.data||[],lapRows=lapResult.data||[];const eventKey=value=>String(value||'').trim().toLowerCase();const lapCounts=new Map();lapRows.forEach(row=>{const key=eventKey(row.event),lap=String(row.lap_number_as_shown||'').trim();if(key&&/^\d+$/.test(lap))lapCounts.set(key,(lapCounts.get(key)||0)+1);});const formatted=races.map(r=>({event:r.event||'Unlabelled event',race_date:r.race_date,result:r.result||'—',laps:(lapCounts.get(eventKey(r.event))||0)>0?lapCounts.get(eventKey(r.event)):(Number(r.laps)||0)}));const tbody=$('raceRows');tbody.innerHTML='';if(!formatted.length)tbody.innerHTML='<tr><td colspan="4" class="empty">No race records are available to this account.</td></tr>';formatted.slice(0,12).forEach(r=>{const tr=document.createElement('tr');[r.event,date(r.race_date),r.result,String(r.laps)].forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===3)td.className='num';tr.append(td)});tbody.append(tr);});const totals=new Map();riders.forEach(r=>{const name=String(r.rider_name||'').trim();if(!name||/^ross$/i.test(name))return;const key=name.toLowerCase();const item=totals.get(key)||{name,laps:0};item.laps+=Number(r.laps)||0;totals.set(key,item)});const sorted=[...totals.values()].sort((a,b)=>a.name.localeCompare(b.name));$('riderRows').innerHTML='';if(!sorted.length)$('riderRows').innerHTML='<tr><td colspan="2" class="empty">No rider statistics are available.</td></tr>';sorted.slice(0,10).forEach(r=>{const tr=document.createElement('tr'),name=document.createElement('td'),laps=document.createElement('td');name.textContent=r.name;laps.textContent=String(r.laps);laps.className='num';tr.append(name,laps);$('riderRows').append(tr)});$('metricRaces').textContent=String(formatted.length);$('metricLaps').textContent=String(lapRows.filter(r=>/^\d+$/.test(String(r.lap_number_as_shown||'').trim())).length||formatted.reduce((sum,r)=>sum+r.laps,0));$('metricRiders').textContent=String(totals.size);$('metricAccess').textContent='APPROVED';const chart=$('raceChart');chart.innerHTML='';const bars=formatted.slice(0,6).reverse();const max=Math.max(1,...bars.map(r=>r.laps));if(!bars.length)chart.innerHTML='<div class="empty">No event totals to compare.</div>';bars.forEach(r=>{const col=document.createElement('div');col.className='bar-col';const val=document.createElement('div');val.className='bar-val';val.textContent=String(r.laps);const bar=document.createElement('div');bar.className='bar';bar.style.height=Math.max(3,Math.round(r.laps/max*78))+'px';bar.title=r.event+' · '+r.laps+' laps';const label=document.createElement('div');label.className='bar-label';label.textContent=r.event;label.title=r.event;col.append(val,bar,label);chart.append(col)});}catch(error){notice.textContent='Dashboard data could not be loaded: '+(error.message||'unknown database error')+'. Existing records have not been changed.';notice.classList.remove('hidden');notice.classList.add('error');$('raceRows').innerHTML='<tr><td colspan="4" class="empty">Data unavailable — use Refresh to try again.</td></tr>';$('riderRows').innerHTML='<tr><td colspan="2" class="empty">Data unavailable.</td></tr>';}}
+$('refreshData').addEventListener('click',loadDashboard);$('signOut').addEventListener('click',async()=>{await sb.auth.signOut();await routeSession(null)});$('pendingSignOut').addEventListener('click',async()=>{await sb.auth.signOut();await routeSession(null)});$('pendingRefresh').addEventListener('click',async()=>{message('pendingMessage','Checking account status…');const {data,error}=await sb.auth.getSession();if(error){message('pendingMessage',error.message,true);return;}await routeSession(data.session);});$('mobileToggle').addEventListener('click',()=>{const rail=$('rail'),open=rail.classList.toggle('open');$('mobileToggle').setAttribute('aria-expanded',String(open));});document.addEventListener('click',event=>{if(event.target.closest('.nav-link')&&window.matchMedia('(max-width:700px)').matches){$('rail').classList.remove('open');$('mobileToggle').setAttribute('aria-expanded','false');}});
+sb.auth.onAuthStateChange((_event,nextSession)=>{setTimeout(()=>routeSession(nextSession),0);});
+sb.auth.getSession().then(({data,error})=>{if(error){show('authView');message('authMessage',error.message,true);return;}routeSession(data.session);});
 })();
 </script>
-
-<script src="viper-navigation.js?v=16"></script>
-</body></html>
+</body>
+</html>
