@@ -98,3 +98,62 @@ body.viper-universal-layout #gate.wrap{padding-left:clamp(20px,3vw,44px)!importa
  body.viper-universal-layout main.wrap,
  body.viper-universal-layout #gate.wrap{padding-left:14px!important;padding-right:14px!important}
 }
+
+
+/* One consistent content gutter beside the universal sidebar on every page. */
+body.viper-universal-layout > main,
+body.viper-universal-layout > main.wrap,
+body.viper-universal-layout main.wrap,
+body.viper-universal-layout main.container,
+body.viper-universal-layout main .wrap,
+body.viper-universal-layout main .container,
+body.viper-universal-layout > .wrap,
+body.viper-universal-layout > .container,
+body.viper-universal-layout > .page-container,
+body.viper-universal-layout > .content-wrap {
+  box-sizing:border-box!important;
+  width:auto!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:28px!important;
+  padding-right:28px!important;
+}
+body.viper-universal-layout > footer,
+body.viper-universal-layout footer .wrap,
+body.viper-universal-layout footer .container {
+  box-sizing:border-box!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+@media(max-width:760px){
+  body.viper-universal-layout > main,
+  body.viper-universal-layout > main.wrap,
+  body.viper-universal-layout main.wrap,
+  body.viper-universal-layout main.container,
+  body.viper-universal-layout main .wrap,
+  body.viper-universal-layout main .container,
+  body.viper-universal-layout > .wrap,
+  body.viper-universal-layout > .container,
+  body.viper-universal-layout > .page-container,
+  body.viper-universal-layout > .content-wrap {
+    padding-left:20px!important;
+    padding-right:20px!important;
+  }
+}
+@media(max-width:420px){
+  body.viper-universal-layout > main,
+  body.viper-universal-layout > main.wrap,
+  body.viper-universal-layout main.wrap,
+  body.viper-universal-layout main.container,
+  body.viper-universal-layout main .wrap,
+  body.viper-universal-layout main .container,
+  body.viper-universal-layout > .wrap,
+  body.viper-universal-layout > .container,
+  body.viper-universal-layout > .page-container,
+  body.viper-universal-layout > .content-wrap {
+    padding-left:14px!important;
+    padding-right:14px!important;
+  }
+}
