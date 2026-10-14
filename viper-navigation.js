@@ -1,94 +1,115 @@
-/* VIPER AI — unified app navigation. Does not create or modify auth sessions. */
+/* VIPER AI shared grouped navigation. Keeps page-specific auth and feature code intact. */
 (function(){
 'use strict';
-const header=document.querySelector('header.bar');
 const nav=document.querySelector('header .site-nav,header .links,.sidebar .nav');
-if(!header||!nav||document.querySelector('.viper-redesign-sidebar'))return;
-const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-const permissionLinks={
- 'race-days.html':'navRace','rider-data.html':'navRiders','team-analysis.html':'navAnalysis',
- 'performance-dashboard.html':'navPerformance','announcements.html':'navAnnouncements',
- 'captain.html':'navCaptain'
-};
+if(!nav)return;
+if(nav.querySelector('.viper-menu-wrap'))return;
 const groups=[
- {title:'WORKSPACE',items:[['Dashboard','index.html','⌂'],['Race Days','race-days.html','▣'],['Rider Data','rider-data.html','↗'],['Data Analysis','team-analysis.html','⌁'],['Performance Dashboard','performance-dashboard.html','◫']]},
- {title:'TEAM',items:[['Roll Call','attendance.html','✓'],['Announcements','announcements.html','▤'],['Training Planner','training.html','◷'],['Rider Availability','rider-availability.html','◉']]},
- {title:'RACE OPERATIONS',items:[['Race Day Command Centre','race-command.html','⚑']]},
- {title:'LEADERSHIP',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧']]}
+ {title:'Home',items:[['Dashboard','index.html','⌂'],['Race Days','race-days.html','🏁']]},
+ {title:'Performance',items:[['Rider Data','rider-data.html','↗'],['Data Analysis','team-analysis.html','▥'],['Performance Dashboard','performance-dashboard.html','◫']]},
+ {title:'Team',items:[['Roll Call','attendance.html','✓'],['Announcements','announcements.html','▤']]},
+ {title:'Leadership',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧'],['Training Planner','training.html','▦'],['Race Day Command Centre','race-command.html','🏁'],['Rider Availability','rider-availability.html','◉']]}
 ];
-if(current!=='index.html'){
- const wrap=document.createElement('div');wrap.className='viper-menu-wrap viper-redesign-top-menu';
- const button=document.createElement('button');button.type='button';button.className='viper-top-menu-button';button.textContent='NAVIGATE  ▾';button.setAttribute('aria-expanded','false');
- const panel=document.createElement('div');panel.className='viper-top-menu-panel';
+const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+if(current==='index.html'){
+ const sidebar=document.createElement('aside');sidebar.className='viper-dashboard-sidebar is-visible';sidebar.setAttribute('aria-label','Dashboard navigation');
+ sidebar.innerHTML='<div class="viper-sidebar-brand">VIPER<span>TEAM VENOM HPR</span></div><div class="viper-sidebar-label">NAVIGATION</div><div class="viper-sidebar-links"></div><div class="viper-sidebar-footer">VIPER AI · TEAM VENOM HPR</div>';
+ const links=sidebar.querySelector('.viper-sidebar-links');
  groups.forEach(group=>{
-  const section=document.createElement('section');section.className='viper-top-menu-group';
-  const heading=document.createElement('div');heading.className='viper-redesign-caption';heading.textContent=group.title;section.append(heading);
-  group.items.forEach(([label,href,glyph])=>{
-   const a=document.createElement('a');a.href=href;const icon=document.createElement('span');icon.textContent=glyph;icon.setAttribute('aria-hidden','true');
-   const name=document.createElement('span');name.textContent=label;a.append(icon,name);
+  const section=document.createElement('section');section.className='viper-sidebar-group';section.dataset.group=group.title;
+  const heading=document.createElement('h3');heading.textContent=group.title;section.append(heading);
+  group.items.forEach(([label,href,icon])=>{
+   const a=document.createElement('a');a.href=href;a.dataset.href=href;
+   const glyph=document.createElement('span');glyph.className='viper-sidebar-icon';glyph.setAttribute('aria-hidden','true');glyph.textContent=icon;
+   const name=document.createElement('span');name.textContent=label;a.append(glyph,name);
    if(current===href.toLowerCase())a.setAttribute('aria-current','page');
-   const sourceId=permissionLinks[href],source=sourceId&&document.getElementById(sourceId);
-   if(source&&source.hidden)a.hidden=true;
-   if(group.leadership){const gate=document.getElementById('leadershipMenu');if(gate&&gate.hidden)a.hidden=true}
    section.append(a);
   });
-  if([...section.querySelectorAll('a')].some(a=>!a.hidden))panel.append(section);
+  links.append(section);
  });
- wrap.append(button,panel);nav.append(wrap);
- button.addEventListener('click',()=>{const open=!wrap.classList.contains('is-open');wrap.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open))});
- document.addEventListener('click',e=>{if(!wrap.contains(e.target)){wrap.classList.remove('is-open');button.setAttribute('aria-expanded','false')}});
- nav.querySelectorAll('a[href],.lead-menu').forEach(el=>{if(!wrap.contains(el))el.style.setProperty('display','none','important')});
- const observer=new MutationObserver(()=>{panel.querySelectorAll('a').forEach(a=>{const id=permissionLinks[a.getAttribute('href')],source=id&&document.getElementById(id);if(source)a.hidden=source.hidden;if(['captain.html','riders.html','training.html','race-command.html','rider-availability.html','attendance.html'].includes(a.getAttribute('href'))){const gate=document.getElementById('leadershipMenu');if(gate&&gate.hidden)a.hidden=true}});panel.querySelectorAll('.viper-top-menu-group').forEach(s=>s.hidden=![...s.querySelectorAll('a')].some(a=>!a.hidden))});
- nav.querySelectorAll('[id]').forEach(el=>observer.observe(el,{attributes:true,attributeFilter:['hidden','class','style']}));
+ nav.classList.add('viper-dashboard-top-nav');
+ document.body.classList.add('viper-has-sidebar');
+ const main=document.querySelector('main');
+ if(main)document.body.insertBefore(sidebar,main);else document.body.insertBefore(sidebar,document.body.firstChild);
+ function syncSidebarVisibility(){
+  const leadership=document.getElementById('leadershipMenu');
+  const race=document.getElementById('navRace');
+  const announcements=document.getElementById('navAnnouncements');
+  sidebar.querySelectorAll('a').forEach(a=>{
+   const href=a.dataset.href;
+   const isLeadership=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(href);
+   if(isLeadership) a.hidden=!leadership||leadership.hidden;
+   else if(href==='race-days.html') a.hidden=!!race&&race.hidden;
+   else if(href==='announcements.html') a.hidden=!!announcements&&announcements.hidden;
+  });
+  sidebar.querySelectorAll('.viper-sidebar-group').forEach(section=>{
+   section.hidden=![...section.querySelectorAll('a')].some(a=>!a.hidden);
+  });
+ }
+ syncSidebarVisibility();
+ const authVisibilityObserver=new MutationObserver(syncSidebarVisibility);
+ ['leadershipMenu','navRace','navAnnouncements'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)authVisibilityObserver.observe(el,{attributes:true,attributeFilter:['hidden']});
+ });
  return;
 }
-const sidebar=document.createElement('aside');
-sidebar.className='viper-redesign-sidebar';
-sidebar.setAttribute('aria-label','VIPER AI main navigation');
-sidebar.innerHTML='<div class="viper-redesign-brand"><div class="viper-redesign-mark">V</div><div><strong>VIPER AI</strong><span>TEAM VENOM HPR</span></div></div><div class="viper-redesign-caption">TEAM PLATFORM</div><div class="viper-redesign-nav"></div><div class="viper-redesign-footer">INTELLIGENCE · PERFORMANCE · RESULTS</div>';
-const list=sidebar.querySelector('.viper-redesign-nav');
+const wrap=document.createElement('div');wrap.className='viper-menu-wrap';
+const trigger=document.createElement('button');trigger.type='button';trigger.className='viper-menu-trigger';trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-haspopup','true');
+trigger.innerHTML='<span class="viper-menu-icon" aria-hidden="true">☰</span><span>Navigate</span><span aria-hidden="true">▾</span>';
+const panel=document.createElement('div');panel.className='viper-menu-panel';panel.id='viperNavigationPanel';panel.setAttribute('role','menu');
+trigger.setAttribute('aria-controls',panel.id);
+const user=document.createElement('span');user.className='viper-menu-footer';user.textContent='VIPER AI  ·  TEAM VENOM HPR';
 groups.forEach(group=>{
- const section=document.createElement('section');section.className='viper-redesign-group';section.dataset.group=group.title;
- const heading=document.createElement('div');heading.className='viper-redesign-caption';heading.textContent=group.title;section.append(heading);
- const links=document.createElement('div');links.className='viper-redesign-links';
- group.items.forEach(([label,href,glyph])=>{
-  const a=document.createElement('a');a.href=href;a.dataset.href=href;
-  const icon=document.createElement('span');icon.className='viper-nav-icon';icon.setAttribute('aria-hidden','true');icon.textContent=glyph;
-  const text=document.createElement('span');text.textContent=label;a.append(icon,text);
-  if(current===href.toLowerCase())a.setAttribute('aria-current','page');
-  links.append(a);
+ const section=document.createElement('section');section.className='viper-menu-group';section.dataset.group=group.title;
+ const heading=document.createElement('h3');heading.textContent=group.title;section.append(heading);
+ group.items.forEach(([label,href,icon])=>{
+  const a=document.createElement('a');a.href=href;a.setAttribute('role','menuitem');
+  const dot=document.createElement('span');dot.className='viper-menu-dot';dot.setAttribute('aria-hidden','true');
+  const name=document.createElement('span');name.textContent=label;
+  a.append(dot,name);a.dataset.href=href;
+  if(current===href.toLowerCase()){a.setAttribute('aria-current','page');heading.textContent=group.title+' · CURRENT'}
+  section.append(a);
  });
- section.append(links);list.append(section);
+ panel.append(section);
 });
-document.body.classList.add('viper-redesign-dashboard');
-document.body.insertBefore(sidebar,document.body.firstChild);
-const scrim=document.createElement('div');scrim.className='viper-redesign-scrim';scrim.setAttribute('aria-hidden','true');document.body.append(scrim);
-const toggle=document.createElement('button');toggle.type='button';toggle.className='viper-mobile-nav-toggle';toggle.setAttribute('aria-label','Open navigation');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰';
-const brand=header.querySelector('.site-brand');
-if(brand)header.querySelector('.topbar-inner')?.insertBefore(toggle,brand);
-function closeNav(){document.body.classList.remove('viper-nav-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation')}
-toggle.addEventListener('click',()=>{const open=!document.body.classList.contains('viper-nav-open');document.body.classList.toggle('viper-nav-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
-scrim.addEventListener('click',closeNav);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav()});
-sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
-function syncVisibility(){
- sidebar.querySelectorAll('a[data-href]').forEach(a=>{
+panel.append(user);wrap.append(trigger,panel);
+nav.classList.add('viper-legacy-nav');
+nav.insertBefore(wrap,nav.firstChild);
+function close(){panel.dataset.open='false';trigger.setAttribute('aria-expanded','false')}
+function toggle(){const open=panel.dataset.open!=='true';panel.dataset.open=String(open);trigger.setAttribute('aria-expanded',String(open))}
+trigger.addEventListener('click',toggle);
+document.addEventListener('click',e=>{if(!wrap.contains(e.target))close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();trigger.focus()}});
+panel.addEventListener('click',e=>{if(e.target.closest('a'))close()});
+function setAccess(role,status){
+ const approved=status==='approved';
+ const leadership=approved&&(role==='captain'||role==='leadership');
+ panel.querySelectorAll('a').forEach(a=>{
   const href=a.dataset.href;
-  const sourceId=permissionLinks[href];
-  const source=sourceId&&document.getElementById(sourceId);
-  if(source)a.hidden=source.hidden;
-  if(['captain.html','riders.html','training.html','race-command.html','rider-availability.html','attendance.html'].includes(href)){
-   const gate=document.getElementById('leadershipMenu');
-   if(gate && gate.hidden)a.hidden=true;
-  }
+  const isLeadership=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(href);
+  const allowed=!isLeadership||(approved&&leadership);
+  a.hidden=!allowed;
  });
- sidebar.querySelectorAll('.viper-redesign-group').forEach(section=>{
-  section.hidden=![...section.querySelectorAll('a')].some(a=>!a.hidden);
+ panel.querySelectorAll('.viper-menu-group').forEach(section=>{
+  const visible=[...section.querySelectorAll('a')].some(a=>!a.hidden);
+  section.hidden=!visible;
  });
 }
-syncVisibility();
-const observer=new MutationObserver(syncVisibility);
-nav.querySelectorAll('[id]').forEach(el=>observer.observe(el,{attributes:true,attributeFilter:['hidden','class','style']}));
-const gate=document.getElementById('leadershipMenu');if(gate)observer.observe(gate,{attributes:true,attributeFilter:['hidden','class','style']});
-nav.querySelectorAll('a[href],.lead-menu,.viper-menu-wrap').forEach(el=>{el.style.setProperty('display','none','important')});
+(async()=>{
+ try{
+  if(!window.supabase||!window.supabase.createClient){setAccess('', '');return}
+  const client=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+  const {data,error}=await client.auth.getSession();
+  if(error||!data.session){setAccess('', '');return}
+  const {data:profile,error:profileError}=await client.from('profiles').select('status,role').eq('id',data.session.user.id).single();
+  if(profileError||!profile){setAccess('', '');return}
+  setAccess(profile.role,profile.status);
+  client.auth.onAuthStateChange(async(event,session)=>{
+   if(event==='SIGNED_OUT'||!session){setAccess('', '');return}
+   const p=await client.from('profiles').select('status,role').eq('id',session.user.id).single();
+   setAccess(p.data?.role,p.data?.status);
+  });
+ }catch(e){console.warn('VIPER navigation permissions could not be refreshed.',e)}
+})();
 })();
