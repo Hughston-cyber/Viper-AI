@@ -47,3 +47,10 @@ html body header.bar .site-nav.viper-dashboard-top-nav>.lead-menu,
 html body header.bar .site-nav.viper-dashboard-top-nav>.viper-menu-wrap,
 html body header.bar .site-nav.viper-dashboard-top-nav>#leadershipMenu,
 html body header.bar .site-nav.viper-dashboard-top-nav>#navCaptain{display:none!important}
+
+/* Race Operations navigation width repair: keep the control compact and constrain its menu. */
+html body .top > .links.viper-legacy-nav{display:flex!important;width:fit-content!important;max-width:100%!important;flex:0 0 auto!important;align-self:center!important;justify-content:flex-end!important;}
+html body .top > .links.viper-legacy-nav .viper-menu-wrap{display:inline-flex!important;width:max-content!important;max-width:100%!important;flex:0 0 auto!important;position:relative!important;}
+html body .top > .links.viper-legacy-nav .viper-menu-panel{position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;width:320px!important;max-width:calc(100vw - 24px)!important;box-sizing:border-box!important;grid-template-columns:minmax(0,1fr)!important;}
+html body .top > .links.viper-legacy-nav .viper-menu-panel[data-open="true"]{display:grid!important;grid-template-columns:minmax(0,1fr)!important;}
+@media(max-width:620px){html body .top > .links.viper-legacy-nav{width:fit-content!important;max-width:100%!important;flex:0 1 auto!important;}html body .top > .links.viper-legacy-nav .viper-menu-panel{width:min(320px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;}}
