@@ -46,8 +46,8 @@ async function init(){
   say('Signed in as '+(profile.full_name||'Spectator')+'. Loading official read-only records…');
   $('content').classList.remove('hidden');
   const [races,stats]=await Promise.all([
-   sb.from('race_records').select('event,race_date,result,laps').order('race_date',{ascending:false}),
-   sb.from('rider_stats').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
+   sb.from('spectator_race_results').select('event,race_date,result,laps').order('race_date',{ascending:false}),
+   sb.from('spectator_rider_statistics').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
   ]);
   if(races.error)throw new Error('Race results could not be loaded: '+races.error.message);
   if(stats.error)throw new Error('Rider statistics could not be loaded: '+stats.error.message);
