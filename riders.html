@@ -74,8 +74,18 @@ input:focus,select:focus{outline:3px solid #55c7b033;border-color:var(--teal)}
  .panel-head{gap:9px}
 }
 
+
+/* Keep the shared VIPER navigation compatible with this page's green/teal theme. */
+.viper-menu-wrap{z-index:1100}
+.viper-menu-trigger{border-color:#416552;background:linear-gradient(100deg,#14251b,#13211b);color:var(--text)}
+.viper-menu-trigger:hover,.viper-menu-trigger[aria-expanded="true"]{border-color:var(--teal);background:#173027;color:var(--teal)}
+.viper-menu-panel{z-index:1100;border-color:#315644;background:#0c140e}
+.viper-menu-group h3{color:var(--accent)}
+.viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#315e4b;background:#17271d;color:var(--teal)}
+.viper-menu-group a .viper-menu-dot{background:var(--accent-strong,#4fb477)}
+
 </style>
-<link rel="stylesheet" href="viper-navigation.css?v=4">
+<link rel="stylesheet" href="viper-navigation.css?v=5">
 </head>
 <body>
 <div class="layout">
@@ -162,5 +172,5 @@ sb.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.href='./index
 load();
 })();
 </script>
-<script src="viper-navigation.js?v=14"></script>
+<script src="viper-navigation.js?v=15"></script>
 </body></html>
