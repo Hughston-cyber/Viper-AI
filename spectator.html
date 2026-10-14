@@ -39,8 +39,9 @@ function cell(row,value){const td=document.createElement('td');td.textContent=va
 function empty(body,span,text){body.textContent='';const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=span;td.className='empty';td.textContent=text;tr.appendChild(td);body.appendChild(tr)}
 function withTimeout(promise,label,ms=12000){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Please return to sign-in and try again; your account and data have not been changed.')),ms))])}
 async function init(){
+ let watchdog;
  try{
-  const watchdog=setTimeout(()=>say('Still waiting for Supabase. The request may be blocked or the connection may be stalled. Use SIGN OUT, then try signing in again.',true),12000);
+  watchdog=setTimeout(()=>say('Still waiting for Supabase. The request may be blocked or the connection may be stalled. Use SIGN OUT, then try signing in again.',true),12000);
   const userResult=await withTimeout(sb.auth.getUser(),'Account verification');const {data:{user},error:userError}=userResult;
   if(userError||!user){location.replace('./index.html');return}
   const profileResult=await withTimeout(sb.from('profiles').select('id,full_name,status,role').eq('id',user.id).single(),'Profile lookup');const {data:profile,error:profileError}=profileResult;
