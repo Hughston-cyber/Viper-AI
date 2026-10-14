@@ -158,26 +158,40 @@ footer{background:#070c08!important;color:#8fa596!important;border-top:1px solid
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 
-/* Dashboard visual repair — keep the background crisp and remove the green overlay band. */
+/* Dashboard visual repair v2 — disable layered overlays at their source. */
 html,body{
   background:#080d0b!important;
   background-image:none!important;
+  filter:none!important;
 }
-header.bar,.bar{
+html:before,html:after,body:before,body:after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+header.bar,.bar,header.bar:before,header.bar:after,.bar:before,.bar:after{
   background:#080d0b!important;
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
+  filter:none!important;
   box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
 }
 body .hero{
   background:#0b120d!important;
   background-image:none!important;
+  filter:none!important;
 }
 body .hero:before,body .hero:after,
-body .hero-photo:before,body .hero-photo:after{
+body .hero-photo:before,body .hero-photo:after,
+body #vAuth:before,body #vAuth:after,
+body #vApp:before,body #vApp:after{
   display:none!important;
   content:none!important;
   background:none!important;
+  filter:none!important;
   box-shadow:none!important;
 }
 body .tile:after{
