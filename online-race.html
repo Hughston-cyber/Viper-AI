@@ -41,7 +41,7 @@ const sb=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co'
 const $=id=>document.getElementById(id);let user=null,profile=null,saving=false,records=[];
 const dateNow=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 $('raceDate').value=dateNow();
-function status(msg,type){$('status').textContent=msg;$('status').className='status'+(type?' '+type)}
+function status(msg,type){$('status').textContent=msg;$('status').className='status'+(type?' '+type:'')}
 function timeout(p,label){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error(label+' timed out. Check your connection and try again.')),12000))])}
 function clean(v,n){return String(v||'').trim().slice(0,n)}
 function td(tr,value){const el=document.createElement('td');el.textContent=value===undefined||value===null||value===''?'—':String(value);tr.appendChild(el)}
