@@ -77,7 +77,7 @@ declare
 begin
   if not is_cap and not exists (
     select 1 from public.invite_codes
-    where code = supplied_code and active and code_type = requested_type
+    where lower(btrim(code)) = lower(btrim(supplied_code)) and active and code_type = requested_type
   ) then
     raise exception 'Invalid invitation code for requested account type';
   end if;
