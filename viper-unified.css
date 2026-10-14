@@ -1,0 +1,71 @@
+/* VIPER AI shared rectangular race-engineering design system.
+   Visual-only overrides: no navigation positioning, data, forms, or feature logic. */
+:root{
+  color-scheme:dark;
+  --viper-bg:#080c0a;--viper-panel:#101713;--viper-panel-raised:#151e18;
+  --viper-line:#29372e;--viper-line-strong:#3b4c40;
+  --viper-text:#eaf0e9;--viper-muted:#8c9b8f;--viper-green:#b9ed5b;
+}
+html{background:var(--viper-bg)!important;color-scheme:dark!important}
+body{background:radial-gradient(ellipse at 72% -20%,#243728 0,transparent 42%),var(--viper-bg)!important;color:var(--viper-text)!important}
+body,body *{scrollbar-color:#3b4c40 #080c0a}
+body h1,body h2,body h3,body h4{color:var(--viper-text)!important}
+body .sub,body .dim,body .muted,body .meta,body .empty,body small,body .eyebrow{color:var(--viper-muted)!important}
+body .eyebrow,body .metric-label,body .tag,body .status-pill{color:var(--viper-green)!important}
+body .panel,body .card,body .box,body .stat,body .metric,body .tile,
+body .feature-card,body .section-card,body .table-wrap,body .chart-wrap,
+body .session,body .announcement,body .item,body .update,body .instructions,
+body .instructions,body .empty,body .notice,body .message,body .alert,
+body .layout-card,body .data-card,body .race-card,body .member-card,
+body .stat-card,body .metric-card,body .content-card{
+  background:linear-gradient(145deg,#121a14,#0e1410)!important;
+  color:var(--viper-text)!important;
+  border:1px solid var(--viper-line)!important;
+  border-radius:5px!important;
+  box-shadow:none!important;
+}
+body .panel,body .card,body .box,body .feature-card,body .section-card,
+body .table-wrap,body .chart-wrap,body .session,body .announcement,
+body .layout-card,body .data-card,body .race-card,body .member-card,
+body .stat-card,body .metric-card,body .content-card{overflow-wrap:anywhere}
+body .panel h2,body .panel h3,body .card h2,body .card h3,
+body .section-title,body .table-title{
+  background:#151e18!important;color:var(--viper-text)!important;
+  border-bottom:1px solid var(--viper-line)!important;
+}
+body .in,body .panel-body,body .card-body{background:transparent!important;color:var(--viper-text)!important}
+body .tile b,body .metric-value,body .value{color:var(--viper-green)!important}
+body button,body .btn,body a.btn,body input[type=submit],body input[type=button]{
+  border-radius:4px!important;box-shadow:none!important;
+}
+body button:not(.primary):not(.bad),body .btn:not(.primary):not(.bad),
+body a.btn:not(.primary):not(.bad),body input[type=button]{
+  background:#141e17!important;border:1px solid var(--viper-line-strong)!important;color:var(--viper-text)!important;
+}
+body button.primary,body .btn.primary,body a.btn.primary,body input[type=submit]{
+  background:var(--viper-green)!important;border:1px solid var(--viper-green)!important;color:#10170c!important;
+}
+body button:hover,body .btn:hover,body a.btn:hover{border-color:var(--viper-green)!important}
+body input:not([type=checkbox]):not([type=radio]):not([type=file]),
+body select,body textarea{
+  background:#080e0a!important;border:1px solid var(--viper-line-strong)!important;
+  border-radius:3px!important;color:var(--viper-text)!important;
+}
+body input:focus,body select:focus,body textarea:focus{outline:2px solid #b9ed5b45!important;border-color:var(--viper-green)!important}
+body table{border-collapse:collapse!important;color:var(--viper-text)!important}
+body th{background:#131b15!important;color:#93a393!important;border-color:var(--viper-line)!important}
+body td{color:#d2dbd2!important;border-color:var(--viper-line)!important}
+body tr:hover td{background:#162019!important}
+body .count-pill,body .pill,body .badge,body .status,body .tag,body .status-pill{
+  border-radius:3px!important;font-variant-numeric:tabular-nums;
+}
+body .notice,body .message,body .alert{border-color:var(--viper-line-strong)!important}
+body .success{color:var(--viper-green)!important}
+body a:not(.btn):not(.nav-link){color:var(--viper-green)}
+body a:not(.btn):not(.nav-link):hover{color:#d6ff8d}
+body hr{border:0!important;border-top:1px solid var(--viper-line)!important}
+body footer{background:#090f0b!important;color:var(--viper-muted)!important;border-top:1px solid var(--viper-line)!important}
+@media(max-width:760px){
+  body .panel,body .card,body .box,body .metric,body .tile,body .session,body .announcement{border-radius:4px!important}
+  body table{font-size:12px}
+}
