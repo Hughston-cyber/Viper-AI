@@ -1,0 +1,14 @@
+{
+  "id": "./index.html",
+  "name": "VIPER AI — Team Venom HPR",
+  "short_name": "VIPER AI",
+  "description": "Team Venom HPR race information and offline race recording.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080c0a",
+  "theme_color": "#0a0f0d",
+  "icons": [
+    {"src":"./viper-app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
+  ]
+}
