@@ -80,3 +80,21 @@ body.viper-universal-layout .viper-universal-old-sidebar{display:none!important}
 /* Keep legacy two-column pages from reserving an empty column after sidebar unification. */
 body.viper-universal-layout > .layout{grid-template-columns:minmax(0,1fr)!important}
 body.viper-universal-layout > .layout > .sidebar{display:none!important}
+
+
+/* Content clearance fixes for pages using the persistent left sidebar. */
+body.viper-universal-layout>header.bar,
+body.viper-universal-layout>header.topbar{display:none!important}
+body.viper-universal-layout main.wrap,
+body.viper-universal-layout #gate.wrap,
+body.viper-universal-layout footer .wrap{
+ width:auto!important;max-width:none!important;
+ margin-left:0!important;margin-right:0!important;
+ box-sizing:border-box!important;
+}
+body.viper-universal-layout main.wrap{padding-left:clamp(20px,3vw,44px)!important;padding-right:clamp(20px,3vw,44px)!important}
+body.viper-universal-layout #gate.wrap{padding-left:clamp(20px,3vw,44px)!important;padding-right:clamp(20px,3vw,44px)!important}
+@media(max-width:760px){
+ body.viper-universal-layout main.wrap,
+ body.viper-universal-layout #gate.wrap{padding-left:14px!important;padding-right:14px!important}
+}
