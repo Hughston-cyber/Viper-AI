@@ -213,3 +213,21 @@ html body.viper-universal-layout .wrap {box-sizing:border-box!important;}
  html body.viper-universal-layout > .layout > .content,
  html body.viper-universal-layout > .layout > .main-content {padding:14px!important;}
 }
+
+
+/* Rider Availability: override its legacy centered 1120px wrapper so it aligns like every other page. */
+html body.viper-universal-layout > .wrap:has(> header.top) {
+  width:100%!important;max-width:none!important;margin:0!important;padding:0!important;
+  box-sizing:border-box!important;
+}
+html body.viper-universal-layout > .wrap > main {
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin:0!important;padding:28px!important;box-sizing:border-box!important;
+}
+html body.viper-universal-layout > .wrap > header.top {display:none!important;}
+@media(max-width:760px){
+ html body.viper-universal-layout > .wrap > main {padding:20px!important;}
+}
+@media(max-width:420px){
+ html body.viper-universal-layout > .wrap > main {padding:14px!important;}
+}
