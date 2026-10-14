@@ -54,3 +54,49 @@ body .links,body .site-nav{gap:8px!important}
 body hr{border:0!important;border-top:1px solid var(--line)!important}
 body .badge,body .pill,body .status{font-family:var(--mono)!important;border-radius:3px!important}
 @media(max-width:760px){body.viper-has-sidebar{padding-left:0!important}body .viper-dashboard-sidebar{width:min(260px,85vw)!important;transform:translateX(-105%)!important;transition:transform .2s ease!important;box-shadow:0 20px 60px #000a!important}body .viper-dashboard-sidebar.is-visible{transform:translateX(0)!important}body .wrap{padding-left:14px!important;padding-right:14px!important}body .page{padding-top:20px!important}body .layout{grid-template-columns:minmax(0,1fr)!important}body .bar .wrap{gap:10px!important;flex-wrap:wrap!important}body table{font-size:12px!important}}
+
+/* NAVIGATION HOTFIX v3: restore normal page flow; legacy fixed-sidebars were covering page content. */
+html body>header.bar,
+html body>header.topbar,
+html body>header.top{
+  position:sticky!important;inset:auto!important;top:0!important;left:auto!important;right:auto!important;bottom:auto!important;
+  display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  transform:none!important;float:none!important;z-index:1200!important;overflow:visible!important;
+  border:0!important;border-bottom:1px solid var(--line2)!important;box-sizing:border-box!important;
+}
+html body>header.bar>.wrap,
+html body>header.topbar>.wrap,
+html body>header.top>.wrap,
+html body>header.bar>.topbar-inner{
+  width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;
+}
+html body>header.bar .site-nav,
+html body>header.bar .links,
+html body>header.top .links,
+html body>header.topbar .site-nav{
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;flex-wrap:wrap!important;
+  gap:8px!important;width:100%!important;min-width:0!important;overflow:visible!important;
+}
+html body>header.bar .site-brand,
+html body>header.topbar .site-brand{min-width:0!important;max-width:100%!important;}
+html body main,
+html body .main,
+html body #app,
+html body .page,
+html body .content{margin-left:0!important;}
+html body .viper-legacy-nav .viper-menu-wrap{position:relative!important;z-index:1300!important;flex:0 0 auto!important;}
+html body .viper-menu-panel{
+  position:fixed!important;top:76px!important;right:16px!important;left:auto!important;bottom:auto!important;
+  width:min(360px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;
+  max-height:calc(100vh - 92px)!important;overflow-y:auto!important;z-index:20000!important;
+  background:#0c140e!important;border:1px solid var(--line2)!important;box-shadow:0 18px 50px #000b!important;
+}
+html body .viper-menu-panel[data-open="true"]{display:grid!important;}
+html body .viper-menu-panel[hidden],
+html body .viper-menu-group[hidden],
+html body .viper-menu-group a[hidden]{display:none!important;}
+@media(max-width:760px){
+  html body>header.bar,html body>header.topbar,html body>header.top{position:sticky!important;width:100%!important;height:auto!important;min-height:0!important;}
+  html body>header.bar .site-nav,html body>header.bar .links,html body>header.top .links,html body>header.topbar .site-nav{gap:6px!important;}
+  html body .viper-menu-panel{top:92px!important;right:8px!important;width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:calc(100vh - 104px)!important;}
+}
