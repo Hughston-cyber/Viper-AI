@@ -59,6 +59,7 @@ body .badge,body .pill,body .status{font-family:var(--mono)!important;border-rad
 html body>header.bar,
 html body>header.topbar,
 html body>header.top{
+  margin-left:0!important;
   position:relative!important;
   top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;inset:auto!important;
   width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;
@@ -71,6 +72,8 @@ html body>header.top>.wrap,
 html body>header.bar>.topbar-inner{
   width:100%!important;max-width:none!important;box-sizing:border-box!important;
 }
+html body>header.bar{width:100%!important;}
+html body>header.topbar{width:100%!important;}
 html body>header.bar .site-nav,
 html body>header.bar .links,
 html body>header.top .links,
