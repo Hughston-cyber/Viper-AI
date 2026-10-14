@@ -134,3 +134,37 @@ a:focus-visible,button:focus-visible{outline:2px solid #c8f169!important;outline
 .viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#344a38!important;background:#19291d!important;color:#c8f169!important}
 .viper-menu-footer{display:block!important;padding:10px!important;border-top:1px solid #2c4032!important;color:#829687!important;font-size:10px!important;letter-spacing:.08em!important}
 @media(max-width:760px){.wrap{padding-left:16px!important;padding-right:16px!important}.hero{padding:42px 0!important}.tiles{grid-template-columns:1fr!important}}
+
+
+/* VIPER colour identity v2 — midnight graphite + electric venom cyan */
+:root{
+ --viper:#080d16;--moss:#102b34;--paper:#080d16;--ink:#edf7fb;--mute:#9aafbd;
+ --line:#293d4d;--sig:#39e7ff;--bad:#ff6f7d;--white:#f6fcff;--r:14px;color-scheme:dark
+}
+body{background:radial-gradient(ellipse at 78% -10%,#123443 0,transparent 40%),#080d16!important;color:#edf7fb!important}
+body:before{background:linear-gradient(135deg,transparent 0 65%,#39e7ff08 65% 65.2%,transparent 65.2%)}
+.bar,header.bar,header{background:#080d16f2!important;border-bottom-color:#294957!important}
+.brand span{color:#39e7ff!important}
+.btn,button.btn{border-color:#39e7ff!important;background:#39e7ff!important;color:#071117!important}
+.btn.line,.btn.outline,button.btn.line{background:#101b27!important;color:#edf7fb!important;border-color:#344b5b!important}
+.btn.line:hover,.btn.outline:hover{border-color:#39e7ff!important;color:#39e7ff!important}
+.hero{background:linear-gradient(120deg,#080d16,#102b34 58%,#080d16)!important;border-bottom-color:#244c59!important}
+.auth,.card,.panel,.chart-panel,.tile,.strength-card,.req,.analytics-grid>section{background:linear-gradient(145deg,#111e2b,#0b131e)!important;color:#edf7fb!important;border-color:#293d4d!important}
+.auth{border-top-color:#39e7ff!important}
+.tabs{border-color:#293d4d!important}.tabs button{color:#9aafbd!important}.tabs button.on{color:#39e7ff!important;border-color:#39e7ff!important}
+input,select,textarea{background:#080f19!important;color:#edf7fb!important;border-color:#344b5b!important}
+input:focus,select:focus,textarea:focus{outline-color:#39e7ff55!important;border-color:#39e7ff!important}
+.tile{border-left-color:#39e7ff!important}.tile b{color:#39e7ff!important}.tile span{color:#b8cbd5!important}
+.panel h3,.chart-title{background:#142333!important;color:#f2f9fc!important;border-bottom-color:#293d4d!important}
+th{background:#142333!important;color:#39e7ff!important}
+td,th{border-bottom-color:#253847!important}tr:hover td{background:#39e7ff09!important}
+.tag{background:#12313b!important;color:#39e7ff!important}
+footer{background:#070b12!important;border-top-color:#293d4d!important;color:#8da4b2!important}
+a:focus-visible,button:focus-visible{outline-color:#39e7ff!important}
+.viper-menu-trigger{border-color:#344b5b!important;background:#101b27!important;color:#edf7fb!important}
+.viper-menu-trigger:hover{border-color:#39e7ff!important;color:#39e7ff!important}
+.viper-menu-panel{border-color:#293d4d!important;background:#0b131e!important}
+.viper-menu-group h3{color:#39e7ff!important}
+.viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#294957!important;background:#122631!important;color:#39e7ff!important}
+.viper-menu-dot{background:#567080!important}.viper-menu-group a[aria-current="page"] .viper-menu-dot{background:#39e7ff!important;box-shadow:0 0 12px #39e7ff66!important}
+.viper-menu-footer{border-top-color:#293d4d!important;color:#8da4b2!important}
