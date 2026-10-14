@@ -79,16 +79,19 @@ async function loadData(){
    sb.from('spectator_race_results').select('event,race_date,result,laps').order('race_date',{ascending:false}),
    sb.from('spectator_rider_statistics').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true}),
    sb.from('race_days').select('title,race_date,venue,start_time').gte('race_date',localDateKey()).order('race_date',{ascending:true}).limit(12),
-   sb.from('team_announcements').select('title,body,category,pinned,created_at').eq('status','published').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(8)
+   sb.from('team_announcements').select('title,body,category,pinned,created_at').eq('status','published').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(8),
+   sb.from('spectator_live_race_summary').select('event,race_date,result,laps').order('event',{ascending:true}),
+   sb.from('spectator_live_rider_summary').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
   ]),'Spectator data lookup');
-  const races=results[0],stats=results[1],events=results[2],announcements=results[3];
-  const errors=[races.error,stats.error,events.error,announcements.error].filter(Boolean);
-  renderRaces(races.data||[]);allStats=stats.data||[];renderStats();renderEvents(events.data||[]);renderAnnouncements(announcements.data||[]);
-  $('metricEvents').textContent=String((races.data||[]).length);
-  $('metricLaps').textContent=String((races.data||[]).reduce((sum,x)=>sum+(Number(x.laps)||0),0));
+  const races=results[0],stats=results[1],events=results[2],announcements=results[3],liveRaces=results[4],liveStats=results[5];
+  const officialRaces=races.data||[],recordedRaces=(liveRaces.data||[]).map(x=>({...x,result:x.result||'LIVE · Recording'}));
+  const errors=[races.error,stats.error,events.error,announcements.error,liveRaces.error,liveStats.error].filter(Boolean);
+  renderRaces([...recordedRaces,...officialRaces]);allStats=[...(stats.data||[]),...(liveStats.data||[]).map(x=>({...x,event:String(x.event||'')+' · LIVE'}))];renderStats();renderEvents(events.data||[]);renderAnnouncements(announcements.data||[]);
+  $('metricEvents').textContent=String(officialRaces.length+recordedRaces.length);
+  $('metricLaps').textContent=String([...officialRaces,...recordedRaces].reduce((sum,x)=>sum+(Number(x.laps)||0),0));
   $('metricRiders').textContent=String(new Set(allStats.map(x=>String(x.rider_name||'').trim()).filter(Boolean)).size);
   $('metricUpcoming').textContent=String((events.data||[]).length);
-  if(errors.length){say('Some spectator information could not be loaded. Available sections are shown; use Refresh to retry. '+errors.map(e=>e.message).join(' · '),true)}else say('Spectator access verified. Published information loaded in read-only mode.');
+  if(errors.length){say('Some spectator information could not be loaded. Available sections are shown; use Refresh to retry. '+errors.map(e=>e.message).join(' · '),true)}else say('Spectator access verified. Published information loaded in read-only mode. Live race summaries refresh automatically every 20 seconds.');
  }catch(e){say((e.message||'Spectator data could not be loaded.')+' Your account and team data have not been changed.',true)}
  finally{loading=false;$('refresh').disabled=false}
 }
@@ -111,6 +114,7 @@ $('riderSearch').addEventListener('input',renderStats);
 $('signOut').addEventListener('click',async()=>{const button=$('signOut');button.disabled=true;button.textContent='SIGNING OUT…';try{const result=await withTimeout(sb.auth.signOut(),'Sign-out request',10000);if(result.error)throw result.error;location.replace('./index.html')}catch(e){say((e.message||'Sign-out could not be completed.')+' Your session may still be active; please try again.',true);button.disabled=false;button.textContent='SIGN OUT'}});
 sb.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT')location.replace('./index.html')});
 init();
+setInterval(()=>{if(!document.hidden&&!loading&&$('dashboard').classList.contains('hidden')===false)loadData()},20000);
 })();
 </script>
 </body>
