@@ -37,18 +37,20 @@ const $=id=>document.getElementById(id);
 function say(text,error){$('status').textContent=text;$('status').style.color=error?'#ffaaa2':''}
 function cell(row,value){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);row.appendChild(td)}
 function empty(body,span,text){body.textContent='';const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=span;td.className='empty';td.textContent=text;tr.appendChild(td);body.appendChild(tr)}
+function withTimeout(promise,label,ms=12000){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Please return to sign-in and try again; your account and data have not been changed.')),ms))])}
 async function init(){
  try{
-  const {data:{user},error:userError}=await sb.auth.getUser();
+  const watchdog=setTimeout(()=>say('Still waiting for Supabase. The request may be blocked or the connection may be stalled. Use SIGN OUT, then try signing in again.',true),12000);
+  const userResult=await withTimeout(sb.auth.getUser(),'Account verification');const {data:{user},error:userError}=userResult;
   if(userError||!user){location.replace('./index.html');return}
-  const {data:profile,error:profileError}=await sb.from('profiles').select('id,full_name,status,role').eq('id',user.id).single();
+  const profileResult=await withTimeout(sb.from('profiles').select('id,full_name,status,role').eq('id',user.id).single(),'Profile lookup');const {data:profile,error:profileError}=profileResult;
   if(profileError||!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
   say('Signed in as '+(profile.full_name||'Spectator')+'. Loading official read-only records…');
   $('content').classList.remove('hidden');
-  const [races,stats]=await Promise.all([
+  const [races,stats]=await withTimeout(Promise.all([
    sb.from('spectator_race_results').select('event,race_date,result,laps').order('race_date',{ascending:false}),
    sb.from('spectator_rider_statistics').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
-  ]);
+  ]),'Spectator data lookup');
   if(races.error)throw new Error('Race results could not be loaded: '+races.error.message);
   if(stats.error)throw new Error('Rider statistics could not be loaded: '+stats.error.message);
   const raceBody=$('raceRows');raceBody.textContent='';
@@ -58,7 +60,7 @@ async function init(){
   if(!stats.data?.length)empty(statBody,3,'No approved rider statistics are available yet.');
   else stats.data.forEach(x=>{const tr=document.createElement('tr');cell(tr,x.rider_name);cell(tr,x.event);cell(tr,x.laps);statBody.appendChild(tr)});
   say('Spectator access verified. You can view official race results and approved rider statistics only.');
- }catch(e){say(e.message||'Could not load spectator data. Please try again.',true)}
+ }catch(e){say(e.message||'Could not load spectator data. Please try again.',true)}finally{clearTimeout(watchdog)}
 }
 $('signOut').addEventListener('click',async()=>{await sb.auth.signOut();location.replace('./index.html')});
 init();
