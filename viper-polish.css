@@ -157,3 +157,30 @@ footer{background:#070c08!important;color:#8fa596!important;border-top:1px solid
   #leadershipSubmenu{right:auto;left:0}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* Dashboard visual repair — keep the background crisp and remove the green overlay band. */
+html,body{
+  background:#080d0b!important;
+  background-image:none!important;
+}
+header.bar,.bar{
+  background:#080d0b!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
+}
+body .hero{
+  background:#0b120d!important;
+  background-image:none!important;
+}
+body .hero:before,body .hero:after,
+body .hero-photo:before,body .hero-photo:after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+body .tile:after{
+  display:none!important;
+  content:none!important;
+}
