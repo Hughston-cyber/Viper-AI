@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="./viper-redesign.css?v=1">
+<link rel="stylesheet" href="./viper-redesign.css?v=2">
 <title>Team Announcements — VIPER AI</title><link rel="stylesheet" href="viper-polish.css?v=1"><style>
 body{padding:24px!important}.wrap{max-width:1100px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 0 24px;border-bottom:1px solid #344632}.links{display:flex;gap:8px;flex-wrap:wrap}.links a{padding:9px 12px;border:1px solid #344632;border-radius:8px;text-decoration:none;color:#dce7de;background:#111a14;font-size:12px;font-weight:800}.links a.active{color:#c8f169;border-color:#759d4b}.layout{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr);gap:18px;margin-top:22px}.panel{padding:20px}.panel h2{margin-bottom:12px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field input,.field select,.field textarea{width:100%;padding:10px 12px}.field textarea{min-height:140px;resize:vertical}.announcement{border:1px solid #344632;background:linear-gradient(135deg,#121c15,#0d140f);border-radius:12px;padding:18px;margin:12px 0}.announcehead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.announcement h3{font-size:25px;margin:8px 0}.announcebody{white-space:pre-wrap;overflow-wrap:anywhere;color:#cbd8ce}.meta{font-size:12px;color:#a1afa5}.pill{display:inline-block;border:1px solid #3a5736;background:#1e3020;color:#c8f169;border-radius:99px;padding:3px 8px;font-size:10px;font-weight:850;text-transform:uppercase}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.msg{min-height:22px;margin-top:10px;font-size:13px;color:#b8e29b}.msg.err{color:#ff7168}.muted{color:#a1afa5}.empty{padding:22px;border:1px dashed #344632;border-radius:10px;color:#a1afa5}.hidden{display:none!important}
 @media(max-width:800px){.layout{grid-template-columns:1fr}}@media(max-width:520px){body{padding:14px!important}}
-</style><link rel="stylesheet" href="viper-navigation.css?v=4">
+</style><link rel="stylesheet" href="viper-navigation.css?v=6">
 </head><body><div class="wrap">
 <header class="top"><a class="brand" href="index.html">VIPER<span>TEAM VENOM HPR</span></a><nav class="links"><a href="index.html">Dashboard</a><a href="training.html">Training Planner</a><a class="active" href="announcements.html">Announcements</a><a href="attendance.html">Race Roll Call</a><a href="riders.html" id="riderLink" class="hidden">Rider Management</a><button class="btn line" id="signout" type="button">Sign out</button></nav></header>
 <main><div class="eyebrow">Team communications</div><h1>Team <span style="color:var(--sig)">Announcements.</span></h1><p class="sub">One place for race-day updates, training reminders and important Team Venom notices.</p>
@@ -22,5 +22,5 @@ $('announceForm').addEventListener('submit',async e=>{e.preventDefault();const b
 $('refresh').onclick=load;$('signout').onclick=async()=>{await sb.auth.signOut();location.href='index.html'};
 async function init(){const s=await sb.auth.getSession();user=s.data&&s.data.session&&s.data.session.user;if(!user){$('gate').classList.remove('hidden');return}const p=await sb.from('profiles').select('id,full_name,role,status').eq('id',user.id).single();profile=p.data;if(p.error||!profile||profile.status!=='approved'){$('gate').classList.remove('hidden');return}$('app').classList.remove('hidden');if(canLead(profile))$('composePanel').classList.remove('hidden');if(profile.role==='captain')$('riderLink').classList.remove('hidden');await load()}
 sb.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.href='index.html'});init()})();
-</script><script src="viper-navigation.js?v=14"></script>
+</script><script src="viper-navigation.js?v=16"></script>
 </body></html>
