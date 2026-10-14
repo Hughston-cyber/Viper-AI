@@ -9,6 +9,6 @@
   "background_color": "#080c0a",
   "theme_color": "#0a0f0d",
   "icons": [
-    {"src":"./viper-app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
+    {"src":"./viper-app-icon.svg","sizes":"192x192 512x512 any","type":"image/svg+xml","purpose":"any maskable"}
   ]
 }
