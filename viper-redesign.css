@@ -20,7 +20,7 @@ body .brand{color:var(--v-accent)!important;font-weight:900;letter-spacing:.08em
 body .brand span{color:var(--v-muted)!important}
 body .page-indicator{color:var(--v-muted)!important;border-left:1px solid var(--v-border);padding-left:14px}
 body .site-nav{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-body .site-nav>a[href],body .site-nav>.lead-menu,body .site-nav>.viper-menu-wrap{display:none!important}
+body .site-nav>a[href],body .site-nav>.lead-menu{display:none!important}
 body .site-nav .who{font-size:12px;color:var(--v-muted);max-width:180px;overflow:hidden;text-overflow:ellipsis}
 body .btn,body button,body input[type=submit]{border-radius:9px!important;transition:transform .18s ease,border-color .18s ease,background .18s ease}
 body .btn.primary,body button.primary,body .btn:not(.line){background:var(--v-accent)!important;color:#11190d!important;border:1px solid var(--v-accent)!important;font-weight:800}
@@ -168,3 +168,8 @@ a:focus-visible,button:focus-visible{outline-color:#39e7ff!important}
 .viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#294957!important;background:#122631!important;color:#39e7ff!important}
 .viper-menu-dot{background:#567080!important}.viper-menu-group a[aria-current="page"] .viper-menu-dot{background:#39e7ff!important;box-shadow:0 0 12px #39e7ff66!important}
 .viper-menu-footer{border-top-color:#293d4d!important;color:#8da4b2!important}
+
+
+/* Navigation repair: keep the shared Navigate dropdown visible on interior pages. */
+body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap{display:inline-flex!important;visibility:visible!important;opacity:1!important}
+body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap .viper-menu-trigger{display:inline-flex!important}
