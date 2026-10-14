@@ -93,6 +93,6 @@ sb.auth.onAuthStateChange((_event,nextSession)=>{setTimeout(()=>routeSession(nex
 sb.auth.getSession().then(({data,error})=>{if(error){show('authView');message('authMessage',error.message,true);return;}routeSession(data.session);});
 })();
 </script>
-<script src="./viper-navigation.js?v=18"></script>
+<script src="./viper-navigation.js?v=19"></script>
 </body>
 </html>
