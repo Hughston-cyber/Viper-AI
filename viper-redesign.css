@@ -173,3 +173,45 @@ a:focus-visible,button:focus-visible{outline-color:#39e7ff!important}
 /* Navigation repair: keep the shared Navigate dropdown visible on interior pages. */
 body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap{display:inline-flex!important;visibility:visible!important;opacity:1!important}
 body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap .viper-menu-trigger{display:inline-flex!important}
+
+
+/* VIPER navigation containment fix — dropdowns must anchor to their own menu, never the viewport. */
+html body .viper-redesign-top-menu,
+html body .viper-menu-wrap{
+  position:relative!important;
+  display:inline-flex!important;
+  align-items:flex-start!important;
+  width:max-content!important;
+  max-width:100%!important;
+  min-width:0!important;
+  flex:0 0 auto!important;
+}
+html body .viper-redesign-top-menu .viper-top-menu-panel{
+  position:absolute!important;
+  inset:calc(100% + 8px) auto auto 0!important;
+  width:min(320px,calc(100vw - 24px))!important;
+  min-width:0!important;
+  max-width:320px!important;
+  max-height:70vh!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  box-sizing:border-box!important;
+  transform:none!important;
+  z-index:1201!important;
+}
+html body .viper-redesign-top-menu .viper-top-menu-panel > *,
+html body .viper-redesign-top-menu .viper-top-menu-panel a,
+html body .viper-menu-wrap .viper-menu-panel > *{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+html body .viper-redesign-top-menu .viper-top-menu-panel a{
+  display:flex!important;
+  width:100%!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+}
+@media(min-width:901px){
+  html body .viper-redesign-scrim{display:none!important;opacity:0!important;pointer-events:none!important}
+}
