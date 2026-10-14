@@ -5,7 +5,7 @@
 - The project is a static HTML/CSS/JavaScript site published through GitHub Pages; there is no `package.json` or application build pipeline in the inspected repository.
 - Pages use the Supabase JavaScript client from a CDN.
 - The current site connects to the existing Supabase project using a publishable client key. The publishable key is not an admin credential; table access must continue to be enforced by Supabase Auth and Row Level Security (RLS).
-- The existing `main` branch remains the live source. The rebuild is isolated on `rebuild/race-engineering` until it has been reviewed and verified.
+- The `main` branch remains the live source. Rebuild development is isolated on `rebuild/race-engineering`; a standalone `engineering-preview.html` is published at a separate GitHub Pages route for visual review and does not replace the homepage.
 
 ## Existing feature inventory
 
