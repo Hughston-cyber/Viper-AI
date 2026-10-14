@@ -27,26 +27,30 @@ as $function$
   );
 $function$;
 
--- Keep spectator reads restricted to the two official, read-only data sets.
-drop policy if exists "approved read records" on public.race_records;
-create policy "approved read records" on public.race_records
-  for select to public using (public.is_approved());
+-- Use narrow views for spectators so notes and detailed lap entries cannot be fetched
+-- directly from the underlying tables.
 drop policy if exists "spectators read official race results" on public.race_records;
-create policy "spectators read official race results" on public.race_records
-  for select to authenticated using (
-    exists (select 1 from public.profiles p
-      where p.id = (select auth.uid()) and p.status = 'approved' and p.role = 'spectator')
-  );
-
-drop policy if exists "approved read stats" on public.rider_stats;
-create policy "approved read stats" on public.rider_stats
-  for select to public using (public.is_approved());
 drop policy if exists "spectators read approved rider statistics" on public.rider_stats;
-create policy "spectators read approved rider statistics" on public.rider_stats
-  for select to authenticated using (
-    exists (select 1 from public.profiles p
-      where p.id = (select auth.uid()) and p.status = 'approved' and p.role = 'spectator')
-  );
+
+create or replace view public.spectator_race_results with (security_barrier = true) as
+select r.event, r.race_date, r.result, r.laps
+from public.race_records r
+where exists (
+  select 1 from public.profiles p
+  where p.id = auth.uid() and p.status = 'approved' and p.role = 'spectator'
+);
+
+create or replace view public.spectator_rider_statistics with (security_barrier = true) as
+select s.rider_name, s.event, s.laps
+from public.rider_stats s
+where exists (
+  select 1 from public.profiles p
+  where p.id = auth.uid() and p.status = 'approved' and p.role = 'spectator'
+);
+
+revoke all on public.spectator_race_results from public, anon;
+revoke all on public.spectator_rider_statistics from public, anon;
+grant select on public.spectator_race_results, public.spectator_rider_statistics to authenticated;
 
 drop policy if exists "Approved members can read lap records" on public.lap_records;
 create policy "Approved members can read lap records" on public.lap_records
@@ -91,3 +95,6 @@ end;
 $function$;
 
 grant select, insert, update, delete on public.invite_codes to authenticated;
+
+-- Auth trigger invokes this function internally; do not expose it as a public RPC.
+revoke all on function public.handle_new_user() from public, anon, authenticated;
