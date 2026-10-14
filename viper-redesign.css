@@ -82,3 +82,21 @@ body .viper-redesign-main{margin-left:260px}
  body .topbar-inner{min-height:62px}
  body header.bar{min-height:62px}
 }
+
+/* Navigation layout: dashboard uses a rail; interior pages use a top dropdown. */
+body:not(.viper-redesign-dashboard) header.bar{margin-left:0!important;width:100%!important}
+body:not(.viper-redesign-dashboard) main{margin-left:0!important;width:auto!important}
+body:not(.viper-redesign-dashboard) .viper-redesign-sidebar{display:none!important}
+body:not(.viper-redesign-dashboard) .site-nav{display:flex!important}
+body:not(.viper-redesign-dashboard) .site-nav>a[href],body:not(.viper-redesign-dashboard) .site-nav>.lead-menu{display:none!important}
+.viper-redesign-top-menu{display:inline-block!important;position:relative}
+.viper-redesign-top-menu .viper-top-menu-button{display:inline-flex;align-items:center;gap:8px;padding:10px 13px!important;background:#172219!important;border:1px solid #3a4d39!important;color:#c8f169!important;font-size:11px;font-weight:850;letter-spacing:.08em;cursor:pointer}
+.viper-top-menu-panel{display:none;position:absolute;right:0;top:calc(100% + 12px);width:min(330px,calc(100vw - 30px));max-height:min(70vh,620px);overflow:auto;padding:14px;background:#0d1510;border:1px solid #354635;border-radius:13px;box-shadow:0 20px 60px rgba(0,0,0,.55);z-index:1200}
+.viper-redesign-top-menu.is-open .viper-top-menu-panel{display:block}
+.viper-top-menu-group{padding:0 0 10px;margin-bottom:10px;border-bottom:1px solid #243329}
+.viper-top-menu-group:last-child{border-bottom:0;margin-bottom:0}
+.viper-top-menu-group>a{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;text-decoration:none;color:#dce7dc;font-size:12px;font-weight:650}
+.viper-top-menu-group>a>span:first-child{width:22px;text-align:center;color:#c8f169}
+.viper-top-menu-group>a:hover,.viper-top-menu-group>a[aria-current=page]{background:#1b291c;color:#c8f169}
+.viper-top-menu-group>a[hidden],.viper-top-menu-group[hidden]{display:none!important}
+@media(max-width:900px){body:not(.viper-redesign-dashboard) header.bar{margin-left:0!important;width:100%!important}}
