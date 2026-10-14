@@ -53,8 +53,8 @@
 <div class="eyebrow">Session log</div><h2 id="log-title">Recorded entries</h2>
 <div class="stats"><div class="stat"><strong id="record-count">0</strong><span class="small">Entries</span></div><div class="stat"><strong id="lap-count">0</strong><span class="small">Laps entered</span></div><div class="stat"><strong id="rider-count">0</strong><span class="small">Riders</span></div></div>
 <div class="table-wrap"><table><thead><tr><th>Rider</th><th>Stint</th><th>Lap</th><th>Lap time</th><th>Incident</th><th>Notes</th><th></th></tr></thead><tbody id="records-body"><tr><td colspan="7">No records yet.</td></tr></tbody></table></div>
-<div class="actions"><button id="export" type="button">Export race file (.json)</button><button class="secondary" id="import-button" type="button">Load a saved race file</button><input id="import-file" class="hidden" type="file" accept="application/json,.json"><button class="danger" id="clear-session" type="button">Clear this session</button></div>
-<p class="small">Keep the exported JSON file safe. Importing a file here only loads it into this browser for review; it does not publish anything to main VIPER AI.</p>
+<div class="actions"><button id="export" type="button">Export race file (.json)</button><button id="sync-button" type="button" hidden>↻ Sync saved races to VIPER AI</button><button class="secondary" id="import-button" type="button">Load a saved race file</button><input id="import-file" class="hidden" type="file" accept="application/json,.json"><button class="danger" id="clear-session" type="button">Clear this session</button></div>
+<p id="sync-status" class="status" aria-live="polite">Saved race sessions stay on this device until you sync them online.</p><p class="small">Keep the exported JSON file safe. Importing a file here only loads it into this browser for review; it does not publish anything to main VIPER AI.</p>
 </section>
 <section class="panel" id="database-import" hidden>
 <div class="eyebrow">Online · Captain import</div><h2>Import a completed race into main VIPER AI</h2>
