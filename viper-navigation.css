@@ -157,3 +157,59 @@ body.viper-universal-layout footer .container {
     padding-right:14px!important;
   }
 }
+
+
+/* FINAL layout normalization: account for the sidebar exactly once, then let every page use the full remaining width. */
+html body.viper-universal-layout {padding-left:232px!important; width:auto!important; overflow-x:hidden!important;}
+html body.viper-universal-layout > .wrap,
+html body.viper-universal-layout > .layout {
+  width:100%!important; max-width:none!important; margin:0!important;
+  padding:0!important; box-sizing:border-box!important;
+}
+html body.viper-universal-layout > main,
+html body.viper-universal-layout main.wrap,
+html body.viper-universal-layout > .wrap > main,
+html body.viper-universal-layout > .layout > main,
+html body.viper-universal-layout > .layout > #app,
+html body.viper-universal-layout > .layout > #gate {
+  width:100%!important; max-width:none!important; min-width:0!important;
+  margin:0!important; padding:28px!important; box-sizing:border-box!important;
+}
+html body.viper-universal-layout > .layout > .main,
+html body.viper-universal-layout > .layout > .content,
+html body.viper-universal-layout > .layout > .main-content {
+  width:100%!important; max-width:none!important; min-width:0!important;
+  margin:0!important; padding:28px!important; box-sizing:border-box!important;
+}
+html body.viper-universal-layout > .wrap > header,
+html body.viper-universal-layout > header.bar,
+html body.viper-universal-layout > header.topbar {display:none!important;}
+/* The dashboard already has a native rail; hide it when the universal rail is active to prevent double navigation offsets. */
+html body.viper-universal-layout > .shell > .rail,
+html body.viper-universal-layout > .rail {display:none!important;}
+html body.viper-universal-layout .shell {margin-left:0!important;width:100%!important;max-width:none!important;}
+html body.viper-universal-layout .wrap {box-sizing:border-box!important;}
+@media(max-width:760px){
+ html body.viper-universal-layout {padding-left:180px!important;}
+ html body.viper-universal-layout > main,
+ html body.viper-universal-layout main.wrap,
+ html body.viper-universal-layout > .wrap > main,
+ html body.viper-universal-layout > .layout > main,
+ html body.viper-universal-layout > .layout > #app,
+ html body.viper-universal-layout > .layout > #gate,
+ html body.viper-universal-layout > .layout > .main,
+ html body.viper-universal-layout > .layout > .content,
+ html body.viper-universal-layout > .layout > .main-content {padding:20px!important;}
+}
+@media(max-width:420px){
+ html body.viper-universal-layout {padding-left:156px!important;}
+ html body.viper-universal-layout > main,
+ html body.viper-universal-layout main.wrap,
+ html body.viper-universal-layout > .wrap > main,
+ html body.viper-universal-layout > .layout > main,
+ html body.viper-universal-layout > .layout > #app,
+ html body.viper-universal-layout > .layout > #gate,
+ html body.viper-universal-layout > .layout > .main,
+ html body.viper-universal-layout > .layout > .content,
+ html body.viper-universal-layout > .layout > .main-content {padding:14px!important;}
+}
