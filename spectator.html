@@ -63,7 +63,7 @@ let loading=false,allStats=[];
 function say(text,error){$('status').textContent=text;$('status').classList.toggle('error',!!error)}
 function cell(row,value,cls){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);if(cls)td.className=cls;row.appendChild(td)}
 function empty(body,span,text){body.textContent='';const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=span;td.className='empty';td.textContent=text;tr.appendChild(td);body.appendChild(tr)}
-function withTimeout(promise,label,ms){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Check your connection and try again.')),ms||12000))]}
+function withTimeout(promise,label,ms){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Check your connection and try again.')),ms||12000))]);}
 function dateLabel(value){if(!value)return'—';const d=new Date(value+'T00:00:00');return Number.isNaN(d.getTime())?String(value):d.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'})}
 function dateParts(value){if(!value)return{day:'—',month:'DATE TBC'};const d=new Date(value+'T00:00:00');if(Number.isNaN(d.getTime()))return{day:'—',month:'DATE TBC'};return{day:d.toLocaleDateString('en-AU',{day:'2-digit'}),month:d.toLocaleDateString('en-AU',{month:'short'}).toUpperCase()}}
 function localDateKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
