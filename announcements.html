@@ -25,5 +25,5 @@ $('announceForm').addEventListener('submit',async e=>{e.preventDefault();const b
 $('refresh').onclick=load;$('signout').onclick=async()=>{await sb.auth.signOut();location.href='index.html'};
 async function init(){const s=await sb.auth.getSession();user=s.data&&s.data.session&&s.data.session.user;if(!user){$('gate').classList.remove('hidden');return}const p=await sb.from('profiles').select('id,full_name,role,status').eq('id',user.id).single();profile=p.data;if(p.error||!profile||profile.status!=='approved'){$('gate').classList.remove('hidden');return}$('app').classList.remove('hidden');if(canLead(profile))$('composePanel').classList.remove('hidden');if(profile.role==='captain')$('riderLink').classList.remove('hidden');await load()}
 sb.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')location.href='index.html'});init()})();
-</script><script src="viper-navigation.js?v=18"></script>
+</script><script src="viper-navigation.js?v=19"></script>
 </body></html>
