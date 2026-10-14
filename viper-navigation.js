@@ -5,6 +5,11 @@ const header=document.querySelector('header.bar');
 const nav=document.querySelector('header .site-nav,header .links,.sidebar .nav');
 if(!header||!nav||document.querySelector('.viper-redesign-sidebar'))return;
 const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+const permissionLinks={
+ 'race-days.html':'navRace','rider-data.html':'navRiders','team-analysis.html':'navAnalysis',
+ 'performance-dashboard.html':'navPerformance','announcements.html':'navAnnouncements',
+ 'captain.html':'navCaptain'
+};
 const groups=[
  {title:'WORKSPACE',items:[['Dashboard','index.html','⌂'],['Race Days','race-days.html','▣'],['Rider Data','rider-data.html','↗'],['Data Analysis','team-analysis.html','⌁'],['Performance Dashboard','performance-dashboard.html','◫']]},
  {title:'TEAM',items:[['Roll Call','attendance.html','✓'],['Announcements','announcements.html','▤'],['Training Planner','training.html','◷'],['Rider Availability','rider-availability.html','◉']]},
@@ -42,11 +47,6 @@ sidebar.className='viper-redesign-sidebar';
 sidebar.setAttribute('aria-label','VIPER AI main navigation');
 sidebar.innerHTML='<div class="viper-redesign-brand"><div class="viper-redesign-mark">V</div><div><strong>VIPER AI</strong><span>TEAM VENOM HPR</span></div></div><div class="viper-redesign-caption">TEAM PLATFORM</div><div class="viper-redesign-nav"></div><div class="viper-redesign-footer">INTELLIGENCE · PERFORMANCE · RESULTS</div>';
 const list=sidebar.querySelector('.viper-redesign-nav');
-const permissionLinks={
- 'race-days.html':'navRace','rider-data.html':'navRiders','team-analysis.html':'navAnalysis',
- 'performance-dashboard.html':'navPerformance','announcements.html':'navAnnouncements',
- 'captain.html':'navCaptain'
-};
 groups.forEach(group=>{
  const section=document.createElement('section');section.className='viper-redesign-group';section.dataset.group=group.title;
  const heading=document.createElement('div');heading.className='viper-redesign-caption';heading.textContent=group.title;section.append(heading);
