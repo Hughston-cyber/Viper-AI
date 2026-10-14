@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0f0d">
+<meta name="description" content="VIPER AI offline race recorder for Team Venom HPR leadership.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/svg+xml" href="./viper-app-icon.svg">
+<title>Offline Race Mode — VIPER AI</title>
+<style>
+:root{color-scheme:dark;--bg:#080c0a;--panel:#101713;--line:#29372e;--text:#eaf0e9;--muted:#9aa89c;--green:#b9ed5b;--amber:#f0bf57;--red:#ff756d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#142219 0,var(--bg) 55%);color:var(--text);font:15px/1.5 system-ui,-apple-system,sans-serif;padding:22px}.shell{max-width:1050px;margin:auto}.brand{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0 18px;margin-bottom:22px}.brand strong{font-size:22px;letter-spacing:2px}.brand strong span{color:var(--green)}a{color:var(--green)}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--green);text-transform:uppercase}.panel{background:rgba(16,23,19,.95);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:flex;flex-direction:column;gap:6px;margin:9px 0}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;background:#080d0a;color:var(--text);border:1px solid #3a4b3d;border-radius:7px;padding:11px;font:inherit;min-width:0}textarea{min-height:76px;resize:vertical}button{background:var(--green);color:#11170e;border:0;border-radius:7px;padding:11px 15px;font-weight:750;cursor:pointer}button.secondary{background:#1b2820;color:var(--text);border:1px solid #3a4b3d}button.danger{background:#3b1b18;color:#ffd5d0;border:1px solid #71362e}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.status{border:1px solid #3a4b3d;background:#0b120d;padding:10px 12px;border-radius:8px;color:var(--muted);margin:12px 0}.status.good{color:var(--green)}.status.warn{color:var(--amber)}.status.bad{color:var(--red)}.small{font-size:12px;color:var(--muted)}.stats{display:flex;gap:12px;flex-wrap:wrap}.stat{padding:12px 14px;background:#0a100c;border:1px solid var(--line);border-radius:8px;min-width:110px}.stat strong{display:block;font-size:22px;color:var(--green)}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:660px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:600}#gate{max-width:650px;margin:50px auto}.hidden{display:none!important}@media(max-width:680px){body{padding:14px}.grid{grid-template-columns:1fr}.brand{align-items:flex-start;flex-direction:column}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="brand"><div><strong>VIPER<span> AI</span></strong><div class="small">TEAM VENOM HPR · OFFLINE RACE MODE</div></div><a href="./index.html">← Main VIPER AI</a></header>
+<div id="gate" class="panel">
+<div class="eyebrow">Leadership access</div><h1>Offline Race Mode</h1>
+<p>To prepare this device, connect to the internet and sign in to VIPER AI with an approved captain or leadership account. After that, this browser can reopen the recorder offline on this device.</p>
+<div id="auth-status" class="status">Checking access…</div>
+<p class="small">Important: offline access is stored on this browser. It cannot be remotely verified or revoked while the device is offline. Use a trusted, device-locked device; this is not a replacement for server-side permissions.</p>
+<a href="./index.html">Return to VIPER AI sign-in</a>
+</div>
+<main id="app" class="hidden">
+<div class="eyebrow">Local-only capture</div><h1>Race session recorder</h1>
+<div id="connection" class="status">Checking connection…</div>
+<div class="status warn">Offline entries are saved only on this device until you export them. This first version exports a review file; it does not write directly to the main database.</div>
+<section class="panel">
+<h2>Race details</h2>
+<div class="grid">
+<div class="field"><label for="event">Event / round *</label><input id="event" placeholder="e.g. Casey Fields 2" required></div>
+<div class="field"><label for="venue">Venue</label><input id="venue" placeholder="e.g. Casey Fields"></div>
+<div class="field"><label for="race-date">Race date *</label><input id="race-date" type="date" required></div>
+<div class="field"><label for="session-notes">Session notes</label><input id="session-notes" placeholder="Conditions, race notes…"></div>
+</div>
+<div class="actions"><button id="save-session" type="button">Save race details</button><button class="secondary" id="new-session" type="button">Start a separate session</button></div>
+</section>
+<section class="panel">
+<h2>Record a stint or lap</h2>
+<div class="grid">
+<div class="field"><label for="rider">Rider *</label><input id="rider" placeholder="Rider full name" required></div>
+<div class="field"><label for="stint">Stint number</label><input id="stint" type="number" min="1" step="1" placeholder="1"></div>
+<div class="field"><label for="lap-number">Lap number</label><input id="lap-number" type="number" min="1" step="1" placeholder="1"></div>
+<div class="field"><label for="lap-time">Lap time</label><input id="lap-time" placeholder="e.g. 3:21.45"></div>
+<div class="field"><label for="incident">Incident / flag</label><select id="incident"><option value="">None recorded</option><option>Mechanical</option><option>Traffic</option><option>Rider change</option><option>Red flag</option><option>Other</option></select></div>
+<div class="field"><label for="record-notes">Notes</label><input id="record-notes" placeholder="Optional note"></div>
+</div>
+<div class="actions"><button id="add-record" type="button">＋ Save record</button></div>
+</section>
+<section class="panel">
+<div class="eyebrow">Session log</div><h2 id="log-title">Recorded entries</h2>
+<div class="stats"><div class="stat"><strong id="record-count">0</strong><span class="small">Entries</span></div><div class="stat"><strong id="lap-count">0</strong><span class="small">Laps entered</span></div><div class="stat"><strong id="rider-count">0</strong><span class="small">Riders</span></div></div>
+<div class="table-wrap"><table><thead><tr><th>Rider</th><th>Stint</th><th>Lap</th><th>Lap time</th><th>Incident</th><th>Notes</th><th></th></tr></thead><tbody id="records-body"><tr><td colspan="7">No records yet.</td></tr></tbody></table></div>
+<div class="actions"><button id="export" type="button">Export race file (.json)</button><button class="secondary" id="import-button" type="button">Load a saved race file</button><input id="import-file" class="hidden" type="file" accept="application/json,.json"><button class="danger" id="clear-session" type="button">Clear this session</button></div>
+<p class="small">Keep the exported JSON file safe. Importing a file here only loads it into this browser for review; it does not publish anything to main VIPER AI.</p>
+</section>
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="./offline-race.js?v=1"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>
+</body></html>
