@@ -1,5 +1,5 @@
-const CACHE_NAME='viper-pwa-v7';
-const APP_SHELL=['./','./index.html','./spectator.html','./captain.html','./offline-race.html','./offline-race.js?v=3','./viper-navigation.js?v=19','./viper-navigation.css?v=14','./viper-redesign.css?v=4','./viper-polish.css?v=1','./manifest.json','./viper-app-icon.svg'];
+const CACHE_NAME='viper-pwa-v8';
+const APP_SHELL=['./','./index.html','./spectator.html','./online-race.html','./captain.html','./offline-race.html','./offline-race.js?v=3','./viper-navigation.js?v=19','./viper-navigation.css?v=14','./viper-redesign.css?v=4','./viper-polish.css?v=1','./manifest.json','./viper-app-icon.svg'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('viper-pwa-')&&key!==CACHE_NAME).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{
