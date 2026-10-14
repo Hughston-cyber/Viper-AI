@@ -231,3 +231,11 @@ html body.viper-universal-layout > .wrap > header.top {display:none!important;}
 @media(max-width:420px){
  html body.viper-universal-layout > .wrap > main {padding:14px!important;}
 }
+
+
+/* Dashboard gap fix: body padding already reserves the universal sidebar, so remove the dashboard's legacy second offset. */
+html body.viper-universal-layout > .shell > .main {
+  margin-left:0!important;
+  min-width:0!important;
+  width:100%!important;
+}
