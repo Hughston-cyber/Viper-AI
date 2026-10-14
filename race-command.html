@@ -26,5 +26,5 @@ $('resultForm').onsubmit=async e=>{e.preventDefault();const r=await sb.from('rac
 $('updateForm').onsubmit=async e=>{e.preventDefault();const r=await sb.from('race_day_updates').insert({race_day_id:selected.id,category:$('category').value,message:$('message').value.trim(),created_by:user.id});if(r.error)say('updateMsg',r.error.message,true);else{$('message').value='';say('updateMsg','Update posted.');updates()}};
 $('event').onchange=eventLoad;$('standardChecks').onclick=addStandardChecks;$('refresh').onclick=load;$('out').onclick=async()=>{await sb.auth.signOut();location.href='index.html'};
 (async()=>{const s=await sb.auth.getSession();user=s.data?.session?.user;if(!user){$('gate').classList.remove('hidden');return}const p=await sb.from('profiles').select('id,role,status').eq('id',user.id).single();profile=p.data;if(p.error||!canLead(profile)){$('gate').classList.remove('hidden');return}$('app').classList.remove('hidden');try{await load()}catch(e){say('updateMsg',e.message,true)}sb.channel('race-updates').on('postgres_changes',{event:'*',schema:'public',table:'race_day_updates'},()=>updates()).subscribe()})();sb.auth.onAuthStateChange(e=>{if(e==='SIGNED_OUT')location.href='index.html'})})();
-</script><script src="viper-navigation.js?v=12"></script>
+</script><script src="viper-navigation.js?v=14"></script>
 </body></html>
