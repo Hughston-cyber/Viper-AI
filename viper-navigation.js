@@ -11,6 +11,32 @@ const groups=[
  {title:'RACE OPERATIONS',items:[['Race Day Command Centre','race-command.html','⚑']]},
  {title:'LEADERSHIP',leadership:true,items:[['Captain Controls','captain.html','⚙'],['Rider Management','riders.html','♧']]}
 ];
+if(current!=='index.html'){
+ const wrap=document.createElement('div');wrap.className='viper-menu-wrap viper-redesign-top-menu';
+ const button=document.createElement('button');button.type='button';button.className='viper-top-menu-button';button.textContent='NAVIGATE  ▾';button.setAttribute('aria-expanded','false');
+ const panel=document.createElement('div');panel.className='viper-top-menu-panel';
+ groups.forEach(group=>{
+  const section=document.createElement('section');section.className='viper-top-menu-group';
+  const heading=document.createElement('div');heading.className='viper-redesign-caption';heading.textContent=group.title;section.append(heading);
+  group.items.forEach(([label,href,glyph])=>{
+   const a=document.createElement('a');a.href=href;const icon=document.createElement('span');icon.textContent=glyph;icon.setAttribute('aria-hidden','true');
+   const name=document.createElement('span');name.textContent=label;a.append(icon,name);
+   if(current===href.toLowerCase())a.setAttribute('aria-current','page');
+   const sourceId=permissionLinks[href],source=sourceId&&document.getElementById(sourceId);
+   if(source&&source.hidden)a.hidden=true;
+   if(group.leadership){const gate=document.getElementById('leadershipMenu');if(gate&&gate.hidden)a.hidden=true}
+   section.append(a);
+  });
+  if([...section.querySelectorAll('a')].some(a=>!a.hidden))panel.append(section);
+ });
+ wrap.append(button,panel);nav.append(wrap);
+ button.addEventListener('click',()=>{const open=!wrap.classList.contains('is-open');wrap.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open))});
+ document.addEventListener('click',e=>{if(!wrap.contains(e.target)){wrap.classList.remove('is-open');button.setAttribute('aria-expanded','false')}});
+ nav.querySelectorAll('a[href],.lead-menu').forEach(el=>{if(!wrap.contains(el))el.style.setProperty('display','none','important')});
+ const observer=new MutationObserver(()=>{panel.querySelectorAll('a').forEach(a=>{const id=permissionLinks[a.getAttribute('href')],source=id&&document.getElementById(id);if(source)a.hidden=source.hidden;if(['captain.html','riders.html','training.html','race-command.html','rider-availability.html','attendance.html'].includes(a.getAttribute('href'))){const gate=document.getElementById('leadershipMenu');if(gate&&gate.hidden)a.hidden=true}});panel.querySelectorAll('.viper-top-menu-group').forEach(s=>s.hidden=![...s.querySelectorAll('a')].some(a=>!a.hidden))});
+ nav.querySelectorAll('[id]').forEach(el=>observer.observe(el,{attributes:true,attributeFilter:['hidden','class','style']}));
+ return;
+}
 const sidebar=document.createElement('aside');
 sidebar.className='viper-redesign-sidebar';
 sidebar.setAttribute('aria-label','VIPER AI main navigation');
@@ -34,6 +60,7 @@ groups.forEach(group=>{
  });
  section.append(links);list.append(section);
 });
+document.body.classList.add('viper-redesign-dashboard');
 document.body.insertBefore(sidebar,document.body.firstChild);
 const scrim=document.createElement('div');scrim.className='viper-redesign-scrim';scrim.setAttribute('aria-hidden','true');document.body.append(scrim);
 const toggle=document.createElement('button');toggle.type='button';toggle.className='viper-mobile-nav-toggle';toggle.setAttribute('aria-label','Open navigation');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰';
