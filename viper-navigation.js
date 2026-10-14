@@ -31,30 +31,27 @@ if(current==='index.html'){
  document.body.classList.add('viper-has-sidebar');
  const main=document.querySelector('main');
  if(main)document.body.insertBefore(sidebar,main);else document.body.insertBefore(sidebar,document.body.firstChild);
- function setSidebarAccess(role,status){
-  const approved=status==='approved',leadership=approved&&(role==='captain'||role==='leadership');
+ function syncSidebarVisibility(){
+  const leadership=document.getElementById('leadershipMenu');
+  const race=document.getElementById('navRace');
+  const announcements=document.getElementById('navAnnouncements');
   sidebar.querySelectorAll('a').forEach(a=>{
-   const isLeadership=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(a.dataset.href);
-   a.hidden=isLeadership&& !leadership;
+   const href=a.dataset.href;
+   const isLeadership=['captain.html','riders.html','training.html','race-command.html','rider-availability.html'].includes(href);
+   if(isLeadership) a.hidden=!leadership||leadership.hidden;
+   else if(href==='race-days.html') a.hidden=!!race&&race.hidden;
+   else if(href==='announcements.html') a.hidden=!!announcements&&announcements.hidden;
   });
-  sidebar.querySelectorAll('.viper-sidebar-group').forEach(section=>{section.hidden=![...section.querySelectorAll('a')].some(a=>!a.hidden)});
+  sidebar.querySelectorAll('.viper-sidebar-group').forEach(section=>{
+   section.hidden=![...section.querySelectorAll('a')].some(a=>!a.hidden);
+  });
  }
- (async()=>{
-  try{
-   if(!window.supabase||!window.supabase.createClient){setSidebarAccess('','');return}
-   const client=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
-   const {data,error}=await client.auth.getSession();
-   if(error||!data.session){setSidebarAccess('','');return}
-   const {data:profile,error:profileError}=await client.from('profiles').select('status,role').eq('id',data.session.user.id).single();
-   if(profileError||!profile){setSidebarAccess('','');return}
-   setSidebarAccess(profile.role,profile.status);
-   client.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_OUT'||!session){setSidebarAccess('','');return}
-    const p=await client.from('profiles').select('status,role').eq('id',session.user.id).single();
-    setSidebarAccess(p.data?.role,p.data?.status);
-   });
-  }catch(e){console.warn('VIPER dashboard navigation permissions could not be refreshed.',e)}
- })();
+ syncSidebarVisibility();
+ const authVisibilityObserver=new MutationObserver(syncSidebarVisibility);
+ ['leadershipMenu','navRace','navAnnouncements'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)authVisibilityObserver.observe(el,{attributes:true,attributeFilter:['hidden']});
+ });
  return;
 }
 const wrap=document.createElement('div');wrap.className='viper-menu-wrap';
