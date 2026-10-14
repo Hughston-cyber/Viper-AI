@@ -1,7 +1,7 @@
 /* VIPER AI shared grouped navigation. Keeps page-specific auth and feature code intact. */
 (function(){
 'use strict';
-const nav=document.querySelector('header .site-nav,header .links,.sidebar .nav');
+const nav=document.querySelector('header .site-nav,header nav.links,.top nav.links,header .links,.top .links');
 if(!nav)return;
 if(nav.querySelector('.viper-menu-wrap'))return;
 const groups=[
