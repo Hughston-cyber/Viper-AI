@@ -75,3 +75,8 @@ body.viper-universal-layout .viper-universal-hidden-nav{display:none!important}
 body.viper-universal-layout .viper-universal-old-sidebar{display:none!important}
 @media(max-width:760px){.viper-universal-sidebar{width:180px!important;padding:16px 9px 12px!important}body.viper-universal-layout{padding-left:180px!important}.viper-universal-brand{font-size:23px!important}.viper-universal-group a{font-size:11px!important;padding:8px 6px!important;gap:6px!important}.viper-universal-icon{width:17px!important;flex-basis:17px!important}}
 @media(max-width:420px){.viper-universal-sidebar{width:156px!important;padding:12px 7px!important}body.viper-universal-layout{padding-left:156px!important}.viper-universal-group h3{font-size:9px!important}.viper-universal-group a{font-size:10px!important}}
+
+
+/* Keep legacy two-column pages from reserving an empty column after sidebar unification. */
+body.viper-universal-layout > .layout{grid-template-columns:minmax(0,1fr)!important}
+body.viper-universal-layout > .layout > .sidebar{display:none!important}
