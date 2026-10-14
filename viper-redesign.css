@@ -1,217 +1,129 @@
-/* VIPER AI — 2026 interface refresh */
-:root{
- --v-bg:#080d0b;--v-surface:#101814;--v-surface-2:#151f19;--v-border:#28372d;
- --v-text:#f0f5ef;--v-muted:#9aa99c;--v-accent:#c8f169;--v-accent-2:#91bd3b;
- --v-red:#f07167;--v-radius:15px;--v-shadow:0 16px 45px rgba(0,0,0,.24);
-}
-html{background:var(--v-bg);scroll-behavior:smooth}
-body{background:radial-gradient(ellipse at 85% 0%,rgba(112,151,56,.09),transparent 32%),var(--v-bg)!important;color:var(--v-text)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;line-height:1.55}
-body *{box-sizing:border-box}
-body h1,body h2,body h3{color:var(--v-text);letter-spacing:-.025em}
-body h1{font-size:clamp(1.9rem,3.5vw,3.15rem);line-height:1.05;font-weight:800}
-body h2{font-size:clamp(1.15rem,2vw,1.55rem);font-weight:750}
-body p,body label,body small{color:inherit}
-body .muted,body .sub,body .hint,body .help,body .eyebrow{color:var(--v-muted)}
-body header.bar{position:sticky;top:0;z-index:800;min-height:72px;margin-left:260px;width:calc(100% - 260px);padding:0 26px;background:rgba(8,13,11,.88)!important;border-bottom:1px solid var(--v-border)!important;backdrop-filter:blur(18px)}
-body header.bar .wrap{max-width:none;width:100%;padding:0}
-body .topbar-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-body .site-brand{display:flex;align-items:center;gap:14px}
-body .brand{color:var(--v-accent)!important;font-weight:900;letter-spacing:.08em;text-decoration:none}
-body .brand span{color:var(--v-muted)!important}
-body .page-indicator{color:var(--v-muted)!important;border-left:1px solid var(--v-border);padding-left:14px}
-body .site-nav{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-body .site-nav>a[href],body .site-nav>.lead-menu{display:none!important}
-body .site-nav .who{font-size:12px;color:var(--v-muted);max-width:180px;overflow:hidden;text-overflow:ellipsis}
-body .btn,body button,body input[type=submit]{border-radius:9px!important;transition:transform .18s ease,border-color .18s ease,background .18s ease}
-body .btn.primary,body button.primary,body .btn:not(.line){background:var(--v-accent)!important;color:#11190d!important;border:1px solid var(--v-accent)!important;font-weight:800}
-body .btn.line,body button.line{background:#121a15!important;color:var(--v-text)!important;border:1px solid var(--v-border)!important}
-body button:hover,body .btn:hover{transform:translateY(-1px);border-color:var(--v-accent)!important}
-body input:not([type=checkbox]):not([type=radio]),body select,body textarea{background:#0a100c!important;color:var(--v-text)!important;border:1px solid #344538!important;border-radius:9px!important;min-height:42px}
-body input:focus,body select:focus,body textarea:focus{outline:2px solid rgba(200,241,105,.35)!important;border-color:var(--v-accent)!important}
-body .card,body .panel,body .stat-card,body .metric-card,body .box,body .section-card{background:linear-gradient(145deg,rgba(20,30,23,.96),rgba(13,20,16,.98))!important;border:1px solid var(--v-border)!important;border-radius:var(--v-radius)!important;box-shadow:var(--v-shadow)}
-body .card,body .panel{padding:clamp(16px,2vw,24px)}
-body table{border-collapse:separate!important;border-spacing:0!important;width:100%;overflow:hidden;border:1px solid var(--v-border);border-radius:12px;background:#0c130f}
-body table thead th{background:#19251b!important;color:var(--v-accent)!important;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
-body table th,body table td{padding:12px 14px!important;border-bottom:1px solid #243229!important;color:var(--v-text)}
-body table tbody tr:hover{background:rgba(200,241,105,.045)}
-body table tbody tr:last-child td{border-bottom:0!important}
-body hr{border:0;border-top:1px solid var(--v-border)}
-body main{margin-left:260px!important;width:auto!important;max-width:none!important;padding:clamp(20px,3vw,42px)!important;min-height:calc(100vh - 72px)}
-body main>.wrap,body main .wrap{max-width:1480px}
-body .hero,body .page-hero{border-radius:20px;border:1px solid var(--v-border);background:linear-gradient(120deg,rgba(200,241,105,.1),transparent 55%),#101813;padding:clamp(22px,4vw,48px)}
-body .eyebrow,body .kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:850;color:var(--v-accent)!important}
-body .badge,body .pill,body .tag{border-radius:999px}
-body .badge,body .pill{border:1px solid var(--v-border);background:#17221a;color:var(--v-text)}
-body .viper-redesign-sidebar{position:fixed;inset:0 auto 0 0;width:260px;z-index:1000;display:flex;flex-direction:column;padding:22px 15px 16px;background:linear-gradient(180deg,#111a14 0%,#090e0b 100%);border-right:1px solid #314332;overflow-y:auto}
-body .viper-redesign-brand{display:flex;align-items:center;gap:12px;padding:2px 9px 24px;border-bottom:1px solid var(--v-border);margin-bottom:22px}
-body .viper-redesign-mark{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:var(--v-accent);color:#10170c;font-size:21px;font-weight:950;box-shadow:0 0 28px rgba(200,241,105,.12)}
-body .viper-redesign-brand strong{display:block;color:#f4f7f0;font-size:15px;letter-spacing:.12em}
-body .viper-redesign-brand span{display:block;color:var(--v-muted);font-size:9px;letter-spacing:.14em;margin-top:2px}
-body .viper-redesign-caption{padding:0 10px 9px;color:#77877a;font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-body .viper-redesign-group{margin:0 0 18px}
-body .viper-redesign-links{display:flex;flex-direction:column;gap:4px}
-body .viper-redesign-links a{display:flex;align-items:center;gap:12px;min-height:42px;padding:9px 11px;border:1px solid transparent;border-radius:9px;text-decoration:none;color:#aebcaf;font-size:12px;font-weight:650;transition:all .16s ease}
-body .viper-redesign-links a .viper-nav-icon{width:21px;height:21px;display:grid;place-items:center;color:#93a492;font-size:15px}
-body .viper-redesign-links a:hover{background:#1a271c;color:#f4f8f1;border-color:#2c3d2d}
-body .viper-redesign-links a[aria-current=page]{background:rgba(200,241,105,.11);border-color:rgba(200,241,105,.24);color:var(--v-accent)}
-body .viper-redesign-links a[aria-current=page] .viper-nav-icon{color:var(--v-accent)}
-body .viper-redesign-links a[hidden],body .viper-redesign-group[hidden]{display:none!important}
-body .viper-redesign-footer{margin-top:auto;border-top:1px solid var(--v-border);padding:16px 10px 0;color:#718173;font-size:10px;letter-spacing:.08em}
-body .viper-mobile-nav-toggle{display:none}
-body .viper-redesign-scrim{display:none}
-body .viper-redesign-main{margin-left:260px}
-@media(max-width:900px){
- body header.bar{margin-left:0;width:100%;padding:0 16px}
- body main{margin-left:0!important;padding:22px 16px!important}
- body .viper-redesign-sidebar{transform:translateX(-105%);transition:transform .22s ease;box-shadow:var(--v-shadow)}
- body.viper-nav-open .viper-redesign-sidebar{transform:translateX(0)}
- body .viper-redesign-scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .2s}
- body.viper-nav-open .viper-redesign-scrim{opacity:1;pointer-events:auto}
- body .viper-mobile-nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--v-border)!important;background:#121a15!important;color:var(--v-accent)!important;font-size:20px}
- body .topbar-inner{gap:12px}
- body .site-brand{min-width:0}
- body .page-indicator{display:none}
- body .site-nav .who{max-width:100px}
-}
-@media(max-width:560px){
- body header.bar{padding:0 12px}
- body .brand{font-size:13px}
- body .brand span{display:none}
- body main{padding:18px 12px!important}
- body table th,body table td{padding:9px 10px!important;font-size:12px}
- body .topbar-inner{min-height:62px}
- body header.bar{min-height:62px}
-}
+/* VIPER AI race-engineering skin. Presentation only: feature scripts, Supabase queries and form actions remain page-owned. */
+:root{color-scheme:dark;--bg:#080c0a;--panel:#101713;--panel2:#151e18;--line:#29372e;--line2:#3b4c40;--text:#eaf0e9;--muted:#8c9b8f;--green:#b9ed5b;--green2:#7fae39;--amber:#f0bf57;--red:#ff756d;--mono:"IBM Plex Mono",ui-monospace,monospace;--display:"Barlow Condensed",Impact,sans-serif}
+html{background:var(--bg)!important;color-scheme:dark}
+body{background:radial-gradient(ellipse at 72% -20%,#243728 0,transparent 42%),var(--bg)!important;color:var(--text)!important;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body.viper-has-sidebar{padding-left:242px!important}
+body .bar,body header.bar,body header.topbar{background:#0a100c!important;color:var(--text)!important;border-bottom:1px solid var(--line2)!important;box-shadow:none!important}
+body .bar .wrap{min-height:65px!important;height:auto!important}
+body .brand,body .bar .brand{color:var(--text)!important;font-family:var(--display)!important;letter-spacing:.06em!important;font-weight:800!important}
+body .brand span{color:var(--green)!important;opacity:1!important}
+body .wrap,body .page,body main,body .content,body .container{color:var(--text)!important}
+body .page{padding-top:28px!important;padding-bottom:38px!important}
+body h1,body h2,body h3,body h4,body .panel h3{font-family:var(--display)!important;letter-spacing:.025em!important}
+body h1{font-size:clamp(34px,4vw,52px)!important;line-height:.98!important;text-transform:uppercase!important}
+body h2{font-size:clamp(24px,2.7vw,34px)!important}
+body .sub,body .dim,body .muted,body small{color:var(--muted)!important}
+body .panel,body .card,body .box,body .stat,body .metric,body .feature-card,body .section-card,body .table-wrap,body .chart-wrap{background:linear-gradient(145deg,#121a14,#0e1410)!important;border:1px solid var(--line)!important;border-radius:5px!important;box-shadow:none!important;color:var(--text)!important}
+body .panel{overflow:hidden!important;margin-bottom:15px!important}
+body .panel h3{background:#151e18!important;color:var(--text)!important;border-bottom:1px solid var(--line)!important;padding:13px 16px!important;font-size:20px!important}
+body .in,body .panel-body,body .card-body{background:transparent!important;color:var(--text)!important}
+body .btn,body button,body input[type=submit],body input[type=button]{border-radius:4px!important;box-shadow:none!important;font-family:var(--mono)!important;font-size:11px!important;font-weight:600!important;letter-spacing:.02em!important;transition:border-color .15s,background .15s,color .15s!important}
+body .btn,body button,body input[type=submit],body input[type=button]{background:#141e17!important;border:1px solid var(--line2)!important;color:var(--text)!important}
+body .btn:hover,body button:hover,body input[type=submit]:hover,body input[type=button]:hover{border-color:var(--green)!important;color:var(--green)!important}
+body .btn.primary,body .btn:not(.line):not(.bad).primary,body button.primary,body input[type=submit]{background:var(--green)!important;border-color:var(--green)!important;color:#10170c!important}
+body .btn.bad,body button.bad{border-color:#70423d!important;color:var(--red)!important;background:#211412!important}
+body input:not([type=checkbox]):not([type=radio]):not([type=file]),body select,body textarea{background:#080e0a!important;border:1px solid var(--line2)!important;border-radius:3px!important;color:var(--text)!important}
+body input:focus,body select:focus,body textarea:focus{outline:2px solid #b9ed5b45!important;border-color:var(--green)!important}
+body table{border-collapse:collapse!important;color:var(--text)!important}
+body th{background:#131b15!important;color:#93a393!important;font:500 9px var(--mono)!important;letter-spacing:.07em!important;text-transform:uppercase!important}
+body td,body th{border-color:var(--line)!important}
+body td{color:#d2dbd2!important}
+body tr:hover td{background:#162019!important}
+body a{color:var(--green)}
+body a:hover{color:#d6ff8d}
+body .day,body .race-day,body .tab,body .nav-tab{background:#101713!important;color:var(--text)!important;border-color:var(--line)!important}
+body .day.active,body .day[aria-selected=true],body .tab.active,body .nav-tab.active{background:#19251a!important;color:var(--green)!important;border-color:#567343!important}
+body .notice,body .message,body .alert{background:#151f16!important;color:#cbd8ca!important;border:1px solid #3b4b35!important;border-radius:4px!important}
+body .error,body .alert.error{color:#ffaaa2!important;border-color:#693c38!important}
+body .success{color:var(--green)!important}
+body .viper-dashboard-sidebar{background:#090f0b!important;border-right:1px solid var(--line2)!important;color:var(--text)!important}
+body .viper-sidebar-brand{font-family:var(--display)!important;color:var(--text)!important}
+body .viper-sidebar-brand span,body .viper-sidebar-group h3{color:var(--green)!important}
+body .viper-sidebar-label,body .viper-sidebar-footer{color:#718071!important}
+body .viper-sidebar-group a{background:#101713!important;border:1px solid transparent!important;border-radius:4px!important;color:#aebcaf!important}
+body .viper-sidebar-group a:hover,body .viper-sidebar-group a[aria-current=page]{background:#19251a!important;border-color:#354d2e!important;color:var(--green)!important}
+body .viper-menu-wrap{font-family:var(--mono)!important}
+body .viper-menu-trigger{background:#141e17!important;border:1px solid var(--line2)!important;border-radius:4px!important;color:var(--text)!important}
+body .viper-menu-trigger:hover,body .viper-menu-trigger[aria-expanded=true]{border-color:var(--green)!important;color:var(--green)!important}
+body .viper-menu-panel{background:#0c140e!important;border:1px solid var(--line2)!important;border-radius:5px!important;box-shadow:0 18px 50px #000b!important}
+body .viper-menu-group h3{color:var(--green)!important;font:500 10px var(--mono)!important}
+body .viper-menu-group a{color:#dbe6dc!important;border-radius:3px!important}
+body .viper-menu-group a:hover,body .viper-menu-group a[aria-current=page]{background:#17251a!important;border-color:#344d38!important;color:var(--green)!important}
+body .viper-menu-footer{color:var(--muted)!important;border-color:var(--line)!important}
+body .links,body .site-nav{gap:8px!important}
+body hr{border:0!important;border-top:1px solid var(--line)!important}
+body .badge,body .pill,body .status{font-family:var(--mono)!important;border-radius:3px!important}
+@media(max-width:760px){body.viper-has-sidebar{padding-left:0!important}body .viper-dashboard-sidebar{width:min(260px,85vw)!important;transform:translateX(-105%)!important;transition:transform .2s ease!important;box-shadow:0 20px 60px #000a!important}body .viper-dashboard-sidebar.is-visible{transform:translateX(0)!important}body .wrap{padding-left:14px!important;padding-right:14px!important}body .page{padding-top:20px!important}body .layout{grid-template-columns:minmax(0,1fr)!important}body .bar .wrap{gap:10px!important;flex-wrap:wrap!important}body table{font-size:12px!important}}
 
-/* Navigation layout: dashboard uses a rail; interior pages use a top dropdown. */
-body:not(.viper-redesign-dashboard) header.bar{margin-left:0!important;width:100%!important}
-body:not(.viper-redesign-dashboard) main{margin-left:0!important;width:auto!important}
-body:not(.viper-redesign-dashboard) .viper-redesign-sidebar{display:none!important}
-body:not(.viper-redesign-dashboard) .site-nav{display:flex!important}
-body:not(.viper-redesign-dashboard) .site-nav>a[href],body:not(.viper-redesign-dashboard) .site-nav>.lead-menu{display:none!important}
-.viper-redesign-top-menu{display:inline-block!important;position:relative}
-.viper-redesign-top-menu .viper-top-menu-button{display:inline-flex;align-items:center;gap:8px;padding:10px 13px!important;background:#172219!important;border:1px solid #3a4d39!important;color:#c8f169!important;font-size:11px;font-weight:850;letter-spacing:.08em;cursor:pointer}
-.viper-top-menu-panel{display:none;position:absolute;right:0;top:calc(100% + 12px);width:min(330px,calc(100vw - 30px));max-height:min(70vh,620px);overflow:auto;padding:14px;background:#0d1510;border:1px solid #354635;border-radius:13px;box-shadow:0 20px 60px rgba(0,0,0,.55);z-index:1200}
-.viper-redesign-top-menu.is-open .viper-top-menu-panel{display:block}
-.viper-top-menu-group{padding:0 0 10px;margin-bottom:10px;border-bottom:1px solid #243329}
-.viper-top-menu-group:last-child{border-bottom:0;margin-bottom:0}
-.viper-top-menu-group>a{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;text-decoration:none;color:#dce7dc;font-size:12px;font-weight:650}
-.viper-top-menu-group>a>span:first-child{width:22px;text-align:center;color:#c8f169}
-.viper-top-menu-group>a:hover,.viper-top-menu-group>a[aria-current=page]{background:#1b291c;color:#c8f169}
-.viper-top-menu-group>a[hidden],.viper-top-menu-group[hidden]{display:none!important}
-@media(max-width:900px){body:not(.viper-redesign-dashboard) header.bar{margin-left:0!important;width:100%!important}}
-
-
-/* VIPER 2026 redesign refresh — high contrast, operational cockpit */
-:root{--viper:#070c09;--moss:#183526;--paper:#080e0b;--ink:#edf4ee;--mute:#a2b4a7;--line:#2c4032;--sig:#c8f169;--bad:#ff7770;--white:#f7fbf8;--r:14px;color-scheme:dark}
-html{scroll-behavior:smooth}
-body{background:radial-gradient(ellipse at 78% -10%,#203c2b 0,transparent 38%),#080e0b!important;color:#edf4ee!important;font-family:Inter,ui-sans-serif,system-ui,sans-serif!important}
-.wrap{max-width:1420px!important}
-h1,h2,h3,h4,.brand{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif!important;letter-spacing:.02em!important}
-h1{font-size:clamp(48px,6vw,82px)!important;line-height:.92!important;text-transform:uppercase}
-.bar,header.bar,header{background:#080f0bf2!important;backdrop-filter:blur(18px);border-bottom:1px solid #344a38!important;box-shadow:0 12px 34px #0004}
-.brand{font-size:30px!important;letter-spacing:.06em!important}.brand span{color:#c8f169!important;font-size:11px!important;letter-spacing:.16em!important;text-transform:uppercase}
-.btn,button.btn{border:1px solid #c8f169!important;border-radius:8px!important;background:#c8f169!important;color:#11190e!important;font-weight:850!important;box-shadow:none!important}
-.btn.line,.btn.outline,button.btn.line{background:#121d16!important;color:#e8f1e9!important;border-color:#3b5140!important}
-.btn.line:hover,.btn.outline:hover{border-color:#c8f169!important;color:#c8f169!important}
-.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#0b1710,#13281b 58%,#080e0b)!important;border-bottom:1px solid #2e4633}
-.auth,.card,.panel,.chart-panel,.tile,.strength-card,.req,.analytics-grid>section{background:linear-gradient(145deg,#121e16,#0d1510)!important;color:#edf4ee!important;border:1px solid #2c4032!important;border-radius:14px!important;box-shadow:0 16px 38px #0002!important}
-.auth{border-top:3px solid #c8f169!important}.tabs{border-color:#334737!important}.tabs button{color:#a2b4a7!important}.tabs button.on{color:#c8f169!important;border-color:#c8f169!important}
-input,select,textarea{background:#080f0b!important;color:#edf4ee!important;border:1px solid #3a5140!important;border-radius:8px!important}
-input:focus,select:focus,textarea:focus{outline:2px solid #c8f16955!important;border-color:#c8f169!important}
-label{color:#dce8de!important}.sub,.dim,.note,.chart-caption{color:#a2b4a7!important}
-.tile{position:relative;overflow:hidden;border-left:4px solid #c8f169!important;padding:20px 22px!important}.tile b{color:#c8f169!important;font-size:clamp(42px,4vw,60px)!important}.tile span{color:#b9c9bc!important;text-transform:uppercase;letter-spacing:.08em;font-size:11px!important;font-weight:800}
-.panel{overflow:hidden!important}.panel h3,.chart-title{background:#142219!important;color:#f2f8f3!important;border-bottom:1px solid #2c4032!important;font-size:23px!important;padding:15px 18px!important}
-th{background:#17271c!important;color:#c8f169!important;text-transform:uppercase;letter-spacing:.08em;font-size:10px!important}td,th{border-bottom:1px solid #28392d!important}tr:hover td{background:#c8f16908!important}table{color:#e7efe8!important}
-.tag{background:#233b29!important;color:#c8f169!important}footer{background:#070c09!important;border-top:1px solid #2c4032!important;color:#829687!important}
-a:focus-visible,button:focus-visible{outline:2px solid #c8f169!important;outline-offset:3px}
-.viper-legacy-nav{display:flex!important;align-items:center!important;gap:12px!important}
-.viper-menu-trigger{display:flex!important;align-items:center!important;gap:10px!important;padding:9px 13px!important;border:1px solid #405744!important;border-radius:9px!important;background:#132017!important;color:#eaf2eb!important;font:800 13px system-ui,sans-serif!important;cursor:pointer!important}
-.viper-menu-panel{position:absolute!important;top:calc(100% + 10px)!important;right:0!important;z-index:10001!important;width:min(340px,calc(100vw - 28px))!important;max-height:75vh!important;overflow:auto!important;padding:12px!important;border:1px solid #344a38!important;border-radius:13px!important;background:#0b130e!important;box-shadow:0 22px 55px #0009!important;display:none!important}
-.viper-menu-panel[data-open="true"]{display:block!important}.viper-menu-group{display:flex!important;flex-direction:column!important;gap:5px!important;margin-bottom:12px!important}.viper-menu-group[hidden],.viper-menu-group a[hidden]{display:none!important}
-.viper-menu-group h3{margin:0!important;padding:6px 9px!important;color:#c8f169!important;font:850 10px system-ui,sans-serif!important;letter-spacing:.15em!important;text-transform:uppercase!important}
-.viper-menu-group a{display:flex!important;align-items:center!important;gap:10px!important;padding:10px!important;border:1px solid transparent!important;border-radius:7px!important;color:#dce8de!important;text-decoration:none!important;font-size:13px!important;font-weight:750!important}
-.viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#344a38!important;background:#19291d!important;color:#c8f169!important}
-.viper-menu-footer{display:block!important;padding:10px!important;border-top:1px solid #2c4032!important;color:#829687!important;font-size:10px!important;letter-spacing:.08em!important}
-@media(max-width:760px){.wrap{padding-left:16px!important;padding-right:16px!important}.hero{padding:42px 0!important}.tiles{grid-template-columns:1fr!important}}
-
-
-/* VIPER colour identity v2 — midnight graphite + electric venom cyan */
-:root{
- --viper:#080d16;--moss:#102b34;--paper:#080d16;--ink:#edf7fb;--mute:#9aafbd;
- --line:#293d4d;--sig:#39e7ff;--bad:#ff6f7d;--white:#f6fcff;--r:14px;color-scheme:dark
-}
-body{background:radial-gradient(ellipse at 78% -10%,#123443 0,transparent 40%),#080d16!important;color:#edf7fb!important}
-body:before{background:linear-gradient(135deg,transparent 0 65%,#39e7ff08 65% 65.2%,transparent 65.2%)}
-.bar,header.bar,header{background:#080d16f2!important;border-bottom-color:#294957!important}
-.brand span{color:#39e7ff!important}
-.btn,button.btn{border-color:#39e7ff!important;background:#39e7ff!important;color:#071117!important}
-.btn.line,.btn.outline,button.btn.line{background:#101b27!important;color:#edf7fb!important;border-color:#344b5b!important}
-.btn.line:hover,.btn.outline:hover{border-color:#39e7ff!important;color:#39e7ff!important}
-.hero{background:linear-gradient(120deg,#080d16,#102b34 58%,#080d16)!important;border-bottom-color:#244c59!important}
-.auth,.card,.panel,.chart-panel,.tile,.strength-card,.req,.analytics-grid>section{background:linear-gradient(145deg,#111e2b,#0b131e)!important;color:#edf7fb!important;border-color:#293d4d!important}
-.auth{border-top-color:#39e7ff!important}
-.tabs{border-color:#293d4d!important}.tabs button{color:#9aafbd!important}.tabs button.on{color:#39e7ff!important;border-color:#39e7ff!important}
-input,select,textarea{background:#080f19!important;color:#edf7fb!important;border-color:#344b5b!important}
-input:focus,select:focus,textarea:focus{outline-color:#39e7ff55!important;border-color:#39e7ff!important}
-.tile{border-left-color:#39e7ff!important}.tile b{color:#39e7ff!important}.tile span{color:#b8cbd5!important}
-.panel h3,.chart-title{background:#142333!important;color:#f2f9fc!important;border-bottom-color:#293d4d!important}
-th{background:#142333!important;color:#39e7ff!important}
-td,th{border-bottom-color:#253847!important}tr:hover td{background:#39e7ff09!important}
-.tag{background:#12313b!important;color:#39e7ff!important}
-footer{background:#070b12!important;border-top-color:#293d4d!important;color:#8da4b2!important}
-a:focus-visible,button:focus-visible{outline-color:#39e7ff!important}
-.viper-menu-trigger{border-color:#344b5b!important;background:#101b27!important;color:#edf7fb!important}
-.viper-menu-trigger:hover{border-color:#39e7ff!important;color:#39e7ff!important}
-.viper-menu-panel{border-color:#293d4d!important;background:#0b131e!important}
-.viper-menu-group h3{color:#39e7ff!important}
-.viper-menu-group a:hover,.viper-menu-group a[aria-current="page"]{border-color:#294957!important;background:#122631!important;color:#39e7ff!important}
-.viper-menu-dot{background:#567080!important}.viper-menu-group a[aria-current="page"] .viper-menu-dot{background:#39e7ff!important;box-shadow:0 0 12px #39e7ff66!important}
-.viper-menu-footer{border-top-color:#293d4d!important;color:#8da4b2!important}
-
-
-/* Navigation repair: keep the shared Navigate dropdown visible on interior pages. */
-body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap{display:inline-flex!important;visibility:visible!important;opacity:1!important}
-body:not(.viper-redesign-dashboard) .site-nav>.viper-menu-wrap .viper-menu-trigger{display:inline-flex!important}
-
-
-/* VIPER navigation containment fix — dropdowns must anchor to their own menu, never the viewport. */
-html body .viper-redesign-top-menu,
-html body .viper-menu-wrap{
+/* NAVIGATION HOTFIX v4: preserve each page's own header layout and anchor the menu to its trigger. */
+html body>header.bar,
+html body>header.topbar,
+html body>header.top{
+  margin-left:0!important;
   position:relative!important;
-  display:inline-flex!important;
-  align-items:flex-start!important;
-  width:max-content!important;
-  max-width:100%!important;
-  min-width:0!important;
-  flex:0 0 auto!important;
-}
-html body .viper-redesign-top-menu .viper-top-menu-panel{
-  position:absolute!important;
-  inset:calc(100% + 8px) auto auto 0!important;
-  width:min(320px,calc(100vw - 24px))!important;
-  min-width:0!important;
-  max-width:320px!important;
-  max-height:70vh!important;
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
-  box-sizing:border-box!important;
-  transform:none!important;
-  z-index:1201!important;
-}
-html body .viper-redesign-top-menu .viper-top-menu-panel > *,
-html body .viper-redesign-top-menu .viper-top-menu-panel a,
-html body .viper-menu-wrap .viper-menu-panel > *{
-  min-width:0!important;
-  max-width:100%!important;
+  top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;inset:auto!important;
+  width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;
+  transform:none!important;float:none!important;z-index:1200!important;overflow:visible!important;
   box-sizing:border-box!important;
 }
-html body .viper-redesign-top-menu .viper-top-menu-panel a{
-  display:flex!important;
-  width:100%!important;
-  justify-content:flex-start!important;
-  align-items:center!important;
+html body>header.bar>.wrap,
+html body>header.topbar>.wrap,
+html body>header.top>.wrap,
+html body>header.bar>.topbar-inner{
+  width:100%!important;max-width:none!important;box-sizing:border-box!important;
 }
-@media(min-width:901px){
-  html body .viper-redesign-scrim{display:none!important;opacity:0!important;pointer-events:none!important}
+html body>header.bar{width:100%!important;}
+html body>header.topbar{width:100%!important;}
+html body>header.bar .site-nav,
+html body>header.bar .links,
+html body>header.top .links,
+html body>header.topbar .site-nav{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:wrap!important;
+  gap:8px!important;width:auto!important;min-width:0!important;overflow:visible!important;flex:0 1 auto!important;
 }
+html body .viper-legacy-nav{min-width:0!important;max-width:100%!important;overflow:visible!important;}
+html body .viper-legacy-nav .viper-menu-wrap,
+html body .viper-menu-wrap{
+  position:relative!important;display:inline-flex!important;align-items:center!important;
+  width:max-content!important;max-width:100%!important;min-width:0!important;flex:0 0 auto!important;z-index:1300!important;
+}
+html body .viper-menu-panel{
+  position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;bottom:auto!important;
+  width:min(340px,calc(100vw - 24px))!important;min-width:0!important;max-width:calc(100vw - 24px)!important;
+  max-height:min(70vh,560px)!important;overflow-x:hidden!important;overflow-y:auto!important;
+  z-index:20000!important;box-sizing:border-box!important;
+  background:#0c140e!important;border:1px solid var(--line2)!important;box-shadow:0 18px 50px #000b!important;
+}
+html body .viper-menu-panel[data-open="true"]{display:grid!important;}
+html body .viper-menu-panel[hidden],
+html body .viper-menu-group[hidden],
+html body .viper-menu-group a[hidden]{display:none!important;}
+@media(max-width:760px){
+  html body>header.bar,html body>header.topbar,html body>header.top{position:relative!important;width:auto!important;height:auto!important;min-height:0!important;}
+  html body>header.bar .site-nav,html body>header.bar .links,html body>header.top .links,html body>header.topbar .site-nav{gap:6px!important;}
+  html body .viper-menu-panel{width:min(320px,calc(100vw - 16px))!important;max-width:calc(100vw - 16px)!important;max-height:68vh!important;}
+}
+
+/* NAVIGATION HOTFIX v5: interior pages use the top bar + "Navigate" menu (only the dashboard has a sidebar).
+   Older inline CSS on these pages still turns the header into a stacked sidebar column and reserves a
+   242-248px left gutter. Undo that here. Scoped with :not(.viper-has-sidebar) so the dashboard is unaffected. */
+html body:not(.viper-has-sidebar){padding-left:0!important}
+html body:not(.viper-has-sidebar)>header.bar>.wrap.topbar-inner,
+html body:not(.viper-has-sidebar)>header.bar>.topbar-inner{
+  display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;
+  flex-wrap:wrap!important;gap:10px 18px!important;min-height:0!important;height:auto!important;
+  padding:12px clamp(16px,3vw,32px)!important;margin:0 auto!important;
+}
+html body:not(.viper-has-sidebar)>header.bar .site-brand{display:flex!important;flex-direction:row!important;align-items:center!important;gap:14px!important;flex:0 1 auto!important}
+html body:not(.viper-has-sidebar)>header.bar .site-brand .brand{display:inline-flex!important;align-items:baseline!important;font-size:24px!important;line-height:1.1!important}
+html body:not(.viper-has-sidebar)>header.bar .site-brand .brand span{display:inline-block!important;margin:0 0 0 10px!important;font-size:11px!important;letter-spacing:.12em!important}
+html body:not(.viper-has-sidebar)>header.bar .page-indicator{white-space:nowrap!important;font-size:10px!important}
+html body:not(.viper-has-sidebar)>header.bar .site-nav{flex-direction:row!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:wrap!important;width:auto!important;gap:8px!important}
+html body:not(.viper-has-sidebar)>header.bar .site-nav>a.btn,
+html body:not(.viper-has-sidebar)>header.bar .site-nav>button.btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:auto!important;min-height:0!important;padding:8px 12px!important;margin:0!important;text-align:center!important;white-space:nowrap!important}
+html body:not(.viper-has-sidebar)>header.bar .site-nav .who{display:inline-block!important;padding:0 4px!important;max-width:180px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+/* the "Navigate" menu replaces the old inline links and Leadership dropdown */
+html body:not(.viper-has-sidebar)>header.bar .site-nav.viper-legacy-nav>a[href],
+html body:not(.viper-has-sidebar)>header.bar .site-nav.viper-legacy-nav>.lead-menu,
+html body:not(.viper-has-sidebar)>header.bar .site-nav.viper-legacy-nav>#navCaptain{display:none!important}
+html body:not(.viper-has-sidebar)>header.bar .site-nav [hidden]{display:none!important}
