@@ -78,8 +78,8 @@ async function loadData(){
   const results=await withTimeout(Promise.all([
    sb.from('spectator_race_results').select('event,race_date,result,laps').order('race_date',{ascending:false}),
    sb.from('spectator_rider_statistics').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true}),
-   sb.from('race_days').select('title,race_date,venue,start_time').gte('race_date',localDateKey()).order('race_date',{ascending:true}).limit(12),
-   sb.from('team_announcements').select('title,body,category,pinned,created_at').eq('status','published').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(8),
+   sb.from('spectator_race_days').select('title,race_date,venue,start_time').gte('race_date',localDateKey()).order('race_date',{ascending:true}).limit(12),
+   sb.from('spectator_announcements').select('title,body,category,pinned,created_at').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(8),
    sb.from('spectator_live_race_summary').select('event,race_date,result,laps').order('event',{ascending:true}),
    sb.from('spectator_live_rider_summary').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
   ]),'Spectator data lookup');
