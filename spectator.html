@@ -102,9 +102,27 @@ async function init(){
  let watchdog;
  try{
   watchdog=setTimeout(()=>say('Still waiting for Supabase. Check your connection, then use Refresh or sign out and back in.',true),12000);
-  const auth=await withTimeout(sb.auth.getSession(),'Local session check',8000);
-  const session=auth.data&&auth.data.session;
-  if(auth.error||!session||!session.user){location.replace('./index.html');return}
+  let session=null,sessionCheckError=null;
+  try{
+   const auth=await withTimeout(sb.auth.getSession(),'Local session check',8000);
+   if(auth.error)throw auth.error;
+   session=auth.data&&auth.data.session;
+  }catch(error){
+   sessionCheckError=error;
+   // Recovery only: read the SDK's existing local session if its lock/check hangs.
+   // Permissions are still verified against the server below using this access token.
+   try{
+    const raw=localStorage.getItem('sb-kzazuetxlklmyyrcvgif-auth-token');
+    if(raw){
+     const stored=JSON.parse(raw);
+     if(stored&&stored.access_token&&stored.user)session=stored;
+    }
+   }catch(storageError){}
+  }
+  if(!session||!session.user||!session.access_token){
+   if(sessionCheckError)throw new Error('Could not read your saved sign-in session. '+(sessionCheckError.message||'Please return to sign-in and try again.'));
+   location.replace('./index.html');return;
+  }
   const controller=new AbortController(),requestTimer=setTimeout(()=>controller.abort(),15000);
   let response,body,rows;
   try{
