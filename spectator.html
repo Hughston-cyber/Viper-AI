@@ -63,7 +63,7 @@ window.addEventListener('error',event=>{say('Spectator Hub page error: '+(event.
 window.addEventListener('unhandledrejection',event=>{const reason=event.reason;say('Spectator Hub could not finish loading: '+(reason&&reason.message?reason.message:String(reason||'Unknown error'))+'. Refresh the page; your account and race data have not been changed.',true)});
 if(!window.supabase||typeof window.supabase.createClient!=='function'){say('The VIPER AI sign-in library did not load. Check your connection and refresh this page. Your account and race data have not been changed.',true);return;}
 const sb=window.VIPER_SUPABASE_CLIENT||(window.VIPER_SUPABASE_CLIENT=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR'));
-let loading=false,allStats=[];
+let loading=false,allStats=[],spectatorAccessToken='';
 function cell(row,value,cls){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);if(cls)td.className=cls;row.appendChild(td)}
 function empty(body,span,text){body.textContent='';const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=span;td.className='empty';td.textContent=text;tr.appendChild(td);body.appendChild(tr)}
 function withTimeout(promise,label,ms){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Check your connection and try again.')),ms||12000))]);}
@@ -74,29 +74,68 @@ function renderStats(){const query=$('riderSearch').value.trim().toLowerCase();c
 function renderRaces(rows){const body=$('raceRows');body.textContent='';if(!rows.length){empty(body,4,'No official race results have been published yet.');return}rows.forEach(x=>{const tr=document.createElement('tr');cell(tr,x.event);cell(tr,dateLabel(x.race_date));cell(tr,x.result);cell(tr,x.laps,x.laps===null||x.laps===undefined?'':'num');body.appendChild(tr)})}
 function renderEvents(rows){const root=$('eventList');root.textContent='';if(!rows.length){const note=document.createElement('div');note.className='empty';note.textContent='No upcoming events are currently listed. Check published team briefings for updates.';root.appendChild(note);return}rows.forEach(x=>{const card=document.createElement('article');card.className='event-card';const date=document.createElement('div');date.className='date-box';const parts=dateParts(x.race_date);const day=document.createElement('b');day.textContent=parts.day;const month=document.createElement('span');month.textContent=parts.month;date.append(day,month);const info=document.createElement('div');const title=document.createElement('h3');title.textContent=x.title||'Race event';const meta=document.createElement('div');meta.className='event-meta';meta.textContent=[dateLabel(x.race_date),x.start_time].filter(Boolean).join(' · ')||'Date/time to be confirmed';const venue=document.createElement('div');venue.className='event-info';venue.textContent=x.venue||'Venue to be confirmed';info.append(title,meta,venue);card.append(date,info);root.appendChild(card)})}
 function renderAnnouncements(rows){const root=$('announcementList');root.textContent='';if(!rows.length){const note=document.createElement('div');note.className='empty';note.textContent='No published announcements are available yet.';root.appendChild(note);return}rows.forEach(x=>{const card=document.createElement('article');card.className='announcement';const top=document.createElement('div');top.className='announce-top';const category=document.createElement('span');category.className='pill';category.textContent=x.category||'General';const date=document.createElement('span');date.className='announce-date';date.textContent=x.created_at?new Date(x.created_at).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}):'';top.append(category,date);if(x.pinned){const pinned=document.createElement('span');pinned.className='pill';pinned.textContent='Pinned';top.appendChild(pinned)}const title=document.createElement('h3');title.textContent=x.title||'Team update';const body=document.createElement('p');body.textContent=x.body||'';card.append(top,title,body);root.appendChild(card)})}
-async function loadData(){
- if(loading)return;loading=true;$('refresh').disabled=true;say('Loading approved spectator information…');
- ['raceRows','statRows'].forEach(id=>$(id).textContent='');$('eventList').textContent='';$('announcementList').textContent='';
+async function fetchSpectatorRows(resource,query){
+ const controller=new AbortController();
+ const timer=setTimeout(()=>controller.abort(),10000);
  try{
-  const results=await withTimeout(Promise.all([
-   sb.from('spectator_race_results').select('event,race_date,result,laps').order('race_date',{ascending:false}),
-   sb.from('spectator_rider_statistics').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true}),
-   sb.from('spectator_race_days').select('title,race_date,venue,start_time').gte('race_date',localDateKey()).order('race_date',{ascending:true}).limit(12),
-   sb.from('spectator_announcements').select('title,body,category,pinned,created_at').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(8),
-   sb.from('spectator_live_race_summary').select('event,race_date,result,laps').order('event',{ascending:true}),
-   sb.from('spectator_live_rider_summary').select('rider_name,event,laps').order('event',{ascending:true}).order('rider_name',{ascending:true})
-  ]),'Spectator data lookup');
-  const races=results[0],stats=results[1],events=results[2],announcements=results[3],liveRaces=results[4],liveStats=results[5];
-  const officialRaces=races.data||[],recordedRaces=(liveRaces.data||[]).map(x=>({...x,result:x.result||'LIVE · Recording'}));
-  const errors=[races.error,stats.error,events.error,announcements.error,liveRaces.error,liveStats.error].filter(Boolean);
-  renderRaces([...recordedRaces,...officialRaces]);allStats=[...(stats.data||[]),...(liveStats.data||[]).map(x=>({...x,event:String(x.event||'')+' · LIVE'}))];renderStats();renderEvents(events.data||[]);renderAnnouncements(announcements.data||[]);
+  const response=await fetch('https://kzazuetxlklmyyrcvgif.supabase.co/rest/v1/'+resource+'?'+query,{
+   method:'GET',
+   headers:{
+    apikey:'sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR',
+    Authorization:'Bearer '+spectatorAccessToken,
+    Accept:'application/json'
+   },
+   cache:'no-store',
+   signal:controller.signal
+  });
+  const body=await response.text();
+  let data;
+  try{data=body?JSON.parse(body):[]}catch{data=[]}
+  if(!response.ok)throw new Error(resource+' returned HTTP '+response.status+(data&&data.message?': '+data.message:body?' — '+body.slice(0,180):''));
+  if(!Array.isArray(data))throw new Error(resource+' returned an unexpected response.');
+  return data;
+ }catch(error){
+  if(error.name==='AbortError')throw new Error(resource+' request timed out after 10 seconds.');
+  throw error;
+ }finally{clearTimeout(timer)}
+}
+async function loadData(){
+ if(loading)return;
+ loading=true;
+ $('refresh').disabled=true;
+ say('Loading approved spectator information…');
+ ['raceRows','statRows'].forEach(id=>$(id).textContent='');
+ try{
+  const requests=[
+   ['race results',()=>fetchSpectatorRows('spectator_race_results','select=event,race_date,result,laps&order=race_date.desc')],
+   ['rider statistics',()=>fetchSpectatorRows('spectator_rider_statistics','select=rider_name,event,laps&order=event.asc,rider_name.asc')],
+   ['race calendar',()=>fetchSpectatorRows('spectator_race_days','select=title,race_date,venue,start_time&race_date=gte.'+encodeURIComponent(localDateKey())+'&order=race_date.asc&limit=12')],
+   ['announcements',()=>fetchSpectatorRows('spectator_announcements','select=title,body,category,pinned,created_at&order=pinned.desc,created_at.desc&limit=8')],
+   ['live race summary',()=>fetchSpectatorRows('spectator_live_race_summary','select=event,race_date,result,laps&order=event.asc')],
+   ['live rider summary',()=>fetchSpectatorRows('spectator_live_rider_summary','select=rider_name,event,laps&order=event.asc,rider_name.asc')]
+  ];
+  const settled=await Promise.allSettled(requests.map(([,run])=>run()));
+  const values=settled.map(item=>item.status==='fulfilled'?item.value:[]);
+  const errors=settled.map((item,index)=>item.status==='rejected'?requests[index][0]+': '+(item.reason&&item.reason.message||String(item.reason)):null).filter(Boolean);
+  const [officialRaces,stats,events,announcements,liveRaces,liveStats]=values;
+  const recordedRaces=liveRaces.map(x=>({...x,result:x.result||'LIVE · Recording'}));
+  renderRaces([...recordedRaces,...officialRaces]);
+  allStats=[...stats,...liveStats.map(x=>({...x,event:String(x.event||'')+' · LIVE'}))];
+  renderStats();
+  renderEvents(events);
+  renderAnnouncements(announcements);
   $('metricEvents').textContent=String(officialRaces.length+recordedRaces.length);
   $('metricLaps').textContent=String([...officialRaces,...recordedRaces].reduce((sum,x)=>sum+(Number(x.laps)||0),0));
   $('metricRiders').textContent=String(new Set(allStats.map(x=>String(x.rider_name||'').trim()).filter(Boolean)).size);
-  $('metricUpcoming').textContent=String((events.data||[]).length);
-  if(errors.length){say('Some spectator information could not be loaded. Available sections are shown; use Refresh to retry. '+errors.map(e=>e.message).join(' · '),true)}else say('Spectator access verified. Published information loaded in read-only mode. Live race summaries refresh automatically every 20 seconds.');
- }catch(e){say((e.message||'Spectator data could not be loaded.')+' Your account and team data have not been changed.',true)}
- finally{loading=false;$('refresh').disabled=false}
+  $('metricUpcoming').textContent=String(events.length);
+  if(errors.length)say('Some spectator information could not be loaded. Available sections are shown; use Refresh to retry. '+errors.join(' · '),true);
+  else say('Spectator access verified. Published information loaded in read-only mode. Live race summaries refresh automatically every 20 seconds.');
+ }catch(error){
+  say((error.message||'Spectator data could not be loaded.')+' Your account and team data have not been changed.',true);
+ }finally{
+  loading=false;
+  $('refresh').disabled=false;
+ }
 }
 async function init(){
  let watchdog;
@@ -132,6 +171,7 @@ async function init(){
    if(!Array.isArray(rows)||!rows.length)throw new Error('No profile row was returned for this account (RLS or missing profile).');
   }catch(error){if(error.name==='AbortError')throw new Error('Profile verification request to Supabase did not respond within 15 seconds.');throw error}
   finally{clearTimeout(requestTimer)}
+  spectatorAccessToken=session.access_token;
   const profile=rows[0];
   if(!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
   if(profile.full_name)$('welcome').textContent='Welcome, '+profile.full_name+'. Follow official race results, approved rider statistics, upcoming event details and published Team Venom announcements — all in one place.';
