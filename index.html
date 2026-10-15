@@ -96,6 +96,6 @@ sb.auth.onAuthStateChange((event,nextSession)=>{if(event==='SIGNED_OUT'){setTime
 sb.auth.getSession().then(({data,error})=>{if(error){show('authView');message('authMessage',error.message,true);return;}routeSession(data.session);});
 })();
 </script>
-<script src="./viper-navigation.js?v=19"></script>
+<script src="./viper-navigation.js?v=20"></script>
 </body>
 </html>
