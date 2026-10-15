@@ -57,10 +57,13 @@
 <script>
 (function(){
 'use strict';
-const sb=window.VIPER_SUPABASE_CLIENT||(window.VIPER_SUPABASE_CLIENT=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR'));
 const $=id=>document.getElementById(id);
+function say(text,error){const status=$('status');if(!status)return;status.textContent=text;status.classList.toggle('error',!!error)}
+window.addEventListener('error',event=>{say('Spectator Hub page error: '+(event.message||'A script failed to load')+'. Refresh the page; your account and race data have not been changed.',true)});
+window.addEventListener('unhandledrejection',event=>{const reason=event.reason;say('Spectator Hub could not finish loading: '+(reason&&reason.message?reason.message:String(reason||'Unknown error'))+'. Refresh the page; your account and race data have not been changed.',true)});
+if(!window.supabase||typeof window.supabase.createClient!=='function'){say('The VIPER AI sign-in library did not load. Check your connection and refresh this page. Your account and race data have not been changed.',true);return;}
+const sb=window.VIPER_SUPABASE_CLIENT||(window.VIPER_SUPABASE_CLIENT=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR'));
 let loading=false,allStats=[];
-function say(text,error){$('status').textContent=text;$('status').classList.toggle('error',!!error)}
 function cell(row,value,cls){const td=document.createElement('td');td.textContent=value===null||value===undefined||value===''?'—':String(value);if(cls)td.className=cls;row.appendChild(td)}
 function empty(body,span,text){body.textContent='';const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=span;td.className='empty';td.textContent=text;tr.appendChild(td);body.appendChild(tr)}
 function withTimeout(promise,label,ms){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out. Check your connection and try again.')),ms||12000))]);}
