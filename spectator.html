@@ -57,7 +57,7 @@
 <script>
 (function(){
 'use strict';
-const sb=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR');
+const sb=window.VIPER_SUPABASE_CLIENT||(window.VIPER_SUPABASE_CLIENT=window.supabase.createClient('https://kzazuetxlklmyyrcvgif.supabase.co','sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR'));
 const $=id=>document.getElementById(id);
 let loading=false,allStats=[];
 function say(text,error){$('status').textContent=text;$('status').classList.toggle('error',!!error)}
@@ -99,11 +99,20 @@ async function init(){
  let watchdog;
  try{
   watchdog=setTimeout(()=>say('Still waiting for Supabase. Check your connection, then use Refresh or sign out and back in.',true),12000);
-  const auth=await withTimeout(sb.auth.getUser(),'Account verification');
-  if(auth.error||!auth.data.user){location.replace('./index.html');return}
-  const result=await withTimeout(sb.from('profiles').select('id,full_name,status,role').eq('id',auth.data.user.id).single(),'Profile lookup');
-  const profile=result.data;
-  if(result.error||!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
+  const auth=await withTimeout(sb.auth.getSession(),'Local session check',8000);
+  const session=auth.data&&auth.data.session;
+  if(auth.error||!session||!session.user){location.replace('./index.html');return}
+  const controller=new AbortController(),requestTimer=setTimeout(()=>controller.abort(),15000);
+  let response,body,rows;
+  try{
+   response=await fetch('https://kzazuetxlklmyyrcvgif.supabase.co/rest/v1/profiles?select=id,full_name,status,role&id=eq.'+encodeURIComponent(session.user.id),{method:'GET',headers:{apikey:'sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR',Authorization:'Bearer '+session.access_token,Accept:'application/json'},cache:'no-store',signal:controller.signal});
+   body=await response.text();try{rows=body?JSON.parse(body):null}catch{rows=null}
+   if(!response.ok)throw new Error('Profile verification returned HTTP '+response.status+(rows&&rows.message?': '+rows.message:''));
+   if(!Array.isArray(rows)||!rows.length)throw new Error('No profile row was returned for this account (RLS or missing profile).');
+  }catch(error){if(error.name==='AbortError')throw new Error('Profile verification request to Supabase did not respond within 15 seconds.');throw error}
+  finally{clearTimeout(requestTimer)}
+  const profile=rows[0];
+  if(!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
   if(profile.full_name)$('welcome').textContent='Welcome, '+profile.full_name+'. Follow official race results, approved rider statistics, upcoming event details and published Team Venom announcements — all in one place.';
   $('dashboard').classList.remove('hidden');
   await loadData();
