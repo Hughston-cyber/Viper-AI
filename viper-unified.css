@@ -153,3 +153,96 @@ body.viper-universal-layout footer {
     padding:9px 10px!important;
   }
 }
+
+
+/* Layout repair v3: size the full page canvas relative to the persistent sidebar,
+   rather than leaving each page's legacy max-width wrapper centered in the viewport. */
+html body.viper-universal-layout{overflow-x:hidden!important}
+html body.viper-universal-layout> .wrap,
+html body.viper-universal-layout> .shell,
+html body.viper-universal-layout> .page,
+html body.viper-universal-layout> .page-shell{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+html body.viper-universal-layout> .wrap{
+  padding-left:clamp(18px,2.2vw,32px)!important;
+  padding-right:clamp(18px,2.2vw,32px)!important;
+}
+html body.viper-universal-layout> .wrap>main,
+html body.viper-universal-layout> main,
+html body.viper-universal-layout main.wrap{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+html body.viper-universal-layout .hero{
+  margin-left:0!important;
+  margin-right:0!important;
+}
+html body.viper-universal-layout .grid,
+html body.viper-universal-layout .record-grid,
+html body.viper-universal-layout .analysis-grid,
+html body.viper-universal-layout .dash-grid{
+  align-items:start!important;
+  column-gap:16px!important;
+  row-gap:16px!important;
+}
+html body.viper-universal-layout .panel{
+  margin:0 0 16px!important;
+}
+html body.viper-universal-layout .panel .body,
+html body.viper-universal-layout .panel .in,
+html body.viper-universal-layout .panel .panel-body{
+  padding:16px!important;
+}
+html body.viper-universal-layout .field{
+  min-width:0!important;
+  margin:0 0 14px!important;
+}
+html body.viper-universal-layout .field input,
+html body.viper-universal-layout .field select,
+html body.viper-universal-layout .field textarea{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+html body.viper-universal-layout .actions,
+html body.viper-universal-layout .top-actions{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+}
+html body.viper-universal-layout .stats{
+  gap:12px!important;
+  margin-bottom:16px!important;
+}
+html body.viper-universal-layout .table-wrap{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+}
+@media(max-width:760px){
+  html body.viper-universal-layout> .wrap{
+    padding-left:14px!important;
+    padding-right:14px!important;
+  }
+  html body.viper-universal-layout .panel .body,
+  html body.viper-universal-layout .panel .in,
+  html body.viper-universal-layout .panel .panel-body{
+    padding:12px!important;
+  }
+  html body.viper-universal-layout .grid,
+  html body.viper-universal-layout .record-grid,
+  html body.viper-universal-layout .analysis-grid,
+  html body.viper-universal-layout .dash-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+}
