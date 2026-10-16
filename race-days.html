@@ -485,7 +485,7 @@ async function init(){
   if(!s){$('gate').hidden=false;return}
   var p=await sb.from('profiles').select('*').eq('id',s.user.id).single();
   if(p.error||!p.data||p.data.status!=='approved'){$('gate').hidden=false;return}
-  cap=p.data.role==='captain';$('leadershipMenu').hidden=!(p.data.role==='captain'||p.data.role==='leadership');$('leadCaptainLink').hidden=!cap;$('leadRiderManagementLink').hidden=!cap;$('navCaptain').hidden=!cap;$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
+  cap=['captain','leadership'].includes(p.data.role);$('leadershipMenu').hidden=!(p.data.role==='captain'||p.data.role==='leadership');$('leadCaptainLink').hidden=!cap;$('leadRiderManagementLink').hidden=!cap;$('navCaptain').hidden=!cap;$('out').hidden=false;$('main').hidden=false;$('newForm').hidden=!cap;
   list();
 }
 $('out').onclick=async function(){await sb.auth.signOut();location.href='index.html'};
