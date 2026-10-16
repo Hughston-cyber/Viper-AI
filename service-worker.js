@@ -9,7 +9,7 @@ self.addEventListener('fetch',event=>{
  if(url.origin!==self.location.origin)return;
  // Always try the network first for page navigations so login and routing fixes
  // are not hidden behind a stale cached index.html. Keep a cached fallback offline.
- if(req.mode==='navigate'||/\\.html$/i.test(url.pathname)){
+ if(req.mode==='navigate'||/\.html$/i.test(url.pathname)){
   event.respondWith(fetch(req).then(response=>{
    if(response.ok){const copy=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(req,copy));}
    return response;
