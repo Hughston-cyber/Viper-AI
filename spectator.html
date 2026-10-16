@@ -162,15 +162,29 @@ async function init(){
    if(sessionCheckError)throw new Error('Could not read your saved sign-in session. '+(sessionCheckError.message||'Please return to sign-in and try again.'));
    location.replace('./index.html');return;
   }
-  const controller=new AbortController(),requestTimer=setTimeout(()=>controller.abort(),15000);
-  let response,body,rows;
-  try{
-   response=await fetch('https://kzazuetxlklmyyrcvgif.supabase.co/rest/v1/profiles?select=id,full_name,status,role&id=eq.'+encodeURIComponent(session.user.id),{method:'GET',headers:{apikey:'sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR',Authorization:'Bearer '+session.access_token,Accept:'application/json'},cache:'no-store',signal:controller.signal});
-   body=await response.text();try{rows=body?JSON.parse(body):null}catch{rows=null}
-   if(!response.ok)throw new Error('Profile verification returned HTTP '+response.status+(rows&&rows.message?': '+rows.message:''));
-   if(!Array.isArray(rows)||!rows.length)throw new Error('No profile row was returned for this account (RLS or missing profile).');
-  }catch(error){if(error.name==='AbortError')throw new Error('Profile verification request to Supabase did not respond within 15 seconds.');throw error}
-  finally{clearTimeout(requestTimer)}
+  async function verifyProfileWithToken(activeSession){
+   const controller=new AbortController(),requestTimer=setTimeout(()=>controller.abort(),15000);
+   let response,body,rows;
+   try{
+    response=await fetch('https://kzazuetxlklmyyrcvgif.supabase.co/rest/v1/profiles?select=id,full_name,status,role&id=eq.'+encodeURIComponent(activeSession.user.id),{method:'GET',headers:{apikey:'sb_publishable_sqN8XOmc9fzf0YJ1Xx0Vhw_38cmCyKR',Authorization:'Bearer '+activeSession.access_token,Accept:'application/json'},cache:'no-store',signal:controller.signal});
+    body=await response.text();try{rows=body?JSON.parse(body):null}catch{rows=null}
+    return {response,rows,body};
+   }catch(error){if(error.name==='AbortError')throw new Error('Profile verification request to Supabase did not respond within 15 seconds.');throw error}
+   finally{clearTimeout(requestTimer)}
+  }
+  let checked=await verifyProfileWithToken(session);
+  if(checked.response.status===401){
+   // The browser may have restored an expired cached access token. Refresh it
+   // through Supabase Auth, then retry profile verification once with the new JWT.
+   let refreshed;
+   try{refreshed=await withTimeout(sb.auth.refreshSession(session.refresh_token?{refresh_token:session.refresh_token}:undefined),'Session refresh',12000)}
+   catch(refreshError){throw new Error('Your sign-in session has expired and could not be refreshed. Please sign out, sign in again, and reopen Spectator Hub.')}
+   if(refreshed.error||!refreshed.data||!refreshed.data.session)throw new Error('Your sign-in session has expired. Please return to sign-in, sign in again, and reopen Spectator Hub.');
+   session=refreshed.data.session;
+   checked=await verifyProfileWithToken(session);
+  }
+  if(!checked.response.ok)throw new Error('Profile verification returned HTTP '+checked.response.status+(checked.rows&&checked.rows.message?': '+checked.rows.message:''));
+  if(!Array.isArray(checked.rows)||!checked.rows.length)throw new Error('No profile row was returned for this account (RLS or missing profile).');
   spectatorAccessToken=session.access_token;
   const profile=rows[0];
   if(!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
