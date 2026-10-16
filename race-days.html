@@ -622,7 +622,14 @@ $('delDay').onclick=async function(){
   var r=await sb.from('race_days').delete().eq('id',cur.id);
   if(r.error)msg(r.error.message,1);else{cur=null;list()}
 };
-init();
+init().catch(function(err){
+  console.error('VIPER Race Days initialisation failed:', err);
+  var gate=$('gate');
+  gate.hidden=false;
+  gate.innerHTML='<div class="card"><h2>Race Days could not load</h2><p class="dim">The page started, but an error stopped race information from loading.</p><p class="msg err" role="alert"></p><p class="dim">Try refreshing the page. If this continues, send the error message to the VIPER administrator.</p><a class="btn" href="index.html">Return to dashboard</a></div>';
+  var alert=gate.querySelector('[role="alert"]');
+  if(alert)alert.textContent=err&&err.message?err.message:'Unknown initialisation error';
+});
 })();
 </script>
 
