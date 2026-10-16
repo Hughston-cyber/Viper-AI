@@ -186,7 +186,7 @@ async function init(){
   if(!checked.response.ok)throw new Error('Profile verification returned HTTP '+checked.response.status+(checked.rows&&checked.rows.message?': '+checked.rows.message:''));
   if(!Array.isArray(checked.rows)||!checked.rows.length)throw new Error('No profile row was returned for this account (RLS or missing profile).');
   spectatorAccessToken=session.access_token;
-  const profile=rows[0];
+  const profile=checked.rows[0];
   if(!profile||profile.status!=='approved'||profile.role!=='spectator'){say('This page is only available to approved spectator accounts. Returning to sign-in…',true);setTimeout(()=>location.replace('./index.html'),1200);return}
   if(profile.full_name)$('welcome').textContent='Welcome, '+profile.full_name+'. Follow official race results, approved rider statistics, upcoming event details and published Team Venom announcements — all in one place.';
   $('dashboard').classList.remove('hidden');
